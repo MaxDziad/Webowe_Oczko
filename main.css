@@ -5,10 +5,11 @@ body{
 }
 
 .nav{
-    padding: 4rem;
+    padding: 2rem;
     display: flex;
     width: 100vw;
     justify-content: right;
+    background-color: #C4A295;
 }
 
 .nav a{
@@ -16,8 +17,8 @@ body{
 }
 
 .nav-button{
-    color: black;
-    background-color: white;
+    color: white;
+    background-color: #E48B6A;
     border: 3px solid rgb(209, 209, 209);
     font-family: 'Ubuntu';
     font-size: 1.2rem;
@@ -41,8 +42,15 @@ body{
     font-size: 6rem;
     z-index: 2;
     position: absolute;
-    /* color: #fff; */
-    text-shadow: 1px 4px 5px rgb(255, 255, 255);
+    text-shadow: 1px 4px 5px rgb(209, 209, 209);
+}
+
+h3{
+    font-size: 2rem;
+    position: absolute;
+    align-self: center;
+    padding-top: 18px;
+    text-shadow: 1px 1px 1px rgb(209, 209 , 209);
 }
 
 .card{

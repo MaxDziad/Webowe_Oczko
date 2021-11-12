@@ -7,29 +7,27 @@
     flex-direction: column;
 }
 
-.main__form{
+.main_form{
     display: flex;
     flex-direction: column;
 }
 
-.main__form input{
+.main_form input{
     margin-bottom: 1.5rem;
     border-radius: 30px;
-    border: 3px solid black;
+    border: 3px solid rgb(209, 209, 209);
     padding: 1rem;
 }
 
-.main__form-submit{
+.main_form-submit{
     color: #fff;
     font-weight: 700;
     text-transform: uppercase;
-    background-color: black;
+    background-color: #E48B6A;
 }
 
-.main__form-submit:hover{
+.main_form-submit:hover{
     cursor: pointer;
-    background-color: #fff;
-    color: black;
 }
 
 label{
