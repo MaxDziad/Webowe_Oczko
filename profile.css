@@ -1,0 +1,108 @@
+body{
+    background: linear-gradient(63.1deg, #000000 0%, rgba(0, 0, 0, 0.8) 46.61%, rgba(0, 0, 0, 0.63) 98.33%);
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    color: #fff;
+}
+
+.nav{
+    display: flex;
+    width: 100vw;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+}
+
+.nav__list{
+    list-style: none;
+    display: flex;
+    font-size: 2rem;
+}
+
+.nav__name{
+    font-size: 3rem;
+    font-weight: 300;
+}
+
+.nav__list-item{
+    margin-right: 5rem;
+    font-weight: 400;
+}
+
+.nav__list-item a{
+    text-decoration: none;
+    color: #fff;
+}
+
+.nav__button{
+    padding:  0 2rem;
+    border-radius: 30px;
+    height: 50px;
+    width: 135px;
+    background-color: D1D1D1;
+    border: none;
+    font-size: 1.5rem;
+    color: #1F1F1F;
+    font-weight: 400;
+}
+
+.nav__button:hover{
+    cursor: pointer;
+}
+
+.nav__list-item:hover{
+    cursor: pointer;
+}
+
+.game{
+    width: 100vw;
+    display: grid;
+    place-items: center;
+    grid-template-areas:    
+    "start start"
+    "left right";
+}
+
+.game__button-start{
+    margin: 5rem 0;
+    grid-area: start;
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    border: 15px solid #FFFFFF;
+    background-color: #D1D1D1;
+    font-size: 4rem;
+    color: #1F1F1F;
+}
+
+.game__button-start{
+    cursor: pointer;
+}
+
+.game__card{
+    background: #D1D1D1;
+    width: 350px;
+    height: 200px;
+    border-radius: 30px;
+}
+
+.game__card hr{
+    height: 2px;
+    background-color: #7D7D7D;
+    border: none;
+}
+
+.game__card h3{
+    display: grid;
+    place-items: center;
+    color: #1F1F1F;
+    text-transform: uppercase;
+}
+
+.game__card:nth-of-type(1){
+    grid-area: left;
+}
+
+.game__card:nth-of-type(2){
+    grid-area: right;
+}
