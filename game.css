@@ -1,0 +1,38 @@
+body{
+    background: linear-gradient(63.1deg, #000000 0%, rgba(0, 0, 0, 0.8) 46.61%, rgba(0, 0, 0, 0.63) 98.33%);
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    color: rgb(131, 14, 14);
+}
+.game{
+    min-height: 65vh;
+}
+.players{
+    display: flex;
+    justify-content: space-around;
+    min-height: 35vh;
+}
+
+.image{
+    height: 200px;
+    width: 100%;
+    /* overflow: hidden; */
+}
+
+.image img{
+    width: 100%;
+    /* background-size: cover; */
+    height: 100%;
+}
+
+.players__card{
+    background: #Fff;
+    height: 100%;
+    width: 200px;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.players__name, .players__points{
+    text-align: center;
+}
