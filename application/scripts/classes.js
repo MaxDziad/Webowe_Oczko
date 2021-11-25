@@ -50,19 +50,22 @@ function Play(listOfPlayers, Deck) {
         // zeby napisac czyj jest , w sumei moze funkcji CheckPlayer czy cos, albo w momnecie klikniecia przycisku to od razu wyswietla nazwe nastepnego gracza czy cos takiego
 
         //myslalem ze najpierw petle zeby sprawdzic jaki jest gracz , a potem dopiero dodac listenery z funkcja dla danego gracza, ale mamy nieskonczona petle
-        // i by ciagle zmienialo graczy wiec chyba tak srednio 
-        
-        //Trzeba sie zastanowic w ogole czy ta petla while jest w ogole potrzebna, bo jak doddasz clicklistenera to on bedzie ciagle na tym przycisku
-        // i za kazdym kliknieciem by zmienial ture gracza, i w sumie to potem mozna by od razu po kliknieciu i wykonaniu ruchu sprawdzac czy gra sie skonczyla 
-        //czy nie , i wtedy po prostu przyciski by to obslugiwaly 
+        // i by ciagle zmienialo graczy wiec chyba tak srednio
 
-        for (let i = 0; i < listOfPlayers.length; i++) { // tą petle mozna by w sumie walnac do funkcji playTurn ale to sie pomysli jeszcze 
+        //Trzeba sie zastanowic w ogole czy ta petla while jest w ogole potrzebna, bo jak doddasz clicklistenera to on bedzie ciagle na tym przycisku
+        // i za kazdym kliknieciem by zmienial ture gracza, i w sumie to potem mozna by od razu po kliknieciu i wykonaniu ruchu sprawdzac czy gra sie skonczyla
+        //czy nie , i wtedy po prostu przyciski by to obslugiwaly
+
+        //A w sumie jeszcez jedna sprawa, ze jak zmieniamy ruch to trzeba uwzglednic ze jak gracz spasuje, to nie zmieniamy stanu kolejnego tylko kolejnego ktory ma pass = false xD  , to trzeba by cos zmienic... albo 
+        // zrobic liste aktywnych  graczy i na niej sprawdzac kogo jest ruch a jak ma pass to go usuwac z tej listy
+
+        for (let i = 0; i < listOfPlayers.length; i++) { // tą petle mozna by w sumie walnac do funkcji playTurn ale to sie pomysli jeszcze
 
             if (listOfPlayers[i].turn === true) { //sprawdzamy, którego gracza jest tura i jeśli trafimy na gracza to następnemu graczowi ustawiamy flage na true, a temu co wykonuje ruch na false i gitówa, domyslnie wszystko na false
-                if(i < listOfPlayers.length-1){ // musialem tu rozdzielic zeby nie wyjsc poza tablice
+                if (i < listOfPlayers.length - 1) { // musialem tu rozdzielic zeby nie wyjsc poza tablice
                     listOfPlayers[i + 1].turn = true;
                     listOfPlayers[i].turn = false;
-                }else{
+                } else {
                     listOfPlayers[-1].turn = true;
                     listOfPlayers[i].turn = false;
                 }
@@ -90,7 +93,7 @@ function takeCard(player, deck) {
 }
 
 function pass(player) {
-    player.pass = true;
+    player.pass = true; // kiedy gracz juz zpasował
 }
 
 
@@ -104,5 +107,5 @@ let deck = new Deck(2);
 
 takeCard(Player3, deck);
 console.log(Player3.cards)
-let tab = [1,2,3];
+let tab = [1, 2, 3];
 
