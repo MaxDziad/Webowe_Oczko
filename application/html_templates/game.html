@@ -3,15 +3,15 @@
 
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="forall.css">
-    <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="/application/stylesheets/forall.css">
+    <link rel="stylesheet" href="/application/stylesheets/game.css">
+    <script src="/application/scripts/classes.js"></script>
+    <script src="/application/scripts/game.js"></script>
 
 </head>
 
 <body>
     <div class="board">
-        <div class="game"></div>
-        <hr>
         <div class="players">
             <div class="players__card">
                 <div class="image"><img src="https://www.w3schools.com/css/paris.jpg"></div>
@@ -25,8 +25,16 @@
             <div class="players__card">
                 <div class="image"></div>
                 <p class="players__name">G2</p>
-                
             </div>
+        </div>
+        <div class="operations">
+            <p>Player move: </p>
+            <button class="operations__button" id="newCard">Take New Card</button>
+            <button class="operations__button" id="Pass">Pass</button>
+        </div>
+        <hr>
+        <div class="game">
+
         </div>
     </div>
 

@@ -11,28 +11,33 @@ body{
     display: flex;
     justify-content: space-around;
     min-height: 35vh;
+    padding-top: 1rem;
 }
 
 .image{
-    height: 200px;
     width: 100%;
-    /* overflow: hidden; */
+    height: 50%;
 }
 
 .image img{
     width: 100%;
-    /* background-size: cover; */
     height: 100%;
 }
 
 .players__card{
+    display: flex;
+    flex-direction: column;
     background: #Fff;
-    height: 100%;
-    width: 200px;
+    width: 150px;
+    height: 50%;
     border-radius: 30px;
     overflow: hidden;
 }
 
 .players__name, .players__points{
     text-align: center;
+}
+
+.players__points{
+    padding-bottom: 0;
 }
