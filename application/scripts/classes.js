@@ -10,10 +10,6 @@ class Player {
     }
 }
 
-let Player1 = new Player('xd');
-let Player2 = new Player('hm');
-
-let playersList = [Player1, Player2]
 
 class Deck {
     constructor(numberOfDecks) {
@@ -39,10 +35,14 @@ class Deck {
 
 }
 
+
 function Play(listOfPlayers, Deck) {
     let gameover = false;
     listOfPlayers[0].turn = true; //ustawiamy flage turn na true dla pierwszego gracza ( on zaczyna rozgrywke )
 
+    let newCardButton = document.querySelector('#newCard');
+    let passButton = document.querySelector('#Pass');
+    // newCardButton.addEventListener()
     while (!gameover) {
         // ja to widze tak ze na dwa przyciski, które są daje button.addEventlistener("click", playTurn()) i
         // w momencie klikniecia przycisk leci pętla, ktora sprawdza , kogo jest ruch, potem wykonuje pass
