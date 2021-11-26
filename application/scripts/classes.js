@@ -42,12 +42,24 @@ function Play(listOfPlayers, Deck) {
 
     let newCardButton = document.querySelector('#newCard');
     let passButton = document.querySelector('#Pass');
-    // newCardButton.addEventListener()
+
+    newCardButton.addEventListener("click", function(){
+
+    })
+
+    passButton.addEventListener("click", function(){
+        //tutaj np. checkPlayer() z
+        //pass(Player)
+    })
+
+
     while (!gameover) {
         // ja to widze tak ze na dwa przyciski, które są daje button.addEventlistener("click", playTurn()) i
         // w momencie klikniecia przycisk leci pętla, ktora sprawdza , kogo jest ruch, potem wykonuje pass
         // albo takecard w zaleznosci od przycisku i zmienia gracza, a do tego jeszcze raz jakas petla ktora sprawdza na poczatku kogos jest ruch,
-        // zeby napisac czyj jest , w sumei moze funkcji CheckPlayer czy cos, albo w momnecie klikniecia przycisku to od razu wyswietla nazwe nastepnego gracza czy cos takiego
+        // zeby napisac czyj jest , w sumei moze funkcji CheckPlayer czy cos, albo w momnecie klikniecia przycisku to od razu wyswietla nazwe nastepnego gracza czy cos takiego,
+        //jeszcze jedna opcja jest taka zeby rozdzielic to na funkcje i jedna funkcja checkPlayer zeby sprawdzic kogo jest ruch, a druga changePlayerTurn , zeby po prostu moc sprawdzac, bo np
+        // na poczatku rozgrywki tez trzeba sprawdzic chociaz domyslnie to bedzie pierwszy player wiec no tez lajtowo niby
 
         //myslalem ze najpierw petle zeby sprawdzic jaki jest gracz , a potem dopiero dodac listenery z funkcja dla danego gracza, ale mamy nieskonczona petle
         // i by ciagle zmienialo graczy wiec chyba tak srednio
@@ -62,15 +74,15 @@ function Play(listOfPlayers, Deck) {
         for (let i = 0; i < listOfPlayers.length; i++) { // tą petle mozna by w sumie walnac do funkcji playTurn ale to sie pomysli jeszcze
 
             if (listOfPlayers[i].turn === true) { //sprawdzamy, którego gracza jest tura i jeśli trafimy na gracza to następnemu graczowi ustawiamy flage na true, a temu co wykonuje ruch na false i gitówa, domyslnie wszystko na false
-                if (i < listOfPlayers.length - 1) { // musialem tu rozdzielic zeby nie wyjsc poza tablice
-                    listOfPlayers[i + 1].turn = true;
-                    listOfPlayers[i].turn = false;
-                } else {
-                    listOfPlayers[-1].turn = true;
-                    listOfPlayers[i].turn = false;
-                }
-                // listOfPlayers[(i+1)%listOfPlayers.length] = true;  tak by moglo byc zamiast wyzej chyba bo wtedy jak np wyjdziemy poza to bierze znowu od nowa .. np mamy indeksy 0,1,2 , a wezmiemy tab[3%3] to wyjdzie znowu element 0 itd...
-                // listOfPlayers[i] = false;
+                // if (i < listOfPlayers.length - 1) { // musialem tu rozdzielic zeby nie wyjsc poza tablice
+                //     listOfPlayers[i + 1].turn = true;
+                //     listOfPlayers[i].turn = false;
+                // } else {
+                //     listOfPlayers[-1].turn = true;
+                //     listOfPlayers[i].turn = false;
+                // }
+                listOfPlayers[(i+1)%listOfPlayers.length] = true;  //tak by moglo byc zamiast wyzej chyba bo wtedy jak np wyjdziemy poza to bierze znowu od nowa .. np mamy indeksy 0,1,2 , a wezmiemy tab[3%3] to wyjdzie znowu element 0 itd...
+                listOfPlayers[i] = false;
 
             }
 
@@ -78,9 +90,7 @@ function Play(listOfPlayers, Deck) {
 
     }
 
-    // list.forEach(player => {
-    //     playTurn(player);
-    // })
+   
 }
 
 function playTurn(player) {
