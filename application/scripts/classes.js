@@ -37,68 +37,98 @@ class Deck {
 
 
 function Play(listOfPlayers, Deck) {
-    let gameover = false;
-    listOfPlayers[0].turn = true; //ustawiamy flage turn na true dla pierwszego gracza ( on zaczyna rozgrywke )
 
+    listOfPlayers[0].turn = true; //ustawiamy flage turn na true dla pierwszego gracza ( on zaczyna rozgrywke )
+    let playersInGame = [...listOfPlayers] //kopia listy graczy
     let newCardButton = document.querySelector('#newCard');
     let passButton = document.querySelector('#Pass');
 
-    newCardButton.addEventListener("click", function(){
+    newCardButton.addEventListener("click", function () {
+        let actualPlayer = checkActualPlayer(playersInGame);
+        takeCard(actualPlayer);
+        changePlayer(playersInGame);
+        removePlayers(playersInGame);
 
     })
 
-    passButton.addEventListener("click", function(){
-        //tutaj np. checkPlayer() z
-        //pass(Player)
+    passButton.addEventListener("click", function () {
+        let actualPlayer = checkActualPlayer(listOfPlayers);
+        pass(actualPlayer);
+        // playersInGame = playersInGame.filter(function(el){
+        //     return el.username !== actualPlayer.username; //aktualizujemy tablice tak zeby nie zawierała gracza który ma pass, no mozna to zamieniac na inny spsob jeszcze jakos
+        //  }); //programowanie funkcyjne jak coś 
+        removePlayers(playersInGame); //funkcja ktora usuwa gracza, ktory jest juz pass 
+        changePlayer(playersInGame);
+
     })
 
 
-    while (!gameover) {
-        // ja to widze tak ze na dwa przyciski, które są daje button.addEventlistener("click", playTurn()) i
-        // w momencie klikniecia przycisk leci pętla, ktora sprawdza , kogo jest ruch, potem wykonuje pass
-        // albo takecard w zaleznosci od przycisku i zmienia gracza, a do tego jeszcze raz jakas petla ktora sprawdza na poczatku kogos jest ruch,
-        // zeby napisac czyj jest , w sumei moze funkcji CheckPlayer czy cos, albo w momnecie klikniecia przycisku to od razu wyswietla nazwe nastepnego gracza czy cos takiego,
-        //jeszcze jedna opcja jest taka zeby rozdzielic to na funkcje i jedna funkcja checkPlayer zeby sprawdzic kogo jest ruch, a druga changePlayerTurn , zeby po prostu moc sprawdzac, bo np
-        // na poczatku rozgrywki tez trzeba sprawdzic chociaz domyslnie to bedzie pierwszy player wiec no tez lajtowo niby
 
-        //myslalem ze najpierw petle zeby sprawdzic jaki jest gracz , a potem dopiero dodac listenery z funkcja dla danego gracza, ale mamy nieskonczona petle
-        // i by ciagle zmienialo graczy wiec chyba tak srednio
+    //A w sumie jeszcez jedna sprawa, ze jak zmieniamy ruch to trzeba uwzglednic ze jak gracz spasuje, to nie zmieniamy stanu kolejnego tylko kolejnego ktory ma pass = false xD  , to trzeba by cos zmienic... albo 
+    // zrobic liste aktywnych  graczy i na niej sprawdzac kogo jest ruch a jak ma pass to go usuwac z tej listy
 
-        //Trzeba sie zastanowic w ogole czy ta petla while jest w ogole potrzebna, bo jak doddasz clicklistenera to on bedzie ciagle na tym przycisku
-        // i za kazdym kliknieciem by zmienial ture gracza, i w sumie to potem mozna by od razu po kliknieciu i wykonaniu ruchu sprawdzac czy gra sie skonczyla
-        //czy nie , i wtedy po prostu przyciski by to obslugiwaly
 
-        //A w sumie jeszcez jedna sprawa, ze jak zmieniamy ruch to trzeba uwzglednic ze jak gracz spasuje, to nie zmieniamy stanu kolejnego tylko kolejnego ktory ma pass = false xD  , to trzeba by cos zmienic... albo 
-        // zrobic liste aktywnych  graczy i na niej sprawdzac kogo jest ruch a jak ma pass to go usuwac z tej listy
 
-        for (let i = 0; i < listOfPlayers.length; i++) { // tą petle mozna by w sumie walnac do funkcji playTurn ale to sie pomysli jeszcze
+}
 
-            if (listOfPlayers[i].turn === true) { //sprawdzamy, którego gracza jest tura i jeśli trafimy na gracza to następnemu graczowi ustawiamy flage na true, a temu co wykonuje ruch na false i gitówa, domyslnie wszystko na false
-                // if (i < listOfPlayers.length - 1) { // musialem tu rozdzielic zeby nie wyjsc poza tablice
-                //     listOfPlayers[i + 1].turn = true;
-                //     listOfPlayers[i].turn = false;
-                // } else {
-                //     listOfPlayers[-1].turn = true;
-                //     listOfPlayers[i].turn = false;
-                // }
-                listOfPlayers[(i+1)%listOfPlayers.length] = true;  //tak by moglo byc zamiast wyzej chyba bo wtedy jak np wyjdziemy poza to bierze znowu od nowa .. np mamy indeksy 0,1,2 , a wezmiemy tab[3%3] to wyjdzie znowu element 0 itd...
-                listOfPlayers[i] = false;
 
-            }
 
+
+function checkActualPlayer(listOfPlayers) {
+
+    for (let i = 0; i < listOfPlayers.length; i++) {
+        if (listOfPlayers[i].turn === true) {
+            return listOfPlayers[i];
         }
-
     }
 
-   
 }
 
-function playTurn(player) {
+function removePlayers(listOfPlayers){
+    for(let i = 0;i < listOfPlayers.length; i++){
+        if(listOfPlayers[i].pass === true){
+             listOfPlayers.splice(i,i);
+        }
+    }
+}
+
+function changePlayer(listOfPlayers) {
+
+    for (let i = 0; i < listOfPlayers.length; i++) {
+        if (listOfPlayers[i].turn === true) {
+            listOfPlayers[(i + 1) % listOfPlayers.length] = true;
+            listOfPlayers[i] = false;
+            // p.innerHTML = listOfPlayers[(i + 1) % listOfPlayers.length].username;
+        }
+    }
 
 }
+
+function checkPlayer(player){
+    if(player.currentPoints >= 21){
+        pass(player);
+    }
+}
+
 
 function takeCard(player, deck) {
     let card = deck.deck[Math.floor(Math.random() * deck.deck.length)]; //losowa karta z talii
+    //na podstawie karty dodajemy sobie ile punktów
+    if(card === 'Ace'){
+        player.currentPoints += 1;
+    }
+    else if(card === 'Jack'){
+        player.currentPoints += 1;
+    }
+    else if(card === 'Queen'){
+        player.currentPoints += 1;
+    }
+    else if(card === 'King'){
+        player.currentPoints += 1;
+    } else{
+        player.currentPoints += card;
+    }
+
     player.cards.push(card);
 }
 
@@ -116,6 +146,36 @@ let deck = new Deck(2);
 
 
 takeCard(Player3, deck);
-console.log(Player3.cards)
+takeCard(Player3,deck);
+// console.log(Player3.cards);
+// console.log(Player3.currentPoints);
 let tab = [1, 2, 3];
 
+let x = [Player3, Player3];
+// let y = [...x];
+// console.log(x);
+// console.log('-----------------')
+// console.log(y);
+// console.log(y.pop())
+
+let tab2 = ['x', 'y', 'z']
+tab2.splice(2,2);
+// console.log(tab2);
+
+tab2 = tab2.filter(el => el != 'x');
+// console.log(tab2)
+
+
+// let Player2 = new Player("X");
+// Player2.pass = true;
+// x.push(Player2);
+// console.log(x);
+// updatePlayers(x)
+// console.log(x);
+
+// x = x.filter(function(el){
+//     return el.username !== Player2.username;
+//  }); //programowanie funkcyjne jak coś 
+ 
+// console.log('-----')
+// console.log(x);
