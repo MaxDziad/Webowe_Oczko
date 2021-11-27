@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+
 <html>
 
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="/application/stylesheets/forall.css">
     <link rel="stylesheet" href="/application/stylesheets/game.css">
-    <script src="/application/scripts/classes.js"></script>
-    <script src="/application/scripts/game.js"></script>
+   
+  
 
 </head>
 
@@ -17,16 +17,16 @@
         </div>
         <hr>
         <div class="operations">
-            <p>Player move: </p>
+            <p id="move" >Player move: </p>
             <button class="operations__button" id="newCard">Take New Card</button>
             <button class="operations__button" id="Pass">Pass</button>
         </div>
-        <div class="players">
-            <div class="players__card">
+        <div class="players" id="players">
+             <!-- <div class="players__card">
                 <div class="image"><img src="https://www.w3schools.com/css/paris.jpg"></div>
                 <p class="players__name">G1</p>
                 <p class="players__points">12</p>
-            </div>
+            </div>f
             <div class="players__card">
                 <div class="image"></div>
                 <p class="players__name">G1</p>
@@ -34,13 +34,13 @@
             <div class="players__card">
                 <div class="image"></div>
                 <p class="players__name">G2</p>
-            </div>
+            </div>  -->
         </div>
        
       
        
     </div>
-
+     <script src="/application/scripts/classes.js"></script>
 </body>
 
 </html>
