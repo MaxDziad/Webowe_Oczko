@@ -6,11 +6,9 @@
     use Twig\Loader\FilesystemLoader;
 
     $config_path = ROOT . "\application\config\\";
-    $html_path = ROOT . "\application\html_templates\\";
     $images = ROOT . "\application\images\\";
     $php_path = ROOT . "\application\php_templates\\";
-    $stylesheets = "/application/stylesheets/";
 
-    $loader = new FilesystemLoader($html_path);
+    $loader = new FilesystemLoader(ROOT . "\application\html_templates\\");
     $twig = new Environment($loader);
     
