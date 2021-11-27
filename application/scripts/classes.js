@@ -1,3 +1,6 @@
+let moveLabel = document.querySelector('#move');
+let playersView = document.querySelector('#players');
+
 
 class Player {
     constructor(username) {
@@ -36,42 +39,66 @@ class Deck {
 }
 
 
-function Play(listOfPlayers, Deck) {
 
+function Play(listOfPlayers, Deck) {
     listOfPlayers[0].turn = true; //ustawiamy flage turn na true dla pierwszego gracza ( on zaczyna rozgrywke )
+    renderPlayers(listOfPlayers);
+
+    moveLabel.innerHTML = 'Player move: ' + listOfPlayers[0].username;
+
     let playersInGame = [...listOfPlayers] //kopia listy graczy
+
     let newCardButton = document.querySelector('#newCard');
     let passButton = document.querySelector('#Pass');
 
-    newCardButton.addEventListener("click", function () {
-        let actualPlayer = checkActualPlayer(playersInGame);
-        takeCard(actualPlayer);
-        changePlayer(playersInGame);
-        removePlayers(playersInGame);
 
+    newCardButton.addEventListener("click", function () {
+        if (playersInGame.length !== 0) { // sprawdzam czy sa jeszcze jacys gracze w grze 
+            let actualPlayer = checkActualPlayer(playersInGame);
+
+            takeCard(actualPlayer, Deck);
+            changePlayer(playersInGame);
+            console.log(checkActualPlayer(playersInGame))
+            removePlayers(playersInGame);
+            console.log(checkActualPlayer(playersInGame).currentPoints)
+            renderPlayers(listOfPlayers) //moge tak zrobic bo jak mamy obiekty w playersInGame to te obiekty są referencją do tych z listOfPlayers
+        }
     })
 
     passButton.addEventListener("click", function () {
-        let actualPlayer = checkActualPlayer(listOfPlayers);
-        pass(actualPlayer);
-        // playersInGame = playersInGame.filter(function(el){
-        //     return el.username !== actualPlayer.username; //aktualizujemy tablice tak zeby nie zawierała gracza który ma pass, no mozna to zamieniac na inny spsob jeszcze jakos
-        //  }); //programowanie funkcyjne jak coś 
-        removePlayers(playersInGame); //funkcja ktora usuwa gracza, ktory jest juz pass 
-        changePlayer(playersInGame);
+        if (playersInGame.length !== 0) {
+            let actualPlayer = checkActualPlayer(playersInGame);
+
+            pass(actualPlayer);
+            // playersInGame = playersInGame.filter(function(el){
+            //     return el.username !== actualPlayer.username; //aktualizujemy tablice tak zeby nie zawierała gracza który ma pass, no mozna to zamieniac na inny spsob jeszcze jakos
+            //  }); //programowanie funkcyjne jak coś 
+
+            changePlayer(playersInGame);
+            removePlayers(playersInGame); //funkcja ktora usuwa gracza, ktory jest juz pass 
+
+            renderPlayers(listOfPlayers);
+        }
 
     })
-
-
-
-    //A w sumie jeszcez jedna sprawa, ze jak zmieniamy ruch to trzeba uwzglednic ze jak gracz spasuje, to nie zmieniamy stanu kolejnego tylko kolejnego ktory ma pass = false xD  , to trzeba by cos zmienic... albo 
-    // zrobic liste aktywnych  graczy i na niej sprawdzac kogo jest ruch a jak ma pass to go usuwac z tej listy
 
 
 
 }
 
-
+function renderPlayers(listOfPlayers) {
+    playersView.innerHTML = '';
+    for (let i = 0; i < listOfPlayers.length; i++) {
+        playersView.innerHTML +=
+            `<div class="players__card">
+            <div class="image"><img src="https://www.w3schools.com/css/paris.jpg"></div>
+            <p class="players__name">${listOfPlayers[i].username}</p>
+            <p class="players__points">${listOfPlayers[i].currentPoints}</p>
+            <p class="players__points">Pass: ${listOfPlayers[i].pass}</p>
+            <p class="players__points">Turn: ${listOfPlayers[i].turn}</p>
+        </div>`
+    }
+}
 
 
 function checkActualPlayer(listOfPlayers) {
@@ -84,10 +111,11 @@ function checkActualPlayer(listOfPlayers) {
 
 }
 
-function removePlayers(listOfPlayers){
-    for(let i = 0;i < listOfPlayers.length; i++){
-        if(listOfPlayers[i].pass === true){
-             listOfPlayers.splice(i,i);
+function removePlayers(listOfPlayers) {
+    for (let i = 0; i < listOfPlayers.length; i++) {
+        if (listOfPlayers[i].pass === true) {
+            console.log('usuwam')
+            listOfPlayers.splice(i, 1);
         }
     }
 }
@@ -95,17 +123,19 @@ function removePlayers(listOfPlayers){
 function changePlayer(listOfPlayers) {
 
     for (let i = 0; i < listOfPlayers.length; i++) {
+
         if (listOfPlayers[i].turn === true) {
-            listOfPlayers[(i + 1) % listOfPlayers.length] = true;
-            listOfPlayers[i] = false;
-            // p.innerHTML = listOfPlayers[(i + 1) % listOfPlayers.length].username;
+            listOfPlayers[(i + 1) % listOfPlayers.length].turn = true;
+            listOfPlayers[i].turn = false;
+            moveLabel.innerHTML = 'Player move: ' + listOfPlayers[(i + 1) % listOfPlayers.length].username;
+            break;
         }
     }
 
 }
 
-function checkPlayer(player){
-    if(player.currentPoints >= 21){
+function checkPlayer(player) {
+    if (player.currentPoints >= 21) {
         pass(player);
     }
 }
@@ -114,18 +144,18 @@ function checkPlayer(player){
 function takeCard(player, deck) {
     let card = deck.deck[Math.floor(Math.random() * deck.deck.length)]; //losowa karta z talii
     //na podstawie karty dodajemy sobie ile punktów
-    if(card === 'Ace'){
+    if (card === 'Ace') {
         player.currentPoints += 1;
     }
-    else if(card === 'Jack'){
+    else if (card === 'Jack') {
         player.currentPoints += 1;
     }
-    else if(card === 'Queen'){
+    else if (card === 'Queen') {
         player.currentPoints += 1;
     }
-    else if(card === 'King'){
+    else if (card === 'King') {
         player.currentPoints += 1;
-    } else{
+    } else {
         player.currentPoints += card;
     }
 
@@ -141,41 +171,45 @@ function pass(player) {
 
 
 let Player3 = new Player("Kacper");
+let Player4 = new Player("Maks");
+let Player5 = new Player("X");
+let players = [Player3, Player4, Player5];
 
 let deck = new Deck(2);
+Play(players, deck);
+
+// let tab = [...players]
+// tab[0].username = 'hmm'
+// tab.pop();
+// console.log(players)
+
+// console.log('-----')
+// console.log(tab)
 
 
-takeCard(Player3, deck);
-takeCard(Player3,deck);
+// takeCard(Player3, deck);
+// takeCard(Player3,deck);
 // console.log(Player3.cards);
 // console.log(Player3.currentPoints);
-let tab = [1, 2, 3];
+// let tab = [1, 2, 3];
 
-let x = [Player3, Player3];
+// let x = [Player3, Player3];
 // let y = [...x];
 // console.log(x);
 // console.log('-----------------')
 // console.log(y);
 // console.log(y.pop())
 
-let tab2 = ['x', 'y', 'z']
-tab2.splice(2,2);
+// let tab2 = ['x', 'y', 'z']
+// tab2.splice(2,2);
 // console.log(tab2);
 
-tab2 = tab2.filter(el => el != 'x');
+// tab2 = tab2.filter(el => el != 'x');
 // console.log(tab2)
 
 
-// let Player2 = new Player("X");
-// Player2.pass = true;
-// x.push(Player2);
-// console.log(x);
-// updatePlayers(x)
-// console.log(x);
 
 // x = x.filter(function(el){
 //     return el.username !== Player2.username;
 //  }); //programowanie funkcyjne jak coś 
- 
-// console.log('-----')
-// console.log(x);
+
