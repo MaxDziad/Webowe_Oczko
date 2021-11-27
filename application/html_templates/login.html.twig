@@ -10,13 +10,14 @@
 <body>
     <div class="main">
         <h1>Sign In</h1>
-        <form class="main_form">
+        <form class="main_form" action="/" method="POST">
             <label for="login">Login:</label>
             <input class="main_form-input" name="login">
             <label for="password">Password:</label>
             <input class="main_form-input" name="password" type="password">
             <p>Don't have an account yet? <a href="{{ temp_path }}register.html">Register</a></p>
             <input class="main_form-submit" type="submit" value="Login">
+            <p>{{ message }}</p>
         </form>
     </div>
 </body>

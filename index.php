@@ -4,7 +4,10 @@
 	ini_set('display_errors', 1);
 	error_reporting(E_ALL);
 
-	require_once ROOT . "\application\config\config.inc.php";
+	require ROOT . "\application\\vendor\autoload.php";
+
+	include(ROOT . "\application\config\config.inc.php");
+	include(ROOT . "\application\config\database_connection.php");
 
 	session_start();
 
@@ -26,7 +29,8 @@
 		print '<p style="font-weight: bold; text-align: center; margin-top: 50px;">Jesteś zalogowany, więc nie masz dostępu do tej strony.</p>';
 	} 
 	else {
-		include($php_path . 'main.php');
+		include($php_path . 'login.php');
+		//include($php_path . 'main.php');
 	}
 
 	exit;
