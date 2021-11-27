@@ -53,14 +53,19 @@ function Play(listOfPlayers, Deck) {
 
 
     newCardButton.addEventListener("click", function () {
-        if (playersInGame.length !== 0) { // sprawdzam czy sa jeszcze jacys gracze w grze 
+        if (playersInGame.length !== 0) { // sprawdzam czy sa jeszcze jacys gracze w grze
             let actualPlayer = checkActualPlayer(playersInGame);
 
             takeCard(actualPlayer, Deck);
-            changePlayer(playersInGame);
-            console.log(checkActualPlayer(playersInGame))
+
+            if(playersInGame.length !== 1){
+                changePlayer(playersInGame); // zmieniamy gracza, ale tylko wtedy jesli nie jest ostatnim graczem 
+            }
+
+
             removePlayers(playersInGame);
-            console.log(checkActualPlayer(playersInGame).currentPoints)
+            console.log(playersInGame)
+
             renderPlayers(listOfPlayers) //moge tak zrobic bo jak mamy obiekty w playersInGame to te obiekty są referencją do tych z listOfPlayers
         }
     })
@@ -72,11 +77,11 @@ function Play(listOfPlayers, Deck) {
             pass(actualPlayer);
             // playersInGame = playersInGame.filter(function(el){
             //     return el.username !== actualPlayer.username; //aktualizujemy tablice tak zeby nie zawierała gracza który ma pass, no mozna to zamieniac na inny spsob jeszcze jakos
-            //  }); //programowanie funkcyjne jak coś 
+            //  }); //programowanie funkcyjne jak coś
 
             changePlayer(playersInGame);
-            removePlayers(playersInGame); //funkcja ktora usuwa gracza, ktory jest juz pass 
-
+            removePlayers(playersInGame); //funkcja ktora usuwa gracza, ktory jest juz pass
+            console.log(playersInGame)
             renderPlayers(listOfPlayers);
         }
 
@@ -157,6 +162,10 @@ function takeCard(player, deck) {
         player.currentPoints += 1;
     } else {
         player.currentPoints += card;
+    }
+    
+    if(player.currentPoints >= 21){
+        pass(player);
     }
 
     player.cards.push(card);
