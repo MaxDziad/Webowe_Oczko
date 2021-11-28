@@ -7,7 +7,6 @@
 	require ROOT . "\application\\vendor\autoload.php";
 
 	include(ROOT . "\application\config\config.inc.php");
-	include(ROOT . "\application\config\database_connection.php");
 
 	session_start();
 
@@ -15,22 +14,28 @@
 	$pages_for_logged = [];
 	$pages_for_unlogged = [];
 
-	if ((isset($_GET['page']) && $_GET['page'] && in_array($_GET['page'], $pages_for_all)) || (isset($_GET['page']) && $_GET['page'] && in_array($_GET['page'], $pages_for_logged) && isset($_SESSION['id'])) || (isset($_GET['page']) && $_GET['page'] && in_array($_GET['page'], $pages_for_unlogged) && !isset($_SESSION['id']))) {
-		if (file_exists($_GET['page'] . '.php')) {
+	if ((isset($_GET['page']) && $_GET['page'] && in_array($_GET['page'], $pages_for_all)) || (isset($_GET['page']) && $_GET['page'] && in_array($_GET['page'], $pages_for_logged) && isset($_SESSION['id'])) || (isset($_GET['page']) && $_GET['page'] && in_array($_GET['page'], $pages_for_unlogged) && !isset($_SESSION['id']))) 
+	{
+		if (file_exists($php_path . $_GET['page'] . '.php'))
+		{
 			include($php_path . $_GET['page'] . '.php');
-		} else {
+		}
+		else
+		{
 			print '<p style="font-weight: bold; text-align: center; margin-top: 50px;"> Plik ' . $_GET['page'] . '.php nie istnieje.</p>';
 		}
 	}
-	elseif (isset($_GET['page']) && !isset($_SESSION['id']) && in_array($_GET['page'], $pages_for_logged)) {
+	elseif (isset($_GET['page']) && !isset($_SESSION['id']) && in_array($_GET['page'], $pages_for_logged))
+	{
 		print '<p style="font-weight: bold; text-align: center; margin-top: 50px;">Musisz być zalogowany, aby mieć dostęp do tej strony.</p>';
 	} 
-	elseif (isset($_GET['page']) && isset($_SESSION['id']) && in_array($_GET['page'], $pages_for_unlogged)) {
+	elseif (isset($_GET['page']) && isset($_SESSION['id']) && in_array($_GET['page'], $pages_for_unlogged))
+	{
 		print '<p style="font-weight: bold; text-align: center; margin-top: 50px;">Jesteś zalogowany, więc nie masz dostępu do tej strony.</p>';
 	} 
-	else {
-		include($php_path . 'login.php');
-		//include($php_path . 'main.php');
+	else 
+	{
+		include($php_path . 'main.php');
 	}
 
 	exit;
