@@ -3,7 +3,7 @@
     use Twig\Environment;
     use Twig\Loader\FilesystemLoader;
 
-    include(ROOT . "\application\config\database_connection.php");
+    // include(ROOT . "\application\config\database_connection.php");
 
     $config_path = ROOT . "\application\config\\";
     $images = ROOT . "\application\images\\";
