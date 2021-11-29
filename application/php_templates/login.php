@@ -13,9 +13,9 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
-            // if (password_verify($_POST['password'], $user['password'])) {
-            if ($_POST['password'] == $user['password']) {
-                // $_SESSION['id'] = $user['id'];
+            if (password_verify($_POST['password'], $user['password'])) {
+            //if ($_POST['password'] == $user['password']) {
+                $_SESSION['id'] = $user['id'];
                 $_SESSION['login'] = $user['login'];
                 $message = "Zalogowano pomyślnie.";
                 // header('Location: /');
