@@ -6,10 +6,14 @@ body{
 }
 .game{
     min-height: 65vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 .players{
     display: flex;
     justify-content: space-around;
+    
     min-height: 35vh;
     padding-top: 1rem;
 }
@@ -40,4 +44,13 @@ body{
 
 .players__points{
     padding-bottom: 0;
+}
+
+.card{
+    height: 200px;
+    width: 150px;
+    background: #fff;
+    border-radius: 30px;
+    display: grid;
+    place-items: center;
 }

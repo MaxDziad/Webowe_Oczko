@@ -1,15 +1,17 @@
 let moveLabel = document.querySelector('#move');
 let playersView = document.querySelector('#players');
+const board = document.querySelector('#game');
 
 
 class Player {
-    constructor(username) {
+    constructor(username, ai) {
         this.username = username;
         this.currentPoints = 0;
         this.pass = false;
         this.chosenSkin = '';
         this.turn = false;
         this.cards = []; // kazdy gracz musi zapisywac jakie ma karty 
+        this.AI = ai;
     }
 }
 
@@ -43,6 +45,7 @@ class Deck {
 function Play(listOfPlayers, Deck) {
     listOfPlayers[0].turn = true; //ustawiamy flage turn na true dla pierwszego gracza ( on zaczyna rozgrywke )
     renderPlayers(listOfPlayers);
+    renderBoard(listOfPlayers);
 
     moveLabel.innerHTML = 'Player move: ' + listOfPlayers[0].username;
 
@@ -95,13 +98,20 @@ function renderPlayers(listOfPlayers) {
     playersView.innerHTML = '';
     for (let i = 0; i < listOfPlayers.length; i++) {
         playersView.innerHTML +=
-            `<div class="players__card">
+            `<div class="players__card" >
             <div class="image"><img src="https://www.w3schools.com/css/paris.jpg"></div>
             <p class="players__name">${listOfPlayers[i].username}</p>
             <p class="players__points">${listOfPlayers[i].currentPoints}</p>
             <p class="players__points">Pass: ${listOfPlayers[i].pass}</p>
             <p class="players__points">Turn: ${listOfPlayers[i].turn}</p>
         </div>`
+    }
+}
+
+function renderBoard(listOfPlayers){
+    console.log('tak')
+    for(let i =0; i<listOfPlayers.length; i++){
+        board.innerHTML += `<div class="card" data-player="${listOfPlayers[i].username}"><p class='card_points'></p></div>`; // nadajemy divowi gdzie ma byc kladziona karta data-player = nazwa gracza, zeby potem zaznaczyc odpowiednie przy dodawaniu karty
     }
 }
 
@@ -147,6 +157,10 @@ function checkPlayer(player) {
 
 
 function takeCard(player, deck) {
+    
+    let cardPlace = document.querySelector(`[data-player="${player.username}"] p`); //zaznaczamy sobie diva dla danego gracza
+    console.log(cardPlace)
+
     let card = deck.deck[Math.floor(Math.random() * deck.deck.length)]; //losowa karta z talii
     //na podstawie karty dodajemy sobie ile punktów
     if (card === 'Ace') {
@@ -168,6 +182,8 @@ function takeCard(player, deck) {
         pass(player);
     }
 
+    cardPlace.innerHTML = card;
+
     player.cards.push(card);
 }
 
@@ -179,9 +195,10 @@ function pass(player) {
 
 
 
-let Player3 = new Player("Kacper");
-let Player4 = new Player("Maks");
-let Player5 = new Player("X");
+let Player3 = new Player("Kacper", false);
+let Player4 = new Player("Maks", false);
+let Player5 = new Player("X", false);
+console.log(Player5.AI);
 let players = [Player3, Player4, Player5];
 
 let deck = new Deck(2);
