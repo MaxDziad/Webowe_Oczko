@@ -10,7 +10,7 @@
 
 	session_start();
 
-	$pages_for_all = ['main', 'game', 'login', 'register', 'profile'];
+	$pages_for_all = ['main', 'game', 'login', 'register', 'profile', 'lobby'];
 	$pages_for_logged = [];
 	$pages_for_unlogged = [];
 
