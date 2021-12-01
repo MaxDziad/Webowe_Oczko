@@ -1,15 +1,14 @@
 .lobbyPlayers{
-    max-height: 80%;
+    height: 600px;
+    display: flex;
 }
 
 .playerCard{
-    display: inline-block;
     background: linear-gradient(220.55deg, rgba(102, 102, 102, 0.63) -34.12%, rgba(61, 61, 61, 0.83) 38.87%, rgba(0, 0, 0, 0.79) 82.9%);
     width: 24.5%;
     height: 80%;
     box-shadow: 0px 5px 10px 5px #00000054;
     border-radius: 10px;
-    position: top;
     margin-top: auto;
     margin-right: auto;
 }
