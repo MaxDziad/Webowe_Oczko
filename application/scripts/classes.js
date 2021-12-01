@@ -64,10 +64,9 @@ function Play(listOfPlayers, Deck) {
 
 
             removePlayers(playersInGame);
-            // console.log(playersInGame)
+            console.log(playersInGame)
 
             renderPlayers(listOfPlayers) //moge tak zrobic bo jak mamy obiekty w playersInGame to te obiekty są referencją do tych z listOfPlayers
-            checkWin(listOfPlayers);
         }
     })
 
@@ -82,9 +81,8 @@ function Play(listOfPlayers, Deck) {
 
             changePlayer(playersInGame);
             removePlayers(playersInGame); //funkcja ktora usuwa gracza, ktory jest juz pass
-            // console.log(playersInGame)
+            console.log(playersInGame)
             renderPlayers(listOfPlayers);
-            checkWin(listOfPlayers);
         }
 
     })
@@ -92,31 +90,6 @@ function Play(listOfPlayers, Deck) {
 
 
 }
-
-function checkWin(listOfPlayers){
-    let counter = 0;
-    let winners = [];
-
-    listOfPlayers.forEach( player =>
-        { if(player.currentPoints === 21 ){
-        winners.push(player.username);
-    }
-    })
-
-    for(let i =0; i<listOfPlayers.length;i++){
-        if(listOfPlayers[i].pass === true){
-            counter++;
-        }
-    }
-
-    if(counter === listOfPlayers.length){
-        alert(`The winners are: ${winners}`);
-    }
-
-
-}
-
-
 
 function renderPlayers(listOfPlayers) {
     playersView.innerHTML = '';
