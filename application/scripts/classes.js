@@ -2,10 +2,15 @@ let moveLabel = document.querySelector('#move');
 let playersView = document.querySelector('#players');
 const board = document.querySelector('#game');
 
-const human = 0;
-const easyAi = 1;
-const mediumAi = 2;
-const hardAi = 3;
+const HUMAN = 0;
+const AI_EASY = 1;
+const AI_MEDIUM = 2;
+const AI_HARD = 3;
+
+const ACE = 1;
+const JACK = 10;
+const QUEEN = 10;
+const KING = 10;
 
 class Player {
     constructor(username, playerType) {
@@ -14,8 +19,9 @@ class Player {
         this.pass = false;
         this.chosenSkin = '';
         this.turn = false;
-        this.cards = []; // kazdy gracz musi zapisywac jakie ma karty 
+        this.drawnCards = 0;
         this.playerType = playerType;
+        this.snakeEyes = false;
     }
 }
 
@@ -23,128 +29,118 @@ class Deck {
     constructor(numberOfDecks) {
         this.deck = []
         this.numberOfDecks = numberOfDecks;
-        this.makeDeck();
+        this.CreateDeck();
     }
 
-    makeDeck() {
-        const values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
-
+    CreateDeck() {
+        const values = [ACE, 2, 3, 4, 5, 6, 7, 8, 9, 10, JACK, QUEEN, KING];
         this.deck = [...values]
 
-        if (this.numberOfDecks > 1) { // robimy sobie kopie decka i potem dodajemy jeszcze tyle razy ile jest potrzebne 
-            let copy = [...this.deck];  // js destrukturyzacja w ES6 , spread operator , kopiowanie tablic ;-)
-            for (let i = 0; i < this.numberOfDecks - 1; i++) {  //jak mamy miec 3, to dodajemy jeszcez 2 razy i git 
+        if (this.numberOfDecks > 1) {
+            let copy = [...this.deck];
+            for (let i = 0; i < this.numberOfDecks - 1; i++) {
                 this.deck.push(...copy);
             }
         }
     }
 }
 
-
-
-function Play(listOfPlayers, Deck) {
-    let currentPlayer = listOfPlayers[0];  //ustawiamy flage turn na true dla pierwszego gracza ( on zaczyna rozgrywke )
+function Play() {
+    let currentPlayer = playersInGame[0];
     currentPlayer.turn = true;
-    renderPlayers(listOfPlayers);
-    renderBoard(listOfPlayers);
+    RenderPlayers();
+    RenderBoard();
 
     moveLabel.innerHTML = 'Player move: ' + listOfPlayers[0].username;
-
-    let playersInGame = [...listOfPlayers] //kopia listy graczy
-
     let newCardButton = document.querySelector('#newCard');
     let passButton = document.querySelector('#Pass');
 
     newCardButton.addEventListener("click", function () {
-        onNewCardButton(playersInGame);
+        OnNewCardButton();
     })
 
     passButton.addEventListener("click", function () {
-        onPassButton(playersInGame);
+        OnPassButton();
     })
 
-    if (currentPlayer.playerType !== human){
-        tryPlayAiTurn(playersInGame, currentPlayer);
-    }
+    TryPlayAiTurn(currentPlayer);
 }
 
-function onNewCardButton(playersInGame){
+function OnNewCardButton(){
     if (playersInGame.length !== 0) { 
-        currentPlayer = checkActualPlayer(playersInGame);
-        let nextCard = drawCard();
-        putCard(currentPlayer, nextCard);
-
-        endTurn(playersInGame);
+        currentPlayer = GetCurrentPlayer();
+        PutCard(currentPlayer, DrawCard());
+        StartNewTurn();
     }
 }
 
-function onPassButton(playersInGame){
+function OnPassButton(){
     if (playersInGame.length !== 0) {
-        currentPlayer = checkActualPlayer(playersInGame);
-        pass(currentPlayer);
-        endTurn(playersInGame);
+        currentPlayer = GetCurrentPlayer();
+        Pass(currentPlayer);
+        StartNewTurn();
     }
 }
 
-function tryPlayAiTurn(playersInGame, player) {
-
-    if (player.playerType === easyAi){
-        currentPlayer = checkActualPlayer(playersInGame);
-        let nextCard = drawCard();
-        putCard(currentPlayer, nextCard);
-        endTurn(playersInGame);
-        currentPlayer = checkActualPlayer(playersInGame);
-        tryPlayAiTurn(playersInGame, currentPlayer);
+function TryPlayAiTurn(player) {
+    if (player.playerType === HUMAN){
+        return;
     }
 
-    else if (player.playerType === mediumAi){
-        if (player.currentPoints < 14){
-            currentPlayer = checkActualPlayer(playersInGame);
-            let nextCard = drawCard();
-            putCard(currentPlayer, nextCard);
-            endTurn(playersInGame);
-            currentPlayer = checkActualPlayer(playersInGame);
-            tryPlayAiTurn(playersInGame, currentPlayer);
+    switch (player.playerType){
+        case AI_EASY:
+            EasyAiTurn(player);
+            break;
+
+        case AI_MEDIUM:
+            MediumAiTurn(player);
+            break;
+
+        case AI_HARD:
+            HardAiTurn(player);    
+    }
+
+    StartNewTurn();
+}
+
+function EasyAiTurn(player){
+    PutCard(player, DrawCard());
+}
+
+function MediumAiTurn(player){
+    if (player.currentPoints < 14){
+        PutCard(player, DrawCard());
+    }
+    else{
+        if (FiftyChance()){
+            PutCard(player, DrawCard());
         }
         else{
-            if (fiftyDecision()){
-                currentPlayer = checkActualPlayer(playersInGame);
-                let nextCard = drawCard();
-                putCard(currentPlayer, nextCard);
-                endTurn(playersInGame);
-                currentPlayer = checkActualPlayer(playersInGame);
-                tryPlayAiTurn(playersInGame, currentPlayer);
-            }
-            else{
-                pass(player);
-                endTurn(playersInGame);
-                currentPlayer = checkActualPlayer(playersInGame);
-                tryPlayAiTurn(playersInGame, currentPlayer);
-            }
-        }
-    }
-
-    else if (player.playerType === hardAi){
-        let nextCard = drawCard();
-
-        if (calculateCardPoints(nextCard) + player.currentPlayer <= 21){
-            putCard(player, card);
-        }
-        else{
-            pass(player);
+            Pass(player);
         }
     }
 }
 
-function endTurn(playersInGame){
-    changePlayer(playersInGame);
-    removePassedPlayers(playersInGame);
-    renderPlayers(listOfPlayers);
-    currentPlayer = checkActualPlayer(playersInGame);
-    tryPlayAiTurn(playersInGame, currentPlayer);
+function HardAiTurn(player){
+    let card = DrawCard();
+
+    if (CalculateCardPoints(card) + player.currentPlayer <= 21){
+        PutCard(player, card);
+    }
+    else{
+        Pass(player);
+    }
 }
 
-function fiftyDecision(){
+function StartNewTurn(){
+    CheckGameOver();
+    let nextPlayer = ChangePlayer();
+    RemoveIfPlayerPassed();
+    RenderPlayers();
+    TryPlayAiTurn(nextPlayer);
+}
+
+function FiftyChance(){
     if (Math.random() > 0.5){
         return true;
     }
@@ -152,7 +148,7 @@ function fiftyDecision(){
     return false;
 }
 
-function renderPlayers(listOfPlayers) {
+function RenderPlayers() {
     playersView.innerHTML = '';
     for (let i = 0; i < listOfPlayers.length; i++) {
         playersView.innerHTML +=
@@ -166,133 +162,93 @@ function renderPlayers(listOfPlayers) {
     }
 }
 
-function renderBoard(listOfPlayers){
-    console.log('tak')
-    for(let i =0; i<listOfPlayers.length; i++){
-        board.innerHTML += `<div class="card" data-player="${listOfPlayers[i].username}"><p class='card_points'></p></div>`; // nadajemy divowi gdzie ma byc kladziona karta data-player = nazwa gracza, zeby potem zaznaczyc odpowiednie przy dodawaniu karty
+function RenderBoard(){
+    for(let i = 0; i < listOfPlayers.length; i++){
+        board.innerHTML += `<div class="card" data-player="${listOfPlayers[i].username}"><p class='card_points'></p></div>`;
     }
 }
 
-
-function checkActualPlayer(listOfPlayers) {
-
-    for (let i = 0; i < listOfPlayers.length; i++) {
-        if (listOfPlayers[i].turn === true) {
-            return listOfPlayers[i];
-        }
-    }
-
-}
-
-function removePassedPlayers(listOfPlayers) {
-    for (let i = 0; i < listOfPlayers.length; i++) {
-        if (listOfPlayers[i].pass === true) {
-            console.log('usuwam')
-            listOfPlayers.splice(i, 1);
+function GetCurrentPlayer() {
+    for (let i = 0; i < playersInGame.length; i++) {
+        if (playersInGame[i].turn === true) {
+            return playersInGame[i];
         }
     }
 }
 
-function changePlayer(listOfPlayers) {
+function RemoveIfPlayerPassed() {
+    for (let i = 0; i < playersInGame.length; i++) {
+        if (playersInGame[i].pass === true) {
+            playersInGame.splice(i, 1);
+        }
+    }
+}
 
-    for (let i = 0; i < listOfPlayers.length; i++) {
-
-        if (listOfPlayers[i].turn === true) {
-            newPlayer = listOfPlayers[(i + 1) % listOfPlayers.length];
+function ChangePlayer() {
+    for (let i = 0; i < playersInGame.length; i++) {
+        if (playersInGame[i].turn === true) {
+            newPlayer = playersInGame[(i + 1) % playersInGame.length];
             newPlayer.turn = true;
-            listOfPlayers[i].turn = false;
-            return;
+            playersInGame[i].turn = false;
+
+            return newPlayer;
         }
     }
+
+    GameOver();
 }
 
-function checkPlayer(player) {
+function CheckPlayer(player) {
     if (player.currentPoints >= 21) {
-        pass(player);
+        Pass(player);
     }
 }
 
-function drawCard(){
+function DrawCard(){
     let card = deck.deck[Math.floor(Math.random() * deck.deck.length)];
     return card;
 }
 
-function calculateCardPoints(card){
-    if (card === 'Ace') {
-        return 1;
+function CalculateCardPoints(player, card){
+    if (card === ACE && player.currentPoints <= 10) {
+        return 11;
     }
-    else if (card === 'Jack') {
-        return 1;
+    else if (player.drawnCards == 2 && player.currentPoints == 11){
+        player.snakeEyes = true;
+        return 11;
     }
-    else if (card === 'Queen') {
-        return 1;
-    }
-    else if (card === 'King') {
-        return 1;
-    } else {
+    else {
         return card;
     }
 }
 
-function putCard(player, card) {
+function PutCard(player, card) {
     
-    let cardPlace = document.querySelector(`[data-player="${player.username}"] p`); //zaznaczamy sobie diva dla danego gracza
-    
-    player.currentPoints += calculateCardPoints(card);
-
-    if(player.currentPoints >= 21){
-        pass(player);
-    }
-
+    let cardPlace = document.querySelector(`[data-player="${player.username}"] p`);
+    player.drawnCards += 1;
+    player.currentPoints += CalculateCardPoints(player, card);
     cardPlace.innerHTML = card;
 
-    player.cards.push(card);
+    if (player.currentPoints >= 21){
+        Pass(player);
+    }
 }
 
-function pass(player) {
-    player.pass = true; // kiedy gracz juz zpasował
+function Pass(player) {
+    player.pass = true;
 }
 
-let Player3 = new Player("Kacper", 0);
-let Player4 = new Player("Maks", 0);
-let Player5 = new Player("X", 1);
+function GameOver(){
+    // Wypierdolić się ze wszystkich funkcji i pętli w jakiej teraz się znajdujemy
+    // Tutaj dopisać End Screen
+}
+
+let Player3 = new Player("Kacper", HUMAN);
+let Player4 = new Player("Maks", HUMAN);
+let Player5 = new Player("X", AI_EASY);
+
 let listOfPlayers = [Player3, Player4, Player5];
-let deck = new Deck(2);
-Play(listOfPlayers, deck);
+let playersInGame = [...listOfPlayers]
+let deck = new Deck(1);
 
-
-// let tab = [...players]
-// tab[0].username = 'hmm'
-// tab.pop();
-// console.log(players)
-
-// console.log('-----')
-// console.log(tab)
-
-
-// takeCard(Player3, deck);
-// takeCard(Player3,deck);
-// console.log(Player3.cards);
-// console.log(Player3.currentPoints);
-// let tab = [1, 2, 3];
-
-// let x = [Player3, Player3];
-// let y = [...x];
-// console.log(x);
-// console.log('-----------------')
-// console.log(y);
-// console.log(y.pop())
-
-// let tab2 = ['x', 'y', 'z']
-// tab2.splice(2,2);
-// console.log(tab2);
-
-// tab2 = tab2.filter(el => el != 'x');
-// console.log(tab2)
-
-
-
-// x = x.filter(function(el){
-//     return el.username !== Player2.username;
-//  }); //programowanie funkcyjne jak coś 
-
+Play();
