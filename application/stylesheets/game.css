@@ -54,3 +54,12 @@ body{
     display: grid;
     place-items: center;
 }
+
+.card_pointsL{
+    float: left;
+}
+
+.card_pointsR{
+    float: right;
+    transform: scale(-1, 1);
+}

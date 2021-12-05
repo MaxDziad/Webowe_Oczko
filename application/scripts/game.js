@@ -1,4 +1,3 @@
-
 const params = (new URL(document.location)).searchParams;
 
 const player1Type = parseInt(params.get('player1Type'));
@@ -12,14 +11,6 @@ const player3Name = params.get('player3Name');
 
 const player4Type = parseInt(params.get('player4Type'));
 const player4Name = params.get('player4Name');
-
-console.log(player1Name)
-console.log(player2Name)
-console.log(player3Name)
-
-
-
-
 
 let moveLabel = document.querySelector('#move');
 let playersView = document.querySelector('#players');
@@ -39,8 +30,6 @@ const HEART = "heart";
 const DIAMOND = "diamond";
 const SPADE = "spade";
 const CLUB = "club";
-
-
 
 class Player {
     constructor(username, playerType) {
@@ -94,10 +83,7 @@ function StartGame() {
     currentPlayer.turn = true;
     RenderPlayers();
     RenderBoard();
-
     moveLabel.innerHTML = 'Player move: ' + listOfPlayers[0].username;
-    let newCardButton = document.querySelector('#newCard');
-    let passButton = document.querySelector('#Pass');
 
     newCardButton.addEventListener("click", function () {
         OnNewCardButton();
@@ -110,11 +96,26 @@ function StartGame() {
     TryPlayAiTurn(currentPlayer);
 }
 
+function DisableButtons() {
+    newCardButton.disabled = true;
+    passButton.disabled = true;
+}
+
+function EnableButtons() {
+    newCardButton.disabled = false;
+    passButton.disabled = false;
+}
+
+function WaitForNewTurn(){
+    DisableButtons();
+    setTimeout(StartNewTurn, 1000);
+}
+
 function OnNewCardButton() {
     if (playersInGame.length !== 0) {
         currentPlayer = GetCurrentPlayer();
         PutCard(currentPlayer, DrawCard());
-        StartNewTurn();
+        WaitForNewTurn();
     }
 }
 
@@ -122,7 +123,7 @@ function OnPassButton() {
     if (playersInGame.length !== 0) {
         currentPlayer = GetCurrentPlayer();
         Pass(currentPlayer);
-        StartNewTurn();
+        WaitForNewTurn();
     }
 }
 
@@ -144,7 +145,7 @@ function TryPlayAiTurn(player) {
             HardAiTurn(player);
     }
 
-    StartNewTurn();
+    WaitForNewTurn();
 }
 
 function EasyAiTurn(player) {
@@ -167,8 +168,7 @@ function MediumAiTurn(player) {
 
 function HardAiTurn(player) {
     let card = DrawCard();
-
-    if (CalculateCardPoints(card) + player.currentPlayer <= 21) {
+    if (CalculateCardPoints(player, card) + player.currentPoints <= 21) {
         PutCard(player, card);
     }
     else {
@@ -177,6 +177,7 @@ function HardAiTurn(player) {
 }
 
 function StartNewTurn() {
+    EnableButtons();
     let nextPlayer = ChangePlayer();
     RemoveIfPlayerPassed();
     RenderPlayers();
@@ -210,10 +211,10 @@ function RenderBoard() {
         board.innerHTML +=
             `
         <div class="card" data-player="${listOfPlayers[i].username}">
-            <p class='card_points'>
+            <p class='card_pointsL'>
             </p>
             <img src="/application/images/game/default.png" alt="" height="80px" width="80px" >
-            <p class='card_points'>
+            <p class='card_pointsR'>
             </p>
         </div>
         `;
@@ -274,13 +275,9 @@ function CalculateCardPoints(player, card) {
 }
 
 function PutCard(player, card) {
-    console.log(card);
     let cardPlace = document.querySelectorAll(`[data-player="${player.username}"] p`);
-
     let cardImage = document.querySelector(`[data-player="${player.username}"] img`);
-    console.log(cardImage)
     cardImage.src = card.GetImageSymbolPath();
-    console.log(cardImage.src);
     player.drawnCards += 1;
     player.currentPoints += CalculateCardPoints(player, card);
     cardPlace[0].innerHTML = card.value;
@@ -296,8 +293,8 @@ function Pass(player) {
 }
 
 function GameOver() {
-    // Wypierdolić się ze wszystkich funkcji i pętli w jakiej teraz się znajdujemy
-    // Tutaj dopisać End Screen
+    DisableButtons();
+    // ENDING SCREEN HERE
 }
 
 function TryCreatePlayer(playerName, playerType) {
@@ -314,17 +311,13 @@ function CreatePlayers() {
     TryCreatePlayer(player4Name, player4Type);
 }
 
-
-
-let Player3 = new Player("Kacper", HUMAN);
-let Player4 = new Player("Maks", HUMAN);
-let Player5 = new Player("X", AI_EASY);
-
+let newCardButton = document.querySelector('#newCard');
+let passButton = document.querySelector('#Pass');
 
 let listOfPlayers = [];
 CreatePlayers();
-console.log(listOfPlayers);
-let playersInGame = [...listOfPlayers]
+let playersInGame = [...listOfPlayers];
+
 let deck = new Deck(1);
 
 StartGame();
