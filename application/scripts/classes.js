@@ -12,11 +12,6 @@ const JACK = 10;
 const QUEEN = 10;
 const KING = 10;
 
-const HEART = "heart";
-const DIAMOND = "diamond";
-const SPADE = "spade";
-const CLUB = "club";
-
 class Player {
     constructor(username, playerType) {
         this.username = username;
@@ -39,31 +34,18 @@ class Deck {
 
     CreateDeck() {
         const values = [ACE, 2, 3, 4, 5, 6, 7, 8, 9, 10, JACK, QUEEN, KING];
-        const symbols = [HEART, DIAMOND, CLUB, SPADE];
-        this.deck = []
+        this.deck = [...values]
 
-        for (let deckNumber = 0; deckNumber < this.numberOfDecks; deckNumber++) {
-            for (let symbolIndex = 0; symbolIndex < symbols.length; symbolIndex++){
-                for (let valueIndex = 0; valueIndex < values.length; valueIndex++){
-                    this.deck.push(new Card(values[valueIndex], symbols[symbolIndex]));
-                }
+        if (this.numberOfDecks > 1) {
+            let copy = [...this.deck];
+            for (let i = 0; i < this.numberOfDecks - 1; i++) {
+                this.deck.push(...copy);
             }
         }
     }
 }
 
-class Card {
-    constructor(value, symbol){
-        this.value = value;
-        this.symbol = symbol;
-    }
-
-    GetImageSymbolPath(){
-        return "/application/images/game/" + this.symbol + ".png";
-    }
-}
-
-function StartGame() {
+function Play() {
     let currentPlayer = playersInGame[0];
     currentPlayer.turn = true;
     RenderPlayers();
@@ -151,6 +133,7 @@ function HardAiTurn(player){
 }
 
 function StartNewTurn(){
+    CheckGameOver();
     let nextPlayer = ChangePlayer();
     RemoveIfPlayerPassed();
     RenderPlayers();
@@ -181,16 +164,7 @@ function RenderPlayers() {
 
 function RenderBoard(){
     for(let i = 0; i < listOfPlayers.length; i++){
-        board.innerHTML +=
-        `
-        <div class="card" data-player="${listOfPlayers[i].username}">
-            <p class='card_points'>
-            </p>
-            <img src="#" alt="Girl in a jacket" height="80px" width="80px" >
-            <p class='card_points'>
-            </p>
-        </div>
-        `;
+        board.innerHTML += `<div class="card" data-player="${listOfPlayers[i].username}"><p class='card_points'></p></div>`;
     }
 }
 
@@ -220,6 +194,7 @@ function ChangePlayer() {
             return newPlayer;
         }
     }
+
     GameOver();
 }
 
@@ -235,7 +210,7 @@ function DrawCard(){
 }
 
 function CalculateCardPoints(player, card){
-    if (card.value === ACE && player.currentPoints <= 10) {
+    if (card === ACE && player.currentPoints <= 10) {
         return 11;
     }
     else if (player.drawnCards == 2 && player.currentPoints == 11){
@@ -243,22 +218,16 @@ function CalculateCardPoints(player, card){
         return 11;
     }
     else {
-        return card.value;
+        return card;
     }
 }
 
 function PutCard(player, card) {
-    console.log(card);
-    let cardPlace = document.querySelectorAll(`[data-player="${player.username}"] p`);
     
-    let cardImage = document.querySelector(`[data-player="${player.username}"] img`);
-    console.log(cardImage)
-    cardImage.src = card.GetImageSymbolPath();
-    console.log(cardImage.src);
+    let cardPlace = document.querySelector(`[data-player="${player.username}"] p`);
     player.drawnCards += 1;
     player.currentPoints += CalculateCardPoints(player, card);
-    cardPlace[0].innerHTML = card.value;
-    cardPlace[1].innerHTML = card.value;
+    cardPlace.innerHTML = card;
 
     if (player.currentPoints >= 21){
         Pass(player);
@@ -282,4 +251,4 @@ let listOfPlayers = [Player3, Player4, Player5];
 let playersInGame = [...listOfPlayers]
 let deck = new Deck(1);
 
-StartGame();
+Play();
