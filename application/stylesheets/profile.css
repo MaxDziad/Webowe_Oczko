@@ -2,6 +2,7 @@ body{
     background: linear-gradient(63.1deg, #000000 0%, rgba(0, 0, 0, 0.8) 46.61%, rgba(0, 0, 0, 0.63) 98.33%);
     background-repeat: no-repeat;
     min-height: 100vh;
+    width: 100vw;
     color: #fff;
 }
 

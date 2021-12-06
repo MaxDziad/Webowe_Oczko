@@ -15,6 +15,7 @@ const player4Name = params.get('player4Name');
 let moveLabel = document.querySelector('#move');
 let playersView = document.querySelector('#players');
 const board = document.querySelector('#game');
+let gameOver = false;
 
 const HUMAN = 0;
 const AI_EASY = 1;
@@ -106,9 +107,9 @@ function EnableButtons() {
     passButton.disabled = false;
 }
 
-function WaitForNewTurn(){
+function WaitForNewTurn() {
     DisableButtons();
-    setTimeout(StartNewTurn, 1000);
+    setTimeout(StartNewTurn, 1);
 }
 
 function OnNewCardButton() {
@@ -145,7 +146,10 @@ function TryPlayAiTurn(player) {
             HardAiTurn(player);
     }
 
+
     WaitForNewTurn();
+
+
 }
 
 function EasyAiTurn(player) {
@@ -180,9 +184,14 @@ function StartNewTurn() {
     EnableButtons();
     let nextPlayer = ChangePlayer();
     RemoveIfPlayerPassed();
+    CheckGameStatus();
     RenderPlayers();
-    TryPlayAiTurn(nextPlayer);
+    if (gameOver !== true) {
+        TryPlayAiTurn(nextPlayer);
+    }
+
 }
+
 
 function FiftyChance() {
     if (Math.random() > 0.5) {
@@ -238,16 +247,26 @@ function RemoveIfPlayerPassed() {
 }
 
 function ChangePlayer() {
-    for (let i = 0; i < playersInGame.length; i++) {
-        if (playersInGame[i].turn === true) {
-            newPlayer = playersInGame[(i + 1) % playersInGame.length];
-            newPlayer.turn = true;
-            playersInGame[i].turn = false;
 
-            return newPlayer;
+    if (playersInGame.length > 1) {
+        for (let i = 0; i < playersInGame.length; i++) {
+            if (playersInGame[i].turn === true) {
+                newPlayer = playersInGame[(i + 1) % playersInGame.length];
+                newPlayer.turn = true;
+                playersInGame[i].turn = false;
+
+                return newPlayer;
+            }
         }
+    } else if (playersInGame.length === 1) {
+        newPlayer = playersInGame[0];
+        newPlayer.turn = true;
+        return newPlayer;
+    } else {
+        return;
     }
-    GameOver();
+
+
 }
 
 function CheckPlayer(player) {
@@ -293,8 +312,82 @@ function Pass(player) {
 }
 
 function GameOver() {
+    gameOver = true;
+    CheckWinners();
+    let endScreen = document.querySelector('#endview');
+    endScreen.style.display = 'flex';
+    let winnersParagraph = document.querySelector('#winners');
+    let losersParagraph = document.querySelector('#losers');
+    winnersParagraph.innerHTML += winners;
+    losersParagraph.innerHTML += losers;
+
     DisableButtons();
-    // ENDING SCREEN HERE
+
+}
+
+function CheckGameStatus() {
+    if (playersInGame.length === 0) {
+        //  setTimeout(GameOver, 3000);
+        GameOver();
+    }
+}
+
+//  21 - winner , jesli nie ma 21 to ten kto najblizej 21, reszta losers, list winners i losers, sprawdzenie czy snakes eyes na true 
+
+function CheckWinners() {
+
+    listOfPlayers.forEach(player => {
+        if (player.snakeEyes === true) {
+            winners.push(player.username)
+        }
+    })
+
+    if (winners.length !== 0) {
+        losers = listOfPlayers.filter(function (player) {
+            if (!winners.includes(player.username)) {
+
+                return player;
+            }
+        });
+        losers = losers.map(player => player.username)
+        return;
+    }
+
+    listOfPlayers.forEach(player => {
+        if (player.currentPoints === 21) {
+            winners.push(player.username);
+        }
+    })
+
+    if (winners.length === 0) {
+        let closestTo21;
+        let min = 21;
+        let diff = 0;
+        listOfPlayers.forEach(player => {
+            diff = 21 - player.currentPoints;
+
+            if (diff > 0 && diff < min) {
+                min = diff;
+                closestTo21 = player.username;
+            }
+
+        })
+
+        winners.push(closestTo21);
+
+    }
+
+    losers = listOfPlayers.filter(function (player) {
+        if (!winners.includes(player.username)) {
+
+            return player;
+        }
+    });
+    losers = losers.map(player => player.username)
+
+
+
+
 }
 
 function TryCreatePlayer(playerName, playerType) {
@@ -317,7 +410,10 @@ let passButton = document.querySelector('#Pass');
 let listOfPlayers = [];
 CreatePlayers();
 let playersInGame = [...listOfPlayers];
+let winners = [];
+let losers = [];
 
 let deck = new Deck(1);
 
 StartGame();
+

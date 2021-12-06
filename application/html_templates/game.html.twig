@@ -1,43 +1,36 @@
-
 <html>
 
-<head>
-    <link rel="stylesheet" href="/application/stylesheets/forall.css">
-    <link rel="stylesheet" href="/application/stylesheets/game.css">
+	<head>
+		<link rel="stylesheet" href="/application/stylesheets/forall.css">
+		<link rel="stylesheet" href="/application/stylesheets/game.css">
 
-</head>
+	</head>
 
-<body>
-    <div class="board">
-        <div class="game" id='game'>
- 
-        </div>
-        <hr>
-        <div class="operations">
-            <p id="move" >Player move: </p>
-            <button class="operations__button" id="newCard">Take New Card</button>
-            <button class="operations__button" id="Pass">Pass</button>
-        </div>
-        <div class="players" id="players">
-             <!-- <div class="players__card">
-                <div class="image"><img src="https://www.w3schools.com/css/paris.jpg"></div>
-                <p class="players__name">G1</p>
-                <p class="players__points">12</p>
-            </div>f
-            <div class="players__card">
-                <div class="image"></div>
-                <p class="players__name">G1</p>
+	<body>
+		<div class="board">
+			<div class="game" id='game'>
             </div>
-            <div class="players__card">
-                <div class="image"></div>
-                <p class="players__name">G2</p>
-            </div>  -->
-        </div>
-       
-      
-       
-    </div>
-     <script src="/application/scripts/game.js"></script>
-</body>
+			<hr>
+			<div class="operations">
+				<p id="move">Player move:
+				</p>
+				<button class="operations__button" id="newCard">Take New Card</button>
+				<button class="operations__button" id="Pass">Pass</button>
+			</div>
+			<div class="players" id="players">
+
+			</div>
+
+			<div class="endview" id="endview">
+				<div class="endview_box">
+					<p class="winners" id="winners">Winners: </p>
+					<p class="losers" id="losers">Losers: </p>
+				</div>
+			</div>
+
+
+		</div>
+		<script src="/application/scripts/game.js"></script>
+	</body>
 
 </html>
