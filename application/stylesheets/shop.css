@@ -1,0 +1,34 @@
+.shop{
+    display: grid;
+    place-items: center;
+    color: black;
+}
+
+.shop__list{
+    padding: 0 6rem;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.shop__list-item{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    min-height: 200px;
+    /* width: 150px; */
+    background-color: #fff;
+    overflow: hidden;
+    border-radius: 30px;
+    padding-bottom: 1rem;
+}
+
+
+
+.skin__image{
+    width: 150px;
+    height: 100px;
+}

@@ -109,7 +109,7 @@ function EnableButtons() {
 
 function WaitForNewTurn() {
     DisableButtons();
-    setTimeout(StartNewTurn, 1);
+    setTimeout(StartNewTurn, 1000);
 }
 
 function OnNewCardButton() {
