@@ -43,7 +43,4 @@
 	{
 		header('Location: /');
 	}
-
-
-	exit;
 ?>

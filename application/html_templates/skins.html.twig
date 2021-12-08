@@ -5,35 +5,12 @@
 
     <div class="shop">
         <ul class="shop__list">
-            <li class="shop__list-item">
-                <img class="skin__image" src="https://www.w3schools.com/css/paris.jpg" alt="elo">
-                <h2 class="skin__name">Skin1</h2>
-            </li>
-             <li class="shop__list-item">
-                <img class="skin__image" src="https://www.w3schools.com/css/paris.jpg" alt="elo">
-                <h2 class="skin__name">Skin2</h2>
-
-            </li>
-             <li class="shop__list-item">
-                <img class="skin__image" src="https://www.w3schools.com/css/paris.jpg" alt="elo">
-                <h2 class="skin__name">Skin3</h2>
-
-            </li>
-              <li class="shop__list-item">
-                <img class="skin__image" src="https://www.w3schools.com/css/paris.jpg" alt="elo">
-                <h2 class="skin__name">Skin3</h2>
-
-            </li>
-              <li class="shop__list-item">
-                <img class="skin__image" src="https://www.w3schools.com/css/paris.jpg" alt="elo">
-                <h2 class="skin__name">Skin3</h2>
-
-            </li>
-              <li class="shop__list-item">
-                <img class="skin__image" src="https://www.w3schools.com/css/paris.jpg" alt="elo">
-                <h2 class="skin__name">Skin3</h2>
-
-            </li>
+            {% for skin in my_skins %}
+                <li class="shop__list-item">
+                    <img class="skin__image" src="{{ skin['path'] }}">
+                    <h2 class="skin__name">{{ skin['name'] }}</h2>
+                </li>
+            {% endfor %}
         </ul>
     </div>
 {% endblock %}

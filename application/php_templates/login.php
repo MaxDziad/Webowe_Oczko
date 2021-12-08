@@ -1,4 +1,5 @@
 <?php
+if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio."); }
 
 if (isset($_POST['login']) && isset($_POST['password']) && $_POST['login'] !== '' && $_POST['password'] !== '') {
     $stmt = $dbh->prepare("SELECT login, password FROM users WHERE login = :login");
