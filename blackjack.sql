@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 08 Gru 2021, 12:18
+-- Czas generowania: 08 Gru 2021, 16:53
 -- Wersja serwera: 10.4.21-MariaDB
 -- Wersja PHP: 8.0.12
 
@@ -28,17 +28,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `shop` (
-  `id` int(11) NOT NULL,
+  `sid` int(10) NOT NULL,
   `name` text NOT NULL,
   `path` text NOT NULL,
-  `price` int(11) NOT NULL
+  `price` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `shop`
 --
 
-INSERT INTO `shop` (`id`, `name`, `path`, `price`) VALUES
+INSERT INTO `shop` (`sid`, `name`, `path`, `price`) VALUES
 (1, 'green', '/application/images/skins/green.png', 20),
 (2, 'red', '/application/images/skins/red.png', 10),
 (3, 'yellow', '/application/images/skins/yellow.png', 15);
@@ -50,16 +50,18 @@ INSERT INTO `shop` (`id`, `name`, `path`, `price`) VALUES
 --
 
 CREATE TABLE `skins` (
-  `id_skin` int(11) NOT NULL,
-  `login` text NOT NULL
+  `login` text NOT NULL,
+  `sid` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `skins`
 --
 
-INSERT INTO `skins` (`id_skin`, `login`) VALUES
-(2, 'admin');
+INSERT INTO `skins` (`login`, `sid`) VALUES
+('admin', 3),
+('admin', 2),
+('admin', 1);
 
 -- --------------------------------------------------------
 
@@ -68,7 +70,7 @@ INSERT INTO `skins` (`id_skin`, `login`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `uid` int(10) UNSIGNED NOT NULL,
   `login` text NOT NULL,
   `password` text NOT NULL,
   `money` int(10) NOT NULL,
@@ -79,18 +81,24 @@ CREATE TABLE `users` (
 -- Zrzut danych tabeli `users`
 --
 
-INSERT INTO `users` (`id`, `login`, `password`, `money`, `created`) VALUES
-(1, 'admin', '$2y$10$GEO80edBKrYoDIEXiY0W3eT2w.aGZceklHYBHzcB/wu8K/0THSFR6', 405, '2021-11-29 21:00:27');
+INSERT INTO `users` (`uid`, `login`, `password`, `money`, `created`) VALUES
+(1, 'admin', '$2y$10$GEO80edBKrYoDIEXiY0W3eT2w.aGZceklHYBHzcB/wu8K/0THSFR6', 30, '2021-11-29 21:00:27');
 
 --
 -- Indeksy dla zrzutów tabel
 --
 
 --
+-- Indeksy dla tabeli `skins`
+--
+ALTER TABLE `skins`
+  ADD UNIQUE KEY `skin` (`login`,`sid`) USING HASH;
+
+--
 -- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`uid`),
   ADD UNIQUE KEY `login` (`login`) USING HASH;
 
 --
@@ -101,7 +109,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `uid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
