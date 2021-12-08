@@ -3,7 +3,7 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
 
     $my_skins = array();
 
-    $stmt = $dbh->prepare('SELECT * FROM skins, shop WHERE login = :login AND id = id_skin');
+    $stmt = $dbh->prepare('SELECT * FROM shop JOIN skins USING (sid) WHERE login = :login');
     $stmt->execute([':login' => $_SESSION['login']]);
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

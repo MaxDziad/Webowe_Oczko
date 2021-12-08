@@ -11,6 +11,9 @@
                     <h2 class="skin__name">{{ skin['name'] }}</h2>
                 </li>
             {% endfor %}
+            {% if my_skins|length == 0 %}
+                <h3 class="skin__name">You don't have any skins!</h3>
+            {% endif %}
         </ul>
     </div>
 {% endblock %}

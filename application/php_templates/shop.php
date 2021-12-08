@@ -3,17 +3,17 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
 
     $all_skins = array();
 
-    $stmt = $dbh->prepare('SELECT * FROM shop WHERE id IN (SELECT id FROM shop EXCEPT SELECT id_skin FROM skins WHERE login = :login)');
+    $stmt = $dbh->prepare('SELECT * FROM shop WHERE sid IN (SELECT sid FROM shop EXCEPT SELECT sid FROM skins WHERE login = :login)');
     $stmt->execute([':login' => $_SESSION['login']]);
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $id = $row['id'];
+        $sid = $row['sid'];
         $name = html_entity_decode($row['name'], ENT_QUOTES | ENT_HTML401);
         $path = html_entity_decode($row['path'], ENT_QUOTES | ENT_HTML401);
-        $price = intval($row['price']);
+        $price = $row['price'];
 
         $skin = array(
-            'id' => $id,
+            'sid' => $sid,
             'name' => $name,
             'path' => $path,
             'price' => $price
@@ -27,21 +27,23 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
         $stmt->execute([':login' => $_SESSION['login']]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $stmt = $dbh->prepare('SELECT * FROM shop WHERE id = :id');
-        $stmt->execute([':id' => $_GET['buy']]);
+        $stmt = $dbh->prepare('SELECT * FROM shop WHERE sid = :sid');
+        $stmt->execute([':sid' => $_GET['buy']]);
         $skin = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && $skin) {
             $login = $user['login'];
-            $money =  intval($user['money']);
-            $id_skin = $skin['id'];
-            $price =  intval($skin['price']);
+            $money = $user['money'];
+            $sid = $skin['sid'];
+            $price = $skin['price'];
             if($money >= $price){
-                $stmt = $dbh->prepare('UPDATE users SET money = money - :price WHERE login = :login');
-                $stmt->execute([':price' => $price, ':login' => $login]);
-                $stmt = $dbh->prepare('INSERT INTO skins (id_skin, login) VALUES (:id_skin, :login)');
-                $stmt->execute([':id_skin' => $id_skin, ':login' => $login]);
-                header('Location: /skins');
+                try {
+                    $stmt = $dbh->prepare('INSERT INTO skins (login, sid) VALUES (:login, :sid)');
+                    $stmt->execute([':login' => $login, ':sid' => $sid]);
+                    $stmt = $dbh->prepare('UPDATE users SET money = money - :price WHERE login = :login');
+                    $stmt->execute([':price' => $price, ':login' => $login]);
+                    header('Location: /skins');
+                } catch (PDOException $e) {}
             }
         }
     }

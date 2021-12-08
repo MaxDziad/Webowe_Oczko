@@ -10,9 +10,12 @@
                     <img class="skin__image" src="{{ skin['path'] }}">
                     <h2 class="skin__name">{{ skin['name'] }}</h2>
                     <p class="skin__price">Price: {{ skin['price'] }}$</p>
-                    <a href="/shop/buy/{{ skin['id'] }}"><button class="skin__buy-button">Buy</button></a>
+                    <a href="/shop/buy/{{ skin['sid'] }}"><button class="skin__buy-button">Buy</button></a>
                 </li>
             {% endfor %}
+            {% if all_skins|length == 0 %}
+                <h3 class="skin__name">You have all skins!</h3>
+            {% endif %}
         </ul>
     </div>
 {% endblock %}

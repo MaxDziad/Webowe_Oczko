@@ -11,7 +11,7 @@ if (isset($_POST['new_login'])&& isset($_POST['new_password']) && isset($_POST['
         $stmt->execute([':login' => $new_login, ':password' => $new_password]);
         $_SESSION['login'] = $new_login;
         header('Location: /');
-    } catch (PDOException $e) { }
+    } catch (PDOException $e) {}
 }
 
 echo $twig->render('register.html.twig');
