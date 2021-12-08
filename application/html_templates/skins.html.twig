@@ -5,13 +5,13 @@
 
     <div class="shop">
         <ul class="shop__list">
-            {% for skin in my_skins %}
+            {% for skin in user_skins %}
                 <li class="shop__list-item">
                     <img class="skin__image" src="{{ skin['path'] }}">
                     <h2 class="skin__name">{{ skin['name'] }}</h2>
                 </li>
             {% endfor %}
-            {% if my_skins|length == 0 %}
+            {% if user_skins|length == 0 %}
                 <h3 class="skin__name">You don't have any skins!</h3>
             {% endif %}
         </ul>

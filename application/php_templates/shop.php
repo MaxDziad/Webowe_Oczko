@@ -6,20 +6,20 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     $stmt = $dbh->prepare('SELECT * FROM shop WHERE sid IN (SELECT sid FROM shop EXCEPT SELECT sid FROM skins WHERE login = :login)');
     $stmt->execute([':login' => $_SESSION['login']]);
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $sid = $row['sid'];
-        $name = html_entity_decode($row['name'], ENT_QUOTES | ENT_HTML401);
-        $path = html_entity_decode($row['path'], ENT_QUOTES | ENT_HTML401);
-        $price = $row['price'];
+    while ($skin = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $sid = $skin['sid'];
+        $name = html_entity_decode($skin['name'], ENT_QUOTES | ENT_HTML401);
+        $path = html_entity_decode($skin['path'], ENT_QUOTES | ENT_HTML401);
+        $price = $skin['price'];
 
-        $skin = array(
+        $new_skin = array(
             'sid' => $sid,
             'name' => $name,
             'path' => $path,
             'price' => $price
         );
 
-        array_push($all_skins, $skin);
+        array_push($all_skins, $new_skin);
     }
 
     if(isset($_GET['buy'])){

@@ -1,7 +1,7 @@
 <?php
 if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio."); }
 
-    $my_skins = array();
+    $user_skins = array();
 
     $stmt = $dbh->prepare('SELECT * FROM shop JOIN skins USING (sid) WHERE login = :login');
     $stmt->execute([':login' => $_SESSION['login']]);
@@ -15,8 +15,8 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
             'path' => $path,
         );
 
-        array_push($my_skins, $skin);
+        array_push($user_skins, $skin);
     }
 
 
-echo $twig->render('skins.html.twig',  ['my_skins' => $my_skins]);
+echo $twig->render('skins.html.twig',  ['user_skins' => $user_skins]);
