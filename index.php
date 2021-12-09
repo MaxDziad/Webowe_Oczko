@@ -22,14 +22,7 @@
 
 	if (isset($_GET['page']) && ((in_array($_GET['page'], $pages_for_logged) && isset($_SESSION['login'])) || (in_array($_GET['page'], $pages_for_unlogged) && !isset($_SESSION['login']))))
 	{
-		if (file_exists($php_path . $_GET['page'] . '.php'))
-		{
-			include($php_path . $_GET['page'] . '.php');
-		}
-		else
-		{
-			print '<p style="font-weight: bold; text-align: center; margin-top: 50px;"> Plik ' . $_GET['page'] . '.php nie istnieje.</p>';
-		}
+		include($php_path . $_GET['page'] . '.php');
 	}
 	elseif (!isset($_GET['page']) && isset($_SESSION['login']))
 	{

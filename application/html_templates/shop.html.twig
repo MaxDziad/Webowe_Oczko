@@ -5,7 +5,7 @@
 
     <div class="shop">
         <ul class="shop__list">
-            {% for skin in all_skins %}
+            {% for skin in shop_skins %}
                 <li class="shop__list-item">
                     <img class="skin__image" src="{{ skin['path'] }}">
                     <h2 class="skin__name">{{ skin['name'] }}</h2>
@@ -13,7 +13,7 @@
                     <a href="/shop/buy/{{ skin['sid'] }}"><button class="skin__buy-button">Buy</button></a>
                 </li>
             {% endfor %}
-            {% if all_skins|length == 0 %}
+            {% if shop_skins|length == 0 %}
                 <h3 class="skin__name">You have all skins!</h3>
             {% endif %}
         </ul>

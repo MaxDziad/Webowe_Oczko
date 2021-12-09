@@ -1,7 +1,7 @@
 <?php
 if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio."); }
 
-    $all_skins = array();
+    $shop_skins = array();
 
     $stmt = $dbh->prepare('SELECT * FROM shop WHERE sid IN (SELECT sid FROM shop EXCEPT SELECT sid FROM skins WHERE login = :login)');
     $stmt->execute([':login' => $_SESSION['login']]);
@@ -19,7 +19,7 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
             'price' => $price
         );
 
-        array_push($all_skins, $new_skin);
+        array_push($shop_skins, $new_skin);
     }
 
     if(isset($_GET['buy'])){
@@ -48,4 +48,4 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
         }
     }
 
-echo $twig->render('shop.html.twig', ['all_skins' => $all_skins]);
+echo $twig->render('shop.html.twig', ['shop_skins' => $shop_skins]);
