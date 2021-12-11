@@ -9,7 +9,7 @@
 
 <body>
     <div class="canvas">
-        <form class="lobbyPlayers" id='lobbyPlayers' action="game" method="GET">
+        <form class="lobbyPlayers" id='lobbyPlayers' action="game" method="POST">
             <div class="playerCard" id="player1">
                 <select name="player1Type" id="player1Type">
                     <option value="0">Human</option>
@@ -17,7 +17,7 @@
                     <option value="2">Medium Ai</option>
                     <option value="3">Hard Ai</option>
                 </select>
-                <input type="text" name="player1Name">
+                <input type="text" name="player1Name" id="player1Name">
             </div>
             <div class="playerCard" id="player2">
                 <select name="player2Type" id="player2Type">
@@ -27,7 +27,7 @@
                     <option value="2">Medium Ai</option>
                     <option value="3">Hard Ai</option>
                 </select>
-                <input type="text" name="player2Name">
+                <input type="text" name="player2Name" id="player2Name">
 
             </div>
             <div class="playerCard" id="player3">
@@ -38,7 +38,7 @@
                     <option value="2">Medium Ai</option>
                     <option value="3">Hard Ai</option>
                 </select>
-                <input type="text" name="player3Name">
+                <input type="text" name="player3Name" id="player3Name">
 
             </div>
             <div class="playerCard" id="player4">
@@ -50,15 +50,16 @@
                     <option value="2">Medium Ai</option>
                     <option value="3">Hard Ai</option>
                 </select>
-                <input type="text" name="player4Name">
+                <input type="text" name="player4Name" id="player4Name">
 
             </div>
                <div class="bottomPanel">
-                <input type="submit" class="submit-button" value="Start Game">
+                <input type="submit" class="submit-button" value="Start Game" onclick="handleSubmit()">
             </div>
         </form>
      
     </div>
+    <script src="/application/scripts/lobby.js"></script>
 </body>
 
 </html>

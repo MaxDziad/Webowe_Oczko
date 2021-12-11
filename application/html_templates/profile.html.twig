@@ -1,6 +1,8 @@
 <html>
 
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
 		<link rel="stylesheet" href="/application/stylesheets/forall.css">
 		<link rel="stylesheet" href="/application/stylesheets/profile.css">
 	</head>
@@ -8,8 +10,14 @@
 	<body>
 		<div class="main">
 			<nav class="nav">
-				<h1 class="nav__name">BestPlayer</h1>
+				<div class="nav__name">
+					<h1>BestPlayer</h1>
+					<h2>Cash: <h2>
+				</div>
 				<ul class="nav__list">
+					<li class="nav__list-item">
+						<a href="/profile">Game</a>
+					</li>
 					<li class="nav__list-item">
 						<a href="/statistics">Statistics</a>
 					</li>
@@ -27,7 +35,7 @@
 			</nav>
 			{% block content %}
 				<div class="game">
-					<a href="/lobby"><button class="game__button-start">Start Game</button></a>
+					<a href="/lobby" class="lobby_link"><button class="game__button-start">Start Game</button></a>
 					<div class="game__card">
 						<h3>Won Games</h3><hr></div>
 					<div class="game__card">

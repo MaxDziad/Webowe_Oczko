@@ -1,16 +1,18 @@
 const params = (new URL(document.location)).searchParams;
 
-const player1Type = parseInt(params.get('player1Type'));
-const player1Name = params.get('player1Name');
 
-const player2Type = parseInt(params.get('player2Type'));
-const player2Name = params.get('player2Name');
+const player1Type =   parseInt(sessionStorage.getItem("player1Type"));
+const player1Name = sessionStorage.getItem("player1Name")
 
-const player3Type = parseInt(params.get('player3Type'));
-const player3Name = params.get('player3Name');
+const player2Type =   parseInt(sessionStorage.getItem("player2Type"));
+const player2Name =  sessionStorage.getItem("player2Name");
 
-const player4Type = parseInt(params.get('player4Type'));
-const player4Name = params.get('player4Name');
+const player3Type =  parseInt(sessionStorage.getItem("player3Type"));
+const player3Name =    sessionStorage.getItem("player3Name");
+
+
+const player4Type =   parseInt(sessionStorage.getItem("player4Type"));
+const player4Name = sessionStorage.getItem("player4Name");
 
 let moveLabel = document.querySelector('#move');
 let playersView = document.querySelector('#players');
