@@ -16,6 +16,7 @@ const player4Name = sessionStorage.getItem("player4Name");
 
 let moveLabel = document.querySelector('#move');
 let playersView = document.querySelector('#players');
+let actualPlayerCard;
 const board = document.querySelector('#game');
 let gameOver = false;
 
@@ -203,14 +204,23 @@ function FiftyChance() {
 function RenderPlayers() {
     playersView.innerHTML = '';
     for (let i = 0; i < listOfPlayers.length; i++) {
+        
         playersView.innerHTML +=
-            `<div class="players__card" >
+            `<div class="players__card" data-playerName=${listOfPlayers[i].username}>
             <div class="image"><img src="https://www.w3schools.com/css/paris.jpg"></div>
             <p class="players__name">${listOfPlayers[i].username}</p>
             <p class="players__points">${listOfPlayers[i].currentPoints}</p>
             <p class="players__points">Pass: ${listOfPlayers[i].pass}</p>
             <p class="players__points">Turn: ${listOfPlayers[i].turn}</p>
         </div>`
+        if(listOfPlayers[i].turn === true){
+            actualPlayerCard = document.querySelector(`[data-playerName="${listOfPlayers[i].username}"]`);
+            actualPlayerCard.style.boxShadow = "0px 0px 40px 5px var(--orange)";
+        }
+        if(listOfPlayers[i].pass === true){
+            actualPlayerCard = document.querySelector(`[data-playerName="${listOfPlayers[i].username}"]`);
+            actualPlayerCard.style.opacity = "30%";
+        }
     }
 }
 
@@ -252,7 +262,8 @@ function ChangePlayer() {
                 newPlayer = playersInGame[(i + 1) % playersInGame.length];
                 newPlayer.turn = true;
                 playersInGame[i].turn = false;
-
+                moveLabel.innerHTML = 'Player move: ' + newPlayer.username;
+             
                 return newPlayer;
             }
         }
@@ -260,6 +271,7 @@ function ChangePlayer() {
     else if (playersInGame.length === 1) {
         newPlayer = playersInGame[0];
         newPlayer.turn = true;
+        moveLabel.innerHTML = 'Player move: ' + newPlayer.username;
         return newPlayer;
     } 
     else {
@@ -293,6 +305,7 @@ function CalculateCardPoints(player, card) {
 
 function PutCard(player, card) {
     let cardPlace = document.querySelectorAll(`[data-player="${player.username}"] p`);
+    
     let cardImage = document.querySelector(`[data-player="${player.username}"] img`);
     cardImage.src = card.GetImageSymbolPath();
     player.drawnCards += 1;
