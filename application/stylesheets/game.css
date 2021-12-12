@@ -144,6 +144,7 @@ body{
 .losers, .winners{
     font-size: 2rem;
     font-weight: 900;
+    color: var(--pink);
 }
 
 .winners{

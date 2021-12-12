@@ -330,6 +330,8 @@ function GameOver() {
     endScreen.style.display = 'flex';
     let winnersParagraph = document.querySelector('#winners');
     let losersParagraph = document.querySelector('#losers');
+    console.log(losersParagraph)
+    console.log(losers)
     winnersParagraph.innerHTML += winners;
     losersParagraph.innerHTML += losers;
     DisableButtons();
@@ -394,20 +396,23 @@ function CheckWinners() {
                 closestPlayer = player;
             }
         })
-
-        winners.push(closestPlayer.username);
+        if(closestPlayer){
+            winners.push(closestPlayer.username);
+        }
+        
     }
 
     losers = listOfPlayers.filter(function (player) {
         if (!winners.includes(player.username)) {
             return player;
         }
-        else {
-            player.isWinner = true;
-        }
+        // else {
+        //     player.isWinner = true;
+        // }
     });
 
     losers = losers.map(player => player.username);
+    console.log(losers)
 }
 
 function TryCreatePlayer(playerName, playerType) {
