@@ -44,6 +44,8 @@ class Player {
         this.drawnCards = 0;
         this.playerType = playerType;
         this.snakeEyes = false;
+        this.isWinner = false;
+        this.isLogged = true;
     }
 }
 
@@ -148,10 +150,7 @@ function TryPlayAiTurn(player) {
             HardAiTurn(player);
     }
 
-
     WaitForNewTurn();
-
-
 }
 
 function EasyAiTurn(player) {
@@ -191,9 +190,7 @@ function StartNewTurn() {
     if (gameOver !== true) {
         TryPlayAiTurn(nextPlayer);
     }
-
 }
-
 
 function FiftyChance() {
     if (Math.random() > 0.5) {
@@ -249,7 +246,6 @@ function RemoveIfPlayerPassed() {
 }
 
 function ChangePlayer() {
-
     if (playersInGame.length > 1) {
         for (let i = 0; i < playersInGame.length; i++) {
             if (playersInGame[i].turn === true) {
@@ -260,15 +256,15 @@ function ChangePlayer() {
                 return newPlayer;
             }
         }
-    } else if (playersInGame.length === 1) {
+    } 
+    else if (playersInGame.length === 1) {
         newPlayer = playersInGame[0];
         newPlayer.turn = true;
         return newPlayer;
-    } else {
+    } 
+    else {
         return;
     }
-
-
 }
 
 function CheckPlayer(player) {
@@ -316,28 +312,40 @@ function Pass(player) {
 function GameOver() {
     gameOver = true;
     CheckWinners();
+    CreateCookie();
     let endScreen = document.querySelector('#endview');
     endScreen.style.display = 'flex';
     let winnersParagraph = document.querySelector('#winners');
     let losersParagraph = document.querySelector('#losers');
     winnersParagraph.innerHTML += winners;
     losersParagraph.innerHTML += losers;
-
     DisableButtons();
+}
 
+function CreateCookie(){
+    var cookie = "gameData=";
+
+    var date = new Date();
+    date.setTime(date.getTime() + (30 * 60 * 1000)); // 30 minutes till expire
+    expires = "; expires=" + date.toGMTString();
+
+    losers = listOfPlayers.filter(function (player) {
+        if (player.isLogged) {
+            cookie += "&" + player.username + "," + player.isWinner + "," + player.snakeEyes + "," + player.currentPoints + "," + player.drawnCards;
+        }
+    });
+
+    cookie += expires + "; path=/";
+    document.cookie = cookie;
 }
 
 function CheckGameStatus() {
     if (playersInGame.length === 0) {
-        //  setTimeout(GameOver, 3000);
         GameOver();
     }
 }
 
-//  21 - winner , jesli nie ma 21 to ten kto najblizej 21, reszta losers, list winners i losers, sprawdzenie czy snakes eyes na true 
-
 function CheckWinners() {
-
     listOfPlayers.forEach(player => {
         if (player.snakeEyes === true) {
             winners.push(player.username)
@@ -347,7 +355,6 @@ function CheckWinners() {
     if (winners.length !== 0) {
         losers = listOfPlayers.filter(function (player) {
             if (!winners.includes(player.username)) {
-
                 return player;
             }
         });
@@ -362,34 +369,32 @@ function CheckWinners() {
     })
 
     if (winners.length === 0) {
-        let closestTo21;
+        let closestPlayer;
         let min = 21;
-        let diff = 0;
+        let diff = -1;
+
         listOfPlayers.forEach(player => {
             diff = 21 - player.currentPoints;
 
             if (diff > 0 && diff < min) {
                 min = diff;
-                closestTo21 = player.username;
+                closestPlayer = player;
             }
-
         })
 
-        winners.push(closestTo21);
-
+        winners.push(closestPlayer.username);
     }
 
     losers = listOfPlayers.filter(function (player) {
         if (!winners.includes(player.username)) {
-
             return player;
         }
+        else {
+            player.isWinner = true;
+        }
     });
-    losers = losers.map(player => player.username)
 
-
-
-
+    losers = losers.map(player => player.username);
 }
 
 function TryCreatePlayer(playerName, playerType) {
