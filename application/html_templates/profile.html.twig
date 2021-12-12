@@ -16,19 +16,19 @@
 				</div>
 				<ul class="nav__list">
 					<li class="nav__list-item">
-						<a href="/profile">Game</a>
+						<a href="/profile" id="game">Game</a>
+					</li>
+					<li class="nav__list-item" >
+						<a href="/statistics" id="statistics">Statistics</a>
 					</li>
 					<li class="nav__list-item">
-						<a href="/statistics">Statistics</a>
+						<a href="/skins" id="skins">Skins</a>
 					</li>
 					<li class="nav__list-item">
-						<a href="/skins">Skins</a>
+						<a href="/achievements" id="achiev">Achievements</a>
 					</li>
 					<li class="nav__list-item">
-						<a href="/achievements">Achievements</a>
-					</li>
-					<li class="nav__list-item">
-						<a href="/shop">Shop</a>
+						<a href="/shop" id="shop">Shop</a>
 					</li>
 				</ul>
 				<a href="/logout"><button class="nav__button">Logout</button></a>
@@ -46,5 +46,13 @@
 		</div>
 
 	</body>
+
+{% block active %}
+<script>
+    const page = document.querySelector("#game");
+    page.classList.add("active")
+</script>
+
+{% endblock %}
 
 </html>

@@ -17,3 +17,10 @@
         </ul>
     </div>
 {% endblock %}
+{% block active %}
+<script>
+    const page = document.querySelector("#skins");
+    page.classList.add("active")
+</script>
+
+{% endblock %}

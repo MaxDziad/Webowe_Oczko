@@ -156,3 +156,7 @@ body{
 .game__card:nth-of-type(2){
     grid-area: right;
 }
+
+.active{
+    color: var(--pink) !important;
+}
