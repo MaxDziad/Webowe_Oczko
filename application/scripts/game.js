@@ -48,6 +48,11 @@ class Player {
         this.isWinner = false;
         this.isLogged = true;
     }
+
+    AddToWinnerList() {
+        this.isWinner = true;
+        winners.push(this.username);
+    }
 }
 
 
@@ -186,7 +191,7 @@ function StartNewTurn() {
     EnableButtons();
     let nextPlayer = ChangePlayer();
     RemoveIfPlayerPassed();
-    CheckGameStatus();
+    CheckIsGameOver();
     RenderPlayers();
     if (gameOver !== true) {
         TryPlayAiTurn(nextPlayer);
@@ -256,26 +261,19 @@ function RemoveIfPlayerPassed() {
 }
 
 function ChangePlayer() {
-    if (playersInGame.length > 1) {
-        for (let i = 0; i < playersInGame.length; i++) {
-            if (playersInGame[i].turn === true) {
-                newPlayer = playersInGame[(i + 1) % playersInGame.length];
-                newPlayer.turn = true;
-                playersInGame[i].turn = false;
-                moveLabel.innerHTML = 'Player move: ' + newPlayer.username;
-             
-                return newPlayer;
-            }
+    for (let i = 0; i < playersInGame.length; i++) {
+        if (playersInGame.length == 1) {
+            console.log(playersInGame[i]);
+            return playersInGame[i];
         }
-    } 
-    else if (playersInGame.length === 1) {
-        newPlayer = playersInGame[0];
-        newPlayer.turn = true;
-        moveLabel.innerHTML = 'Player move: ' + newPlayer.username;
-        return newPlayer;
-    } 
-    else {
-        return;
+        if (playersInGame[i].turn === true){
+            newPlayer = playersInGame[(i + 1) % playersInGame.length];
+            newPlayer.turn = true;
+            playersInGame[i].turn = false;
+            moveLabel.innerHTML = 'Player move: ' + newPlayer.username;
+            
+            return newPlayer;
+        }
     }
 }
 
@@ -322,19 +320,21 @@ function Pass(player) {
     player.pass = true;
 }
 
-function GameOver() {
-    gameOver = true;
-    CheckWinners();
-    CreateCookie();
+function CreateEndingScreen(){
     let endScreen = document.querySelector('#endview');
     endScreen.style.display = 'flex';
     let winnersParagraph = document.querySelector('#winners');
     let losersParagraph = document.querySelector('#losers');
-    console.log(losersParagraph)
-    console.log(losers)
     winnersParagraph.innerHTML += winners;
     losersParagraph.innerHTML += losers;
+}
+
+function GameOver() {
+    gameOver = true;
     DisableButtons();
+    CheckWinners();
+    CreateCookie();
+    CreateEndingScreen();
 }
 
 function CreateCookie(){
@@ -344,7 +344,7 @@ function CreateCookie(){
     date.setTime(date.getTime() + (30 * 60 * 1000)); // 30 minutes till expire
     expires = "; expires=" + date.toGMTString();
 
-    losers = listOfPlayers.filter(function (player) {
+    listOfPlayers.filter(function (player) {
         if (player.isLogged) {
             cookie += "&" + player.username + "," + player.isWinner + "," + player.snakeEyes + "," + player.currentPoints + "," + player.drawnCards;
         }
@@ -354,65 +354,62 @@ function CreateCookie(){
     document.cookie = cookie;
 }
 
-function CheckGameStatus() {
+function CheckIsGameOver() {
     if (playersInGame.length === 0) {
         GameOver();
     }
 }
 
-function CheckWinners() {
+function TryFindSnakeEyesWinners(){
     listOfPlayers.forEach(player => {
         if (player.snakeEyes === true) {
-            winners.push(player.username)
+            player.AddToWinnerList();
         }
     })
+}
 
-    if (winners.length !== 0) {
-        losers = listOfPlayers.filter(function (player) {
-            if (!winners.includes(player.username)) {
-                return player;
-            }
-        });
-        losers = losers.map(player => player.username)
-        return;
-    }
-
-    listOfPlayers.forEach(player => {
-        if (player.currentPoints === 21) {
-            winners.push(player.username);
-        }
-    })
-
+function TryFindPerfectWinners(){
     if (winners.length === 0) {
-        let closestPlayer;
-        let min = 21;
-        let diff = -1;
-
         listOfPlayers.forEach(player => {
-            diff = 21 - player.currentPoints;
-
-            if (diff > 0 && diff < min) {
-                min = diff;
-                closestPlayer = player;
+            if (player.currentPoints === 21) {
+                player.AddToWinnerList();
             }
         })
-        if(closestPlayer){
-            winners.push(closestPlayer.username);
-        }
-        
     }
+}
 
+function FindNearestWinners(){
+    if (winners.length === 0) {
+        let currentMaxPoints = Number.NEGATIVE_INFINITY;
+
+        listOfPlayers.forEach(player => {
+            if (player.currentPoints > currentMaxPoints){
+                winners = [];
+                currentMaxPoints = player.currentPoints;
+                player.AddToWinnerList();
+            }
+            else if (player.currentPoints === currentMaxPoints){
+                player.AddToWinnerList();
+            }
+        })
+    }
+}
+
+function CreateListOfLosers(){
     losers = listOfPlayers.filter(function (player) {
         if (!winners.includes(player.username)) {
             return player;
         }
-        // else {
-        //     player.isWinner = true;
-        // }
     });
 
     losers = losers.map(player => player.username);
-    console.log(losers)
+}
+
+function CheckWinners() {
+    TryFindSnakeEyesWinners();
+    TryFindPerfectWinners();
+    FindNearestWinners();
+    CreateListOfLosers();
 }
 
 function TryCreatePlayer(playerName, playerType) {
@@ -441,4 +438,3 @@ let losers = [];
 let deck = new Deck(1);
 
 StartGame();
-
