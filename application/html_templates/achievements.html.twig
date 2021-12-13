@@ -4,20 +4,19 @@
 <link rel="stylesheet" href="/application/stylesheets/achiev.css">
 <div class="wrapper">
     <ul class="achiev">
+        {% for achievement in user_achievements %}
         <li class="achiev__item">
-            <h3 class="achiev__item-name">Achievement1</h3>
-            <p class="achiev__item-progress">Wins: 0/50</p>
+            <h3 class="achiev__item-name">{{ achievement['name'] }}</h3>
+            <p class="achiev__item-progress">Progress: {{ achievement['points'] }}/{{ achievement['threshold'] }}</p>
         </li>
-        <li class="achiev__item">
-            <h3 class="achiev__item-name">Achievement1</h3>
-            <p class="achiev__item-progress">Wins: 0/50</p>
-        </li>
-        <li class="achiev__item">
-            <h3 class="achiev__item-name">Achievement1</h3>
-            <p class="achiev__item-progress">Wins: 0/50</p>
-        </li>
+        {% endfor %}
+        {% for achievement in other_achievements %}
+            <li class="achiev__item">
+                <h3 class="achiev__item-name">{{ achievement['name'] }}</h3>
+                <p class="achiev__item-progress">Progress: {{ achievement['points'] }}/{{ achievement['threshold'] }}</p>
+            </li>
+        {% endfor %}
     </ul>
-
 </div>
 
 {% endblock %}

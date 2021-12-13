@@ -23,24 +23,24 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     }
 
     if(isset($_GET['buy'])){
-        $stmt = $dbh->prepare('SELECT * FROM users WHERE login = :login');
+        $stmt = $dbh->prepare('SELECT * FROM statistics WHERE login = :login');
         $stmt->execute([':login' => $_SESSION['login']]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $statistic = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $stmt = $dbh->prepare('SELECT * FROM shop WHERE sid = :sid');
         $stmt->execute([':sid' => $_GET['buy']]);
         $skin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && $skin) {
-            $login = $user['login'];
-            $money = $user['money'];
+        if ($statistic && $skin) {
+            $login = $statistic['login'];
+            $money = $statistic['money'];
             $sid = $skin['sid'];
             $price = $skin['price'];
             if($money >= $price){
                 try {
                     $stmt = $dbh->prepare('INSERT INTO skins (login, sid) VALUES (:login, :sid)');
                     $stmt->execute([':login' => $login, ':sid' => $sid]);
-                    $stmt = $dbh->prepare('UPDATE users SET money = money - :price WHERE login = :login');
+                    $stmt = $dbh->prepare('UPDATE statistics SET money = money - :price WHERE login = :login');
                     $stmt->execute([':price' => $price, ':login' => $login]);
                     header('Location: /skins');
                 } catch (PDOException $e) {}
