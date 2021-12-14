@@ -10,8 +10,10 @@ if (isset($_POST['new_login']) && isset($_POST['new_password']) && isset($_POST[
             if (strcmp($new_password, $confirm_password) == 0) {
                 $new_password = password_hash($new_password, PASSWORD_DEFAULT);
                 try {
-                    $stmt = $dbh->prepare('INSERT INTO users (uid, login, password, money, created) VALUES (null, :login, :password, 10, NOW())');
+                    $stmt = $dbh->prepare('INSERT INTO users (uid, login, password, created) VALUES (null, :login, :password, NOW())');
                     $stmt->execute([':login' => $new_login, ':password' => $new_password]);
+                    $stmt = $dbh->prepare('INSERT INTO statistics (login) VALUES (:login)');
+                    $stmt->execute([':login' => $new_login]);
                     $_SESSION['login'] = $new_login;
                     header('Location: /');
                 } catch (PDOException $e) {
