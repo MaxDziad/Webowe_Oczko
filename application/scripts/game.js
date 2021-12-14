@@ -383,7 +383,7 @@ function FindNearestWinners(){
         let currentMaxPoints = Number.NEGATIVE_INFINITY;
 
         listOfPlayers.forEach(player => {
-            if (player.currentPoints > currentMaxPoints){
+            if (player.currentPoints > currentMaxPoints && player.currentPoints <= 21){
                 winners = [];
                 currentMaxPoints = player.currentPoints;
                 player.AddToWinnerList();
