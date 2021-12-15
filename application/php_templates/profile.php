@@ -8,31 +8,26 @@ if(isset($_COOKIE['gameData'])){
     foreach ($playersData as $playerData){
         $data = explode(",", $playerData);
         $username = $data[0];
-        $win = intval(filter_var($data[1], FILTER_VALIDATE_BOOLEAN));
-        $snakeEye = intval(filter_var($data[2], FILTER_VALIDATE_BOOLEAN));
-        $gamePoints = intval($data[3]);
-        $drawnCards = intval($data[4]);
+        $isWinner = $data[1];
+        $hadSnakeEyes = $data[2];
+        $pointsObtained = intval($data[3]);
+        $drawnCards = $data[4];
 
-        $blackjack = 0;
-        if($gamePoints == 21) $blackjack = 1;
 
-        $rankingPoints = 0;
-        if($win == 1) $rankingPoints = 2;
-        if($win == 0) $rankingPoints = -1;
-        if($blackjack == 1) $rankingPoints = 5;
-        if($snakeEye == 1) $rankingPoints = 10;
+        $win = 0;
+        $failure = 0;
+        $snakeEye = 0;
 
-        $money = 0;
-        if ($rankingPoints > 0) $money = $rankingPoints * 5;
+        if($isWinner == 'true') $win = 1;
+        else $failure = 1;
 
-        $stmt = $dbh->prepare('UPDATE statistics SET wins = wins + :win, failures = failures + (1 - :win),
-                      drawnCards = drawnCards + :drawnCards, blackjacks = blackjacks + :blackjack,
-                      snakeEyes = snakeEyes + :snakeEye, gamePoints = gamePoints + :gamePoints,
-                      rankingPoints = rankingPoints + :rankingPoints, revenue = revenue + :money,
-                      money = money + :money WHERE username = :username');
-        $stmt->execute([':win' => $win, ':drawnCards' => $drawnCards, ':blackjack' => $blackjack,
-                        ':snakeEye' => $snakeEye, ':gamePoints' => $gamePoints,
-                        ':rankingPoints' => $rankingPoints, ':money' => $money, ':username' => $username]);
+        if($hadSnakeEyes == 'true') $snakeEye = 1;
+
+
+        $stmt = $dbh->prepare('UPDATE statistics SET wins = wins + :win, failures = failures + :failure, points = points + :pointsObtained WHERE login = :login');
+        $stmt->execute([':win' => $win, ':failure' => $failure, ':pointsObtained' => $pointsObtained, ':login' => $username]);
+        // TERAZ GUNIA TUTAJ AKTUALIZUJESZ BAZĘ DANYCH! Wszystkie zmienne są w postaci stringów! isWinner i hadSnakeEyes są jako true/false!
+        // Nie musisz sprawdzać czy taki gracz istnieje (można dla pewności), bo ciasteczko zapisuje tylko zalogowanych graczy
     }
 }
 

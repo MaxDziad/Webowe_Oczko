@@ -4,8 +4,8 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     $user_achievements = array();
     $other_achievements = array();
 
-    $stmt = $dbh->prepare('SELECT * FROM statistics WHERE username = :username');
-    $stmt->execute([':username' => $_SESSION['login']]);
+    $stmt = $dbh->prepare('SELECT * FROM statistics WHERE login = :login');
+    $stmt->execute([':login' => $_SESSION['login']]);
     $statistics = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $stmt = $dbh->prepare('SELECT * FROM achievements');
@@ -14,6 +14,7 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     while ($achievements = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $achievement = array(
             'name' => $achievements['name'],
+            'description' => $achievements['description'],
             'points' => $statistics[$achievements['criterion']],
             'threshold' => $achievements['threshold']
         );
