@@ -30,7 +30,9 @@ if(isset($_COOKIE['gameData'])){
                       snakeEyes = snakeEyes + :snakeEye, gamePoints = gamePoints + :gamePoints,
                       rankingPoints = rankingPoints + :rankingPoints, revenue = revenue + :money,
                       money = money + :money WHERE username = :username');
-        $stmt->execute([':win' => $win, ':drawnCards' => $drawnCards, ':blackjack' => $blackjack, ':snakeEye' => $snakeEye, ':gamePoints' => $gamePoints, ':rankingPoints' => $rankingPoints, ':money' => $money, ':username' => $username]);
+        $stmt->execute([':win' => $win, ':drawnCards' => $drawnCards, ':blackjack' => $blackjack,
+                        ':snakeEye' => $snakeEye, ':gamePoints' => $gamePoints,
+                        ':rankingPoints' => $rankingPoints, ':money' => $money, ':username' => $username]);
     }
 }
 
