@@ -6,14 +6,18 @@
     <ul class="achiev">
         {% for achievement in user_achievements %}
         <li class="achiev__item">
-            <h3 class="achiev__item-name">{{ achievement['name'] }}</h3>
-            <p class="achiev__item-progress">Progress: {{ achievement['points'] }}/{{ achievement['threshold'] }}</p>
+           <div class="achiev__title">
+                <h2 class="achiev__item-name">{{ achievement['name'] }}</h2>
+                <p class="achiev__item-progress">Progress: {{ achievement['points'] }}/{{ achievement['threshold'] }}</p>
+            </div>
+            <div class="icon"><i class="far fa-check-circle completed"></i></div>
         </li>
         {% endfor %}
         {% for achievement in other_achievements %}
             <li class="achiev__item">
-                <h3 class="achiev__item-name">{{ achievement['name'] }}</h3>
-                <p class="achiev__item-progress">Progress: {{ achievement['points'] }}/{{ achievement['threshold'] }}</p>
+                <div class="achiev__title"><h2 class="achiev__item-name">{{ achievement['name'] }}</h2>
+                <p class="achiev__item-progress">Progress: {{ achievement['points'] }}/{{ achievement['threshold'] }}</p></div>
+                <div class="icon" ><i class="far fa-times-circle uncompleted"></i></div>
             </li>
         {% endfor %}
     </ul>
