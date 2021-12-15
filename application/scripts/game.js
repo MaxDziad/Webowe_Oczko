@@ -368,12 +368,22 @@ function TryFindSnakeEyesWinners(){
     })
 }
 
+function TryFindPerfectWinners(){
+    if (winners.length === 0) {
+        listOfPlayers.forEach(player => {
+            if (player.currentPoints === 21) {
+                player.AddToWinnerList();
+            }
+        })
+    }
+}
+
 function FindNearestWinners(){
     if (winners.length === 0) {
         let currentMaxPoints = Number.NEGATIVE_INFINITY;
 
         listOfPlayers.forEach(player => {
-            if (player.currentPoints > currentMaxPoints && player.currentPoints <= 21){
+            if (player.currentPoints > currentMaxPoints){
                 winners = [];
                 currentMaxPoints = player.currentPoints;
                 player.AddToWinnerList();
@@ -397,6 +407,7 @@ function CreateListOfLosers(){
 
 function CheckWinners() {
     TryFindSnakeEyesWinners();
+    TryFindPerfectWinners();
     FindNearestWinners();
     CreateListOfLosers();
 }

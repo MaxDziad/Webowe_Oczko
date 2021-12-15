@@ -12,8 +12,8 @@ if (isset($_POST['new_login']) && isset($_POST['new_password']) && isset($_POST[
                 try {
                     $stmt = $dbh->prepare('INSERT INTO users (uid, login, password, created) VALUES (null, :login, :password, NOW())');
                     $stmt->execute([':login' => $new_login, ':password' => $new_password]);
-                    $stmt = $dbh->prepare('INSERT INTO statistics (username) VALUES (:username)');
-                    $stmt->execute([':username' => $new_login]);
+                    $stmt = $dbh->prepare('INSERT INTO statistics (login) VALUES (:login)');
+                    $stmt->execute([':login' => $new_login]);
                     $_SESSION['login'] = $new_login;
                     header('Location: /');
                 } catch (PDOException $e) {
