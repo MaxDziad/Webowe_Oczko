@@ -22,13 +22,13 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
         array_push($shop_skins, $new_skin);
     }
 
-    if(isset($_GET['buy'])){
-        $stmt = $dbh->prepare('SELECT * FROM statistics WHERE login = :login');
-        $stmt->execute([':login' => $_SESSION['login']]);
+    if(isset($_POST['buy'])){
+        $stmt = $dbh->prepare('SELECT * FROM statistics WHERE username = :username');
+        $stmt->execute([':username' => $_SESSION['login']]);
         $statistic = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $stmt = $dbh->prepare('SELECT * FROM shop WHERE sid = :sid');
-        $stmt->execute([':sid' => $_GET['buy']]);
+        $stmt->execute([':sid' => $_POST['buy']]);
         $skin = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($statistic && $skin) {

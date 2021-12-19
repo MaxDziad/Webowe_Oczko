@@ -9,6 +9,9 @@ if(isset($_POST['player1Type'])){
     foreach ($user_players as $username) {
         if ($username == '') echo '<script type="text/javascript">alert("Username cannot be empty!"); window.location = "/lobby"</script>';
         if ($username == $_SESSION['login']) echo '<script type="text/javascript">alert("Username cannot be the same as hostname!"); window.location = "/lobby"</script>';
+        $counter = 0;
+        foreach ($user_players as $username_copy) if($username == $username_copy) $counter++;
+        if ($counter > 1) echo '<script type="text/javascript">alert("Usernames has to be unique!"); window.location = "/lobby"</script>';
         $stmt = $dbh->prepare('SELECT login FROM users');
         $stmt->execute();
         $registered_users = array();
