@@ -12,7 +12,8 @@
         <form class="lobbyPlayers" id='lobbyPlayers' action="game" method="POST">
             <div class="playerCard" id="player1">
                 <select name="player1Type" id="player1Type">
-                    <option value="0">Human</option>
+                    <option value="0">Host</option>
+                    <option value="0">Guest</option>
                     <option value="1">Easy Ai</option>
                     <option value="2">Medium Ai</option>
                     <option value="3">Hard Ai</option>
@@ -21,8 +22,8 @@
             </div>
             <div class="playerCard" id="player2">
                 <select name="player2Type" id="player2Type">
-                    <option value="9999"></option>
-                    <option value="0">Human</option>
+                    <option value="0">User</option>
+                    <option value="0">Guest</option>
                     <option value="1">Easy Ai</option>
                     <option value="2">Medium Ai</option>
                     <option value="3">Hard Ai</option>
@@ -33,7 +34,9 @@
             <div class="playerCard" id="player3">
                 {# <div class="plus" id="plus"><img src="/application/images/plus-xxl.png"></div> #}
                 <select name="player3Type" id="player3Type">
-                    <option value="0">Human</option>
+                     <option value="9999"></option>
+                    <option value="0">User</option>
+                    <option value="0">Guest</option>
                     <option value="1">Easy Ai</option>
                     <option value="2">Medium Ai</option>
                     <option value="3">Hard Ai</option>
@@ -45,7 +48,9 @@
                 {# <div class="plus" id="plus"><img src="/application/images/plus-xxl.png"></div>
                  #}
                  <select name="player4Type" id="player4Type">
-                    <option value="0">Human</option>
+                     <option value="9999"></option>
+                    <option value="0">User</option>
+                    <option value="0">Guest</option>
                     <option value="1">Easy Ai</option>
                     <option value="2">Medium Ai</option>
                     <option value="3">Hard Ai</option>
@@ -59,6 +64,7 @@
         </form>
      
     </div>
+    
     <script src="/application/scripts/lobby.js"></script>
 </body>
 

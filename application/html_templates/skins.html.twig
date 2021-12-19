@@ -5,7 +5,7 @@
 
     <div class="shop">
         <ul class="shop__list">
-            {% for skin in user_skins %}
+            {% for skin in user_skins %} <!-- dopisac zmienna czy skin jest ustawiony -->
                 <li class="shop__list-item">
                     <img class="skin__image" src="{{ skin['path'] }}">
                     <h2 class="skin__name">{{ skin['name'] }}</h2>
