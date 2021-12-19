@@ -12,9 +12,9 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
             if (password_verify($password, $user['password'])) {
                 $_SESSION['login'] = $login;
                 header('Location: /');
-            } else echo '<script type="text/javascript">alert("Podane hasło jest nieprawidłowe!");</script>';
-        } else echo '<script type="text/javascript">alert("Nie ma takiego użytkownika!");</script>';
-    } else echo '<script type="text/javascript">alert("Pola nie mogą być puste!");</script>';
+            } else echo '<script type="text/javascript">alert("The given password is incorrect!");</script>';
+        } else echo '<script type="text/javascript">alert("There is no such user!");</script>';
+    } else echo '<script type="text/javascript">alert("The fields cannot be empty!");</script>';
 }
 
 echo $twig->render('login.html.twig');
