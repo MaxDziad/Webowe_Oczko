@@ -49,16 +49,16 @@ function setName(select, input, i) {
 
     select.addEventListener("change", function (e) {
         if (e.target.value === '1') {
-            input.value = `Easy-Ai${i}`;
+            input.value = `Easy-Ai-${i}`;
             input.readOnly = true;
         } else if (e.target.value === '2') {
-            input.value = `Medium-Ai${i}`;
+            input.value = `Medium-Ai-${i}`;
             input.readOnly = true;
         } else if (e.target.value === '3') {
-            input.value = `Hard-Ai${i}`;
+            input.value = `Hard-Ai-${i}`;
             input.readOnly = true;
         } else if (e.target.options[e.target.selectedIndex].text === 'Guest') {
-            input.value = `Guest${i}`;
+            input.value = `Guest-${i}`;
             input.readOnly = true;
         } else if (e.target.options[e.target.selectedIndex].text === '') {
             input.readOnly = true;

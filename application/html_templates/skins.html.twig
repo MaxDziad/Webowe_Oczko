@@ -6,16 +6,24 @@
     <div class="shop">
         <ul class="shop__list">
             {% for skin in user_skins %} <!-- dopisac zmienna czy skin jest ustawiony -->
+                <a href="#" id="changeSkinLink">
                 <li class="shop__list-item">
                     <img class="skin__image" src="{{ skin['path'] }}">
                     <h2 class="skin__name">{{ skin['name'] }}</h2>
+                    <form method="POST" action='/skins' id="changeSkinForm">
+                    <input  hidden value="{{ skin['sid'] }}" name="CurrentSid">
+                    <input type="submit" hidden>
+                    </form>
                 </li>
+                </a>
+
             {% endfor %}
             {% if user_skins|length == 0 %}
                 <h3 class="skin__name">You don't have any skins!</h3>
             {% endif %}
         </ul>
     </div>
+    <script src="/application/scripts/skins.js"></script>
 {% endblock %}
 {% block active %}
 <script>
@@ -24,3 +32,5 @@
 </script>
 
 {% endblock %}
+
+

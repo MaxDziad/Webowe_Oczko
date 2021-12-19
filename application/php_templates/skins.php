@@ -7,10 +7,12 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     $stmt->execute([':username' => $_SESSION['login']]);
 
     while ($skin = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $sid = intval($skin['sid']);
         $name = html_entity_decode($skin['name'], ENT_QUOTES | ENT_HTML401);
         $path = html_entity_decode($skin['path'], ENT_QUOTES | ENT_HTML401);
 
         $new_skin = array(
+            'sid' => $sid,
             'name' => $name,
             'path' => $path,
         );

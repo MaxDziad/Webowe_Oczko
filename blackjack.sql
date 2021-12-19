@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 15 Gru 2021, 00:35
--- Wersja serwera: 10.4.21-MariaDB
--- Wersja PHP: 8.0.12
+-- Czas generowania: 19 Gru 2021, 17:35
+-- Wersja serwera: 10.4.22-MariaDB
+-- Wersja PHP: 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -62,7 +62,8 @@ CREATE TABLE `shop` (
 INSERT INTO `shop` (`sid`, `name`, `path`, `price`) VALUES
 (1, 'green', '/application/images/skins/green.png', 20),
 (2, 'red', '/application/images/skins/red.png', 10),
-(3, 'yellow', '/application/images/skins/yellow.png', 15);
+(3, 'yellow', '/application/images/skins/yellow.png', 15),
+(900, 'asdasd', '/application/images/skins/green.png', 123);
 
 -- --------------------------------------------------------
 
@@ -83,7 +84,8 @@ INSERT INTO `skins` (`username`, `sid`) VALUES
 ('admin', 3),
 ('admin', 2),
 ('user', 2),
-('admin', 1);
+('admin', 1),
+('admin', 900);
 
 -- --------------------------------------------------------
 
