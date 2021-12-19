@@ -3,9 +3,9 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
 
 if(isset($_POST['player1Type'])){
     $user_players = array();
-    if ($_POST['player2Type'] == 0) array_push($user_players, $_POST['player2Name']);
-    if ($_POST['player3Type'] == 0) array_push($user_players, $_POST['player3Name']);
-    if ($_POST['player4Type'] == 0) array_push($user_players, $_POST['player4Name']);
+    if ($_POST['player2Type'] == 10) array_push($user_players, $_POST['player2Name']);
+    if ($_POST['player3Type'] == 10) array_push($user_players, $_POST['player3Name']);
+    if ($_POST['player4Type'] == 10) array_push($user_players, $_POST['player4Name']);
     foreach ($user_players as $username) {
         if ($username == '') echo '<script type="text/javascript">alert("Username cannot be empty!"); window.location = "/lobby"</script>';
         if ($username == $_SESSION['login']) echo '<script type="text/javascript">alert("Username cannot be the same as hostname!"); window.location = "/lobby"</script>';

@@ -20,7 +20,10 @@ let actualPlayerCard;
 const board = document.querySelector('#game');
 let gameOver = false;
 
-const HUMAN = 0;
+
+const HOST = 100;
+const USER = 10;
+const GUEST = 0;
 const AI_EASY = 1;
 const AI_MEDIUM = 2;
 const AI_HARD = 3;
@@ -139,7 +142,7 @@ function OnPassButton() {
 }
 
 function TryPlayAiTurn(player) {
-    if (player.playerType === HUMAN) {
+    if (player.playerType === USER || player.playerType === GUEST || player.playerType ===HOST) {
         return;
     }
 
