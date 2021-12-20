@@ -18,22 +18,21 @@ if(isset($_POST['player1Type'])){
         while ($users = $stmt->fetch(PDO::FETCH_ASSOC)) array_push($registered_users, $users['login']);
         if (!in_array($username, $registered_users)) echo '<script type="text/javascript">alert("Username is not in our database!"); window.location = "/lobby"</script>';
     }
-    for($i = 1; $i <= 4; $i++){
-        switch ($_POST['player'.$i.'Type']){
-            case 100 or 10:
-                $stmt = $dbh->prepare('SELECT * FROM statistics JOIN shop ON currentSkin = sid WHERE username = :username');
-                $stmt->execute([':username' => $_POST['player'.$i.'Name']]);
-                if ($skin = $stmt->fetch(PDO::FETCH_ASSOC)) setcookie('player'.$i.'Skin', $skin['path']);
-                else setcookie('player'.$i.'Skin', '');
-                break;
-          /*  case 0:
-                setcookie('player'.$i.'Skin', 'application/images/skins/guest.png');
-                break;
-            case 1 or 2 or 3:
-                setcookie('player'.$i.'Skin', 'application/images/skins/AI.png');
-                break;*/
+    $skins_info = array();
+    for($i = 1; $i <= 4; $i++) {
+        if($_POST['player'.$i.'Type'] == 10 OR $_POST['player'.$i.'Type'] == 100) {
+            $stmt = $dbh->prepare('SELECT * FROM statistics JOIN shop ON currentSkin = sid WHERE username = :username');
+            $stmt->execute([':username' => $_POST['player'.$i.'Name']]);
+
+            $user_skin = new stdClass();
+            $user_skin->player = $_POST['player'.$i.'Name'];
+            if ($skin = $stmt->fetch(PDO::FETCH_ASSOC)) $user_skin->path = $skin['path'];
+            else $user_skin->path = '';
+
+            array_push($skins_info, $user_skin);
         }
     }
+    file_put_contents('application/json/json_skins.php', json_encode($skins_info));
 } else echo '<script type="text/javascript">alert("You may go to game only by lobby!"); window.location = "/"</script>';
 
 echo $twig->render('game.html.twig');
