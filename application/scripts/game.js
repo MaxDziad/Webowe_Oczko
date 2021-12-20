@@ -18,10 +18,10 @@ const player4Type =   parseInt(sessionStorage.getItem("player4Type"));
 const player4Name = sessionStorage.getItem("player4Name");
 
 
-const player1Skin = getCookie('player1');
-const player2Skin = getCookie('player2');
-const player3Skin = getCookie('player3');
-const player4Skin = getCookie('player4');
+const player1Skin = getCookie('player1Skin');
+const player2Skin = getCookie('player2Skin');
+const player3Skin = getCookie('player3Skin');
+const player4Skin = getCookie('player4Skin');
 
 
 
