@@ -20,9 +20,9 @@ if(isset($_POST['player1Type'])){
     }
     $skins_info = array();
     for($i = 1; $i <= 4; $i++) {
-
         switch ($_POST['player'.$i.'Type']) {
-            case 10 or 100:
+            case 10:
+            case 100:
                 $stmt = $dbh->prepare('SELECT * FROM statistics JOIN shop ON currentSkin = sid WHERE username = :username');
                 $stmt->execute([':username' => $_POST['player'.$i.'Name']]);
                 if ($skin = $stmt->fetch(PDO::FETCH_ASSOC)) $path = $skin['path'];
@@ -35,11 +35,17 @@ if(isset($_POST['player1Type'])){
                 array_push($skins_info, $path);
                 break;
 
-            case 1 OR 2 OR 3:
+            case 1:
+            case 2:
+            case 3:
                 $path = '/application/images/skins/AI.png';
                 array_push($skins_info, $path);
                 break;
 
+            default:
+                $path = '/application/images/skins/red.png';
+                array_push($skins_info, $path);
+                break;
         }
     }
     file_put_contents('application/json/json_skins.php', json_encode($skins_info));
