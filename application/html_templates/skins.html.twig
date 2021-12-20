@@ -5,7 +5,7 @@
     <div class="shop">
         <ul class="shop__list">
             {% for skin in user_skins %}
-                {% if skin['is_current'] == 'true' %}
+                {% if skin['is_current'] %}
                     <a id="changeSkinLink">
                         <li class="shop__list-item myskin">
                             <img class="skin__image" src="{{ skin['path'] }}">

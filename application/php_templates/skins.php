@@ -1,7 +1,6 @@
 <?php
 if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio."); }
 
-    $user_skins = array();
     $username = $_SESSION['login'];
 
     if(isset($_POST['current_sid'])){
@@ -17,12 +16,14 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     $stmt2->execute([':username' => $username]);
     $current_skin = $stmt2->fetch(PDO::FETCH_ASSOC);
 
+    $user_skins = array();
+
     while ($skin = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $sid = intval($skin['sid']);
         $name = html_entity_decode($skin['name'], ENT_QUOTES | ENT_HTML401);
         $path = html_entity_decode($skin['path'], ENT_QUOTES | ENT_HTML401);
-        if ($sid == $current_skin['currentSkin']) $is_current = 'true';
-        else $is_current = 'false';
+        if ($sid == $current_skin['currentSkin']) $is_current = true;
+        else $is_current = false;
 
         $new_skin = array(
             'sid' => $sid,
