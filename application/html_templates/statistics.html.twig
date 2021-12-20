@@ -1,9 +1,30 @@
 {% extends "profile.html.twig" %}
 
 {% block content %}
-<div>
-    <p>Eloasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
-</div>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">USERNEAME</th>
+                <th scope="col">WINS</th>
+                <th scope="col">FAILURES</th>
+                <th scope="col">GAMES</th>
+                <th scope="col">EFFICIENCY</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in best_users %}
+            <tr>
+                <th scope="col">{{ loop.index }}</th>
+                <th scope="col">{{ user['username'] }}</th>
+                <th scope="col">{{ user['wins'] }}</th>
+                <th scope="col">{{ user['failures'] }}</th>
+                <th scope="col">{{ user['games'] }}</th>
+                <th scope="col">{{ user['efficiency'] }}</th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
 {% block active %}
 <script>
