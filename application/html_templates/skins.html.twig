@@ -2,29 +2,34 @@
 
 {% block content %}
 	<link rel="stylesheet" href="/application/stylesheets/shop.css">
+	<link rel="stylesheet" href="/application/stylesheets/skins.css">
     <div class="shop">
         <ul class="shop__list">
             {% for skin in user_skins %}
                 {% if skin['is_current'] %}
-                    <a id="changeSkinLink">
-                        <li class="shop__list-item myskin">
+                    <a id="changeSkinLink" class="changeSkinLink">
+                        <li class="shop__list-item mySkin">
                             <img class="skin__image" src="{{ skin['path'] }}">
-                            <h2 class="skin__name">{{ skin['name'] }}</h2>
-                            <form method="POST" action='/skins' id="changeSkinForm">
-                                <input hidden value="{{ skin['sid'] }}" name="current_sid">
-                                <input hidden type="submit">
-                            </form>
+                            <div class="skin__buy">
+                                <h2 class="skin__name">{{ skin['name'] }}</h2>
+                                <form method="POST" action='/skins' id="changeSkinForm">
+                                    <input hidden value="{{ skin['sid'] }}" name="current_sid">
+                                    <input hidden type="submit">
+                                </form>
+                            </div>
                         </li>
-                    </a>
+                    </a> 
                 {% else %}
-                    <a id="changeSkinLink">
-                        <li class="shop__list-item">
+                    <a id="changeSkinLink" class="changeSkinLink">
+                        <li class="shop__list-item otherSkin">
                             <img class="skin__image" src="{{ skin['path'] }}">
+                            <div class="skin__buy">
                             <h2 class="skin__name">{{ skin['name'] }}</h2>
                             <form method="POST" action='/skins' id="changeSkinForm">
                                 <input hidden value="{{ skin['sid'] }}" name="current_sid">
                                 <input hidden type="submit">
                             </form>
+                            </div>
                         </li>
                     </a>
                 {% endif %}

@@ -4,15 +4,26 @@ const params = (new URL(document.location)).searchParams;
 const player1Type =   parseInt(sessionStorage.getItem("player1Type"));
 const player1Name = sessionStorage.getItem("player1Name")
 
+
 const player2Type =   parseInt(sessionStorage.getItem("player2Type"));
 const player2Name =  sessionStorage.getItem("player2Name");
+
 
 const player3Type =  parseInt(sessionStorage.getItem("player3Type"));
 const player3Name =    sessionStorage.getItem("player3Name");
 
 
+
 const player4Type =   parseInt(sessionStorage.getItem("player4Type"));
 const player4Name = sessionStorage.getItem("player4Name");
+
+
+const player1Skin = getCookie('player1');
+const player2Skin = getCookie('player2');
+const player3Skin = getCookie('player3');
+const player4Skin = getCookie('player4');
+
+
 
 let moveLabel = document.querySelector('#move');
 let playersView = document.querySelector('#players');
@@ -39,7 +50,7 @@ const SPADE = "spade";
 const CLUB = "club";
 
 class Player {
-    constructor(username, playerType) {
+    constructor(username, playerType, skin) {
         this.username = username;
         this.currentPoints = 0;
         this.pass = false;
@@ -50,6 +61,7 @@ class Player {
         this.snakeEyes = false;
         this.isWinner = false;
         this.isLogged = true;
+        this.skin = skin;
     }
 
     AddToWinnerList() {
@@ -215,7 +227,7 @@ function RenderPlayers() {
         
         playersView.innerHTML +=
             `<div class="players__card" data-playerName=${listOfPlayers[i].username}>
-            <div class="image"><img src="https://www.w3schools.com/css/paris.jpg"></div>
+            <div class="image"><img src="${listOfPlayers[i].skin}"></div>
             <p class="players__name">${listOfPlayers[i].username}</p>
             <p class="players__points">${listOfPlayers[i].currentPoints}</p>
             <p class="players__points">Pass: ${listOfPlayers[i].pass}</p>
@@ -404,18 +416,24 @@ function CheckWinners() {
     CreateListOfLosers();
 }
 
-function TryCreatePlayer(playerName, playerType) {
+function TryCreatePlayer(playerName, playerType, playerSkin) {
     if (playerName !== "") {
-        let player = new Player(playerName, playerType);
+        let player = new Player(playerName, playerType, playerSkin);
         listOfPlayers.push(player);
     }
 }
 
 function CreatePlayers() {
-    TryCreatePlayer(player1Name, player1Type);
-    TryCreatePlayer(player2Name, player2Type);
-    TryCreatePlayer(player3Name, player3Type);
-    TryCreatePlayer(player4Name, player4Type);
+    TryCreatePlayer(player1Name, player1Type, player1Skin);
+    TryCreatePlayer(player2Name, player2Type, player2Skin);
+    TryCreatePlayer(player3Name, player3Type, player3Skin);
+    TryCreatePlayer(player4Name, player4Type, player4Skin);
+}
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
 let newCardButton = document.querySelector('#newCard');
@@ -423,6 +441,7 @@ let passButton = document.querySelector('#Pass');
 
 let listOfPlayers = [];
 CreatePlayers();
+// sessionStorage.clear();
 let playersInGame = [...listOfPlayers];
 let winners = [];
 let losers = [];
@@ -430,3 +449,6 @@ let losers = [];
 let deck = new Deck(1);
 
 StartGame();
+
+
+
