@@ -4,6 +4,12 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     $user_skins = array();
     $username = $_SESSION['login'];
 
+    if(isset($_POST['current_sid'])){
+        $current_sid = $_POST['current_sid'];
+        $stmt = $dbh->prepare('UPDATE statistics SET currentSkin = :current_sid WHERE username = :username');
+        $stmt->execute(['current_sid' => $current_sid, ':username' => $username]);
+    }
+
     $stmt = $dbh->prepare('SELECT * FROM shop JOIN skins USING (sid) WHERE username = :username');
     $stmt->execute([':username' => $username]);
 
@@ -24,14 +30,7 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
             'path' => $path,
             'is_current' => $is_current
         );
-
         array_push($user_skins, $new_skin);
-    }
-
-    if(isset($_POST['current_sid'])){
-        $current_sid = $_POST['current_sid'];
-        $stmt = $dbh->prepare('UPDATE statistics SET currentSkin = :current_sid WHERE username = :username');
-        $stmt->execute(['current_sid' => $current_sid, ':username' => $username]);
     }
 
 echo $twig->render('skins.html.twig',  ['user_skins' => $user_skins]);
