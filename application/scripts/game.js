@@ -1,5 +1,18 @@
-const params = (new URL(document.location)).searchParams;
+let skins = [];
 
+$.ajax({
+    url: "http://localhost/application/json/json_skins.php",
+    type: "GET",
+    dataType: "json",
+    async: false,
+    success: function(data) {
+        skins = [...data]
+        console.log(skins[0])
+    },
+    error: function() {
+        alert("Your error");
+    },
+});
 
 const player1Type =   parseInt(sessionStorage.getItem("player1Type"));
 const player1Name = sessionStorage.getItem("player1Name")
@@ -18,10 +31,7 @@ const player4Type =   parseInt(sessionStorage.getItem("player4Type"));
 const player4Name = sessionStorage.getItem("player4Name");
 
 
-const player1Skin = getCookie('player1Skin');
-const player2Skin = getCookie('player2Skin');
-const player3Skin = getCookie('player3Skin');
-const player4Skin = getCookie('player4Skin');
+
 
 
 
@@ -224,7 +234,7 @@ function FiftyChance() {
 function RenderPlayers() {
     playersView.innerHTML = '';
     for (let i = 0; i < listOfPlayers.length; i++) {
-        
+        console.log(listOfPlayers[i].skin);
         playersView.innerHTML +=
             `<div class="players__card" data-playerName=${listOfPlayers[i].username}>
             <div class="image"><img src="${listOfPlayers[i].skin}"></div>
@@ -424,17 +434,12 @@ function TryCreatePlayer(playerName, playerType, playerSkin) {
 }
 
 function CreatePlayers() {
-    TryCreatePlayer(player1Name, player1Type, player1Skin);
-    TryCreatePlayer(player2Name, player2Type, player2Skin);
-    TryCreatePlayer(player3Name, player3Type, player3Skin);
-    TryCreatePlayer(player4Name, player4Type, player4Skin);
+    TryCreatePlayer(player1Name, player1Type, skins[0]);
+    TryCreatePlayer(player2Name, player2Type, skins[1]);
+    TryCreatePlayer(player3Name, player3Type, skins[2]);
+    TryCreatePlayer(player4Name, player4Type, skins[3]);
 }
 
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
 
 let newCardButton = document.querySelector('#newCard');
 let passButton = document.querySelector('#Pass');

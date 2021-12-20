@@ -1,1 +1,1 @@
-<?php
+["\/application\/images\/skins\/yellow.png","\/application\/images\/skins\/red.png","\/application\/images\/skins\/guest.png","\/application\/images\/skins\/AI.png"]
