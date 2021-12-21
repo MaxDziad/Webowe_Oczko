@@ -36,4 +36,11 @@ if(isset($_COOKIE['gameData'])){
     }
 }
 
-echo $twig->render('profile.html.twig');
+    $username = $_SESSION['login'];
+
+    $stmt = $dbh->prepare('SELECT money FROM statistics WHERE username = :username');
+    $stmt->execute([':username' => $username]);
+    $money = $stmt->fetch(PDO::FETCH_ASSOC);
+    $cash = $money['money'];
+
+echo $twig->render('profile.html.twig', ['cash' => $cash]);
