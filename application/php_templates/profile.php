@@ -34,6 +34,8 @@ if(isset($_COOKIE['gameData'])){
                         ':snakeEye' => $snakeEye, ':gamePoints' => $gamePoints,
                         ':rankingPoints' => $rankingPoints, ':money' => $money, ':username' => $username]);
     }
+
+    setcookie("gameData", "", time() - 3600); // setting cookie time to current time minus one hour to make it expire
 }
 
     $username = $_SESSION['login'];
