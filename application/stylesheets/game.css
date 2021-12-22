@@ -96,6 +96,7 @@ body{
 
 .players__name, .players__points{
     text-align: center;
+    margin-bottom: 1rem;
 }
 
 .players__points{

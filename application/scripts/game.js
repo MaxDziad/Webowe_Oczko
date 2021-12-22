@@ -240,9 +240,11 @@ function RenderPlayers() {
             <div class="image"><img src="${listOfPlayers[i].skin}"></div>
             <p class="players__name">${listOfPlayers[i].username}</p>
             <p class="players__points">${listOfPlayers[i].currentPoints}</p>
-            <p class="players__points">Pass: ${listOfPlayers[i].pass}</p>
-            <p class="players__points">Turn: ${listOfPlayers[i].turn}</p>
         </div>`
+
+        //<p class="players__points">Pass: ${listOfPlayers[i].pass}</p>
+        //<p class="players__points">Turn: ${listOfPlayers[i].turn}</p> 
+
         if(listOfPlayers[i].turn === true){
             actualPlayerCard = document.querySelector(`[data-playerName="${listOfPlayers[i].username}"]`);
             actualPlayerCard.style.boxShadow = "0px 0px 40px 5px var(--orange)";
