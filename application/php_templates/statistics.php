@@ -26,4 +26,4 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     }
 
 
-echo $twig->render('statistics.html.twig', ['best_users' => $best_users]);
+echo $twig->render('statistics.html.twig', ['best_users' => $best_users, 'username' => $_SESSION['login'], 'cash' => $_SESSION['cash']]);

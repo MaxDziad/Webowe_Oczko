@@ -38,11 +38,6 @@ if(isset($_COOKIE['gameData'])){
     setcookie("gameData", "", time() - 3600); // setting cookie time to current time minus one hour to make it expire
 }
 
-    $username = $_SESSION['login'];
 
-    $stmt = $dbh->prepare('SELECT money FROM statistics WHERE username = :username');
-    $stmt->execute([':username' => $username]);
-    $money = $stmt->fetch(PDO::FETCH_ASSOC);
-    $cash = $money['money'];
 
-echo $twig->render('profile.html.twig', ['cash' => $cash]);
+echo $twig->render('profile.html.twig', ['username' => $_SESSION['login'], 'cash' => $_SESSION['cash']]);

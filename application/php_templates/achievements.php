@@ -27,4 +27,4 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
 
     }
 
-echo $twig->render('achievements.html.twig', ['user_achievements' => $user_achievements ,'other_achievements' => $other_achievements]);
+echo $twig->render('achievements.html.twig', ['user_achievements' => $user_achievements ,'other_achievements' => $other_achievements, 'username' => $_SESSION['login'], 'cash' => $_SESSION['cash']]);

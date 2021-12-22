@@ -11,6 +11,10 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
         if ($user) {
             if (password_verify($password, $user['password'])) {
                 $_SESSION['login'] = $login;
+                $stmt = $dbh->prepare('SELECT money FROM statistics WHERE username = :username');
+                $stmt->execute([':username' => $login]);
+                $money = $stmt->fetch(PDO::FETCH_ASSOC);
+                $_SESSION['cash'] = $money['money'];
                 header('Location: /');
             } else echo '<script type="text/javascript">alert("The given password is incorrect!");</script>';
         } else echo '<script type="text/javascript">alert("There is no such user!");</script>';

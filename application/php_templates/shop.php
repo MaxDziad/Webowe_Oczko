@@ -38,10 +38,11 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
                     $stmt->execute([':username' => $statistic['username'], ':sid' => $skin['sid']]);
                     $stmt = $dbh->prepare('UPDATE statistics SET money = money - :price WHERE username = :username');
                     $stmt->execute([':price' => $skin['price'], ':username' => $statistic['username']]);
+                    $_SESSION['cash'] = $_SESSION['cash'] - $skin['price'];
                     header('Location: /skins');
                 } catch (PDOException $e) {}
             }
         }
     }
 
-echo $twig->render('shop.html.twig', ['shop_skins' => $shop_skins]);
+echo $twig->render('shop.html.twig', ['shop_skins' => $shop_skins, 'username' => $_SESSION['login'], 'cash' => $_SESSION['cash']]);

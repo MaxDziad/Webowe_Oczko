@@ -34,4 +34,4 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
         array_push($user_skins, $new_skin);
     }
 
-echo $twig->render('skins.html.twig',  ['user_skins' => $user_skins]);
+echo $twig->render('skins.html.twig',  ['user_skins' => $user_skins, 'username' => $_SESSION['login'], 'cash' => $_SESSION['cash']]);
