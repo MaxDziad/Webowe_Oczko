@@ -24,7 +24,7 @@ if(isset($_COOKIE['gameData'])){
         if($snakeEye == 1) $rankingPoints = 10;
 
         $money = 0;
-        if ($rankingPoints > 0) $money = $rankingPoints * 5;
+        if ($rankingPoints > 0) $money = $rankingPoints * 5 + $additionalBetPoints;
 
         $stmt = $dbh->prepare('UPDATE statistics SET wins = wins + :win, failures = failures + (1 - :win),
                       drawnCards = drawnCards + :drawnCards, blackjacks = blackjacks + :blackjack,
