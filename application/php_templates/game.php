@@ -14,7 +14,7 @@ if(isset($_POST['player1Type'])){
             $stmt = $dbh->prepare('SELECT * FROM statistics WHERE username = :username');
             $stmt->execute([':username' => $username]);
             if ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                if($_POST['player'.$i.'BetValue'] > $user['money']) echo '<script type="text/javascript">alert("Some user or users do not have money enough !"); window.location = "/lobby"</script>';
+                if($_POST['player'.$i.'BetValue'] > $user['money']) echo '<script type="text/javascript">alert("Some user or users do not have money enough!"); window.location = "/lobby"</script>';
             } else echo '<script type="text/javascript">alert("Username is not in our database!"); window.location = "/lobby"</script>';
         }
     }

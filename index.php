@@ -17,7 +17,7 @@
 		header('Location: /');
 	}
 
-	$pages_for_logged = ['lobby', 'game', 'profile', 'statistics', 'skins', 'achievements', 'shop'];
+	$pages_for_logged = ['lobby', 'game', 'profile', 'ranking', 'skins', 'achievements', 'shop'];
 	$pages_for_unlogged = ['main', 'login', 'register'];
 
 	if (isset($_GET['page']) && ((in_array($_GET['page'], $pages_for_logged) && isset($_SESSION['login'])) || (in_array($_GET['page'], $pages_for_unlogged) && !isset($_SESSION['login']))))

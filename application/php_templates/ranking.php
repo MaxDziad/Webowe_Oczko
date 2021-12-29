@@ -4,7 +4,7 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     $best_users = array();
     $hostname = $_SESSION['login'];
 
-    $stmt = $dbh->prepare('SELECT * FROM statistics ORDER BY rankingPoints DESC LIMIT 5');
+    $stmt = $dbh->prepare('SELECT * FROM statistics ORDER BY rankingPoints DESC LIMIT 10');
     $stmt->execute();
 
     while ($stats = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -26,4 +26,4 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     }
 
 
-echo $twig->render('statistics.html.twig', ['best_users' => $best_users, 'username' => $_SESSION['login'], 'cash' => $_SESSION['cash']]);
+echo $twig->render('ranking.html.twig', ['best_users' => $best_users, 'username' => $_SESSION['login'], 'cash' => $_SESSION['cash']]);
