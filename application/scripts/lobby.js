@@ -26,6 +26,7 @@ const player1Name = document.querySelector("#player1Name");
 const player1Bet = document.querySelector("#player1Bet");
 const player1BetValue = document.querySelector("#player1BetValue");
 
+
 const player2Type = document.querySelector("#player2Type");
 const player2Name = document.querySelector("#player2Name");
 const player2Bet = document.querySelector("#player2Bet");
