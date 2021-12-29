@@ -20,13 +20,13 @@
 					</select>
 					<input type="text" name="player1Name" id="player1Name">
 					<select name="player1Bet">
-						<option value="100">Don`t bet</option>
-						<option value="100">Player1</option>
-						<option value="100">Player2</option>
-						<option value="100">Player3</option>
-						<option value="100">Player4</option>
+						<option value="0">Don`t bet</option>
+						<option value="1">Player1</option>
+						<option value="2">Player2</option>
+						<option value="3">Player3</option>
+						<option value="4">Player4</option>
 					</select>
-					<input type="number" min="5" max="40">
+					<input type="player1BetValue" min="5" max="40">
 				</div>
 				<div class="playerCard" id="player2">
 					<select name="player2Type" id="player2Type">
@@ -38,13 +38,13 @@
 					</select>
 					<input type="text" name="player2Name" id="player2Name">
 					<select name="player2Bet">
-						<option value="100">Don`t bet</option>
-						<option value="100">Player1</option>
-						<option value="100">Player2</option>
-						<option value="100">Player3</option>
-						<option value="100">Player4</option>
+						<option value="0">Don`t bet</option>
+						<option value="1">Player1</option>
+						<option value="2">Player2</option>
+						<option value="3">Player3</option>
+						<option value="4">Player4</option>
 					</select>
-					<input type="number" min="5" max="40">
+					<input type="player2BetValue" min="5" max="40">
 				</div>
 				<div
 					class="playerCard" id="player3">
@@ -60,13 +60,13 @@
 
 					<input type="text" name="player3Name" id="player3Name">
 					<select name="player3Bet">
-						<option value="100">Don`t bet</option>
-						<option value="100">Player1</option>
-						<option value="100">Player2</option>
-						<option value="100">Player3</option>
-						<option value="100">Player4</option>
+						<option value="0">Don`t bet</option>
+						<option value="1">Player1</option>
+						<option value="2">Player2</option>
+						<option value="3">Player3</option>
+						<option value="4">Player4</option>
 					</select>
-					<input type="number" min="5" max="40">
+					<input type="player3BetValue" min="5" max="40">
 				</div>
 				<div
 					class="playerCard" id="player4">
@@ -82,20 +82,20 @@
 					</select>
 					<input type="text" name="player4Name" id="player4Name">
 					<select name="player4Bet">
-						<option value="100">Don`t bet</option>
-						<option value="100">Player1</option>
-						<option value="100">Player2</option>
-						<option value="100">Player3</option>
-						<option value="100">Player4</option>
+						<option value="0">Don`t bet</option>
+						<option value="1">Player1</option>
+						<option value="2">Player2</option>
+						<option value="3">Player3</option>
+						<option value="4">Player4</option>
 					</select>
-					<input type="number" min="5" max="40">
+					<input type="player4BetValue" min="5" max="40">
 				</div>
 				<div class="bottomPanel">
-					<select name="costam" id="costam">
-						<option value="xxx">Unlimited Decks</option>
-						<option value="xxx">1 Deck</option>
-						<option value="xxx">2 Decks</option>
-						<option value="xxx">3 Decks</option>
+					<select name="numberOfDecks" id="costam">
+						<option value="0">Unlimited Deck</option>
+						<option value="1">1 Deck</option>
+						<option value="2">2 Decks</option>
+						<option value="3">3 Decks</option>
 					</select>
 					<input type="submit" class="submit-button" value="Start Game" onclick="handleSubmit()">
 				</div>

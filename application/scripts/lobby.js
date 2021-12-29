@@ -1,49 +1,55 @@
-
 function handleSubmit() {
-    const player1Type = document.querySelector("#player1Type").value;
-    const player1Name = document.querySelector("#player1Name").value;
+    sessionStorage.setItem("player1Name", player1Name.value);
+    sessionStorage.setItem("player2Name", player2Name.value);
+    sessionStorage.setItem("player3Name", player3Name.value);
+    sessionStorage.setItem("player4Name", player4Name.value);
+    sessionStorage.setItem("player1Type", player1Type.value);
+    sessionStorage.setItem("player2Type", player2Type.value);
+    sessionStorage.setItem("player3Type", player3Type.value);
+    sessionStorage.setItem("player4Type", player4Type.value);
+    sessionStorage.setItem("player1Bet", player1Bet.value);
+    sessionStorage.setItem("player2Bet", player2Bet.value);
+    sessionStorage.setItem("player3Bet", player3Bet.value);
+    sessionStorage.setItem("player4Bet", player4Bet.value);
+    sessionStorage.setItem("player1BetValue", player1BetValue.value);
+    sessionStorage.setItem("player2BetValue", player2BetValue.value);
+    sessionStorage.setItem("player3BetValue", player3BetValue.value);
+    sessionStorage.setItem("player4BetValue", player4BetValue.value);
 
-    const player2Type = document.querySelector("#player2Type").value;
-    const player2Name = document.querySelector("#player2Name").value;
+    sessionStorage.setItem("numberOfDecks", numberOfDecks.value);
 
-    const player3Type = document.querySelector("#player3Type").value;
-    const player3Name = document.querySelector("#player3Name").value;
-
-    const player4Type = document.querySelector("#player4Type").value;
-    const player4Name = document.querySelector("#player4Name").value;
-
-    sessionStorage.setItem("player1Name", player1Name);
-    sessionStorage.setItem("player2Name", player2Name);
-    sessionStorage.setItem("player3Name", player3Name);
-    sessionStorage.setItem("player4Name", player4Name);
-    sessionStorage.setItem("player1Type", player1Type);
-    sessionStorage.setItem("player2Type", player2Type);
-    sessionStorage.setItem("player3Type", player3Type);
-    sessionStorage.setItem("player4Type", player4Type);
     return;
 }
 
-const firstSelect = document.querySelector('#player1Type');
-const secondSelect = document.querySelector('#player2Type');
-const thirdSelect = document.querySelector('#player3Type');
-const fourthSelect = document.querySelector('#player4Type');
+const player1Type = document.querySelector("#player1Type");
+const player1Name = document.querySelector("#player1Name");
+const player1Bet = document.querySelector("#player1Bet");
+const player1BetValue = document.querySelector("#player1BetValue");
 
-const firstInput = document.querySelector('#player1Name');
-const secondInput = document.querySelector('#player2Name');
-const thirdInput = document.querySelector('#player3Name');
-const fourthInput = document.querySelector('#player4Name');
+const player2Type = document.querySelector("#player2Type");
+const player2Name = document.querySelector("#player2Name");
+const player2Bet = document.querySelector("#player2Bet");
+const player2BetValue = document.querySelector("#player2BetValue");
 
+const player3Type = document.querySelector("#player3Type");
+const player3Name = document.querySelector("#player3Name");
+const player3Bet = document.querySelector("#player3Bet");
+const player3BetValue = document.querySelector("#player3BetValue");
 
-if(thirdSelect.options[thirdSelect.selectedIndex].text === ''){
-    thirdInput.readOnly = true;
+const player4Type = document.querySelector("#player4Type");
+const player4Name = document.querySelector("#player4Name");
+const player4Bet = document.querySelector("#player4Bet");
+const player4BetValue = document.querySelector("#player4BetValue");
+
+const numberOfDecks = document.querySelector("#numberOfDecks")
+
+if(player3Type.options[player3Type.selectedIndex].text === ''){
+    player3Name.readOnly = true;
 }
 
-if(fourthSelect.options[fourthSelect.selectedIndex].text === ''){
-    fourthInput.readOnly = true;
-
+if(player4Type.options[player4Type.selectedIndex].text === ''){
+    player4Name.readOnly = true;
 }
-
-
 
 function setName(select, input, i) {
 
@@ -68,15 +74,10 @@ function setName(select, input, i) {
             input.value = '';
             input.readOnly = false;
         }
-
-
     })
 }
 
-
-setName(firstSelect, firstInput, 1)
-setName(secondSelect, secondInput, 2)
-setName(thirdSelect, thirdInput, 3)
-setName(fourthSelect, fourthInput, 4)
-
-
+setName(player1Type, player1Name, 1);
+setName(player2Type, player2Name, 2);
+setName(player3Type, player3Name, 3);
+setName(player4Type, player4Name, 4);

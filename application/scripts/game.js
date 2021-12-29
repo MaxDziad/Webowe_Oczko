@@ -14,26 +14,27 @@ $.ajax({
     },
 });
 
-const player1Type =   parseInt(sessionStorage.getItem("player1Type"));
+const player1Type = parseInt(sessionStorage.getItem("player1Type"));
 const player1Name = sessionStorage.getItem("player1Name")
+const player1Bet = parseInt(sessionStorage.getItem("player1Bet"));
+const player1BetValue = parseInt(sessionStorage.getItem("player1BetValue"));
 
+const player2Type = parseInt(sessionStorage.getItem("player2Type"));
+const player2Name = sessionStorage.getItem("player2Name");
+const player2Bet = parseInt(sessionStorage.getItem("player2Bet"));
+const player2BetValue = parseInt(sessionStorage.getItem("player2BetValue"));
 
-const player2Type =   parseInt(sessionStorage.getItem("player2Type"));
-const player2Name =  sessionStorage.getItem("player2Name");
+const player3Type = parseInt(sessionStorage.getItem("player3Type"));
+const player3Name = sessionStorage.getItem("player3Name");
+const player3Bet = parseInt(sessionStorage.getItem("player3Bet"));
+const player3BetValue = parseInt(sessionStorage.getItem("player3BetValue"));
 
-
-const player3Type =  parseInt(sessionStorage.getItem("player3Type"));
-const player3Name =    sessionStorage.getItem("player3Name");
-
-
-
-const player4Type =   parseInt(sessionStorage.getItem("player4Type"));
+const player4Type = parseInt(sessionStorage.getItem("player4Type"));
 const player4Name = sessionStorage.getItem("player4Name");
+const player4Bet = parseInt(sessionStorage.getItem("player4Bet"));
+const player4BetValue = parseInt(sessionStorage.getItem("player4BetValue"));
 
-
-
-
-
+const numberOfDecks = parseInt(sessionStorage.getItem("numberOfDecks"));
 
 let moveLabel = document.querySelector('#move');
 let playersView = document.querySelector('#players');
@@ -41,6 +42,7 @@ let actualPlayerCard;
 const board = document.querySelector('#game');
 let gameOver = false;
 
+const NO_BET = 0;
 
 const HOST = 100;
 const USER = 10;
@@ -60,7 +62,7 @@ const SPADE = "spade";
 const CLUB = "club";
 
 class Player {
-    constructor(username, playerType, skin) {
+    constructor(username, playerType, playerBet, playerBetValue, skin, playerNumber) {
         this.username = username;
         this.currentPoints = 0;
         this.pass = false;
@@ -72,19 +74,36 @@ class Player {
         this.isWinner = false;
         this.isLogged = true;
         this.skin = skin;
+        this.playerBet = playerBet;
+        this.playerBetValue = playerBetValue;
+        this.playerNumber = playerNumber;
     }
 
     AddToWinnerList() {
         this.isWinner = true;
         winners.push(this.username);
     }
+
+    CalculatePlayerBet() {    
+        if (this.playerBet !== NO_BET){
+            listOfPlayers.filter(function (player) {
+                if (this.playerBet === player.playerNumber && player.isWinner) {
+                    return playerBetValue;
+                }
+                else {
+                    return -playerBetValue;
+                }
+            });
+        }
+        return 0;
+    }
 }
 
 
 class Deck {
-    constructor(numberOfDecks) {
+    constructor(deckType) {
         this.deck = []
-        this.numberOfDecks = numberOfDecks;
+        this.deckType = deckType;
         this.CreateDeck();
     }
 
@@ -93,7 +112,9 @@ class Deck {
         const symbols = [HEART, DIAMOND, CLUB, SPADE];
         this.deck = []
 
-        for (let deckNumber = 0; deckNumber < this.numberOfDecks; deckNumber++) {
+        let numberOfDecks = this.deckType === 0 ? 1 : this.deckType;
+
+        for (let deckNumber = 0; deckNumber < numberOfDecks; deckNumber++) {
             for (let symbolIndex = 0; symbolIndex < symbols.length; symbolIndex++) {
                 for (let valueIndex = 0; valueIndex < values.length; valueIndex++) {
                     this.deck.push(new Card(values[valueIndex], symbols[symbolIndex]));
@@ -111,6 +132,24 @@ class Card {
 
     GetImageSymbolPath() {
         return "/application/images/game/" + this.symbol + ".png";
+    }
+
+    GetCharacterSymbol(){
+        if (this.value === ACE){
+            return 'A';
+        }
+        else if(this.value === JACK){
+            return 'J';
+        }
+        else if(this.value === QUEEN){
+            return 'Q';
+        }
+        else if(this.value === KING){
+            return 'K';
+        }
+        else{
+            return this.value;
+        }
     }
 }
 
@@ -335,11 +374,19 @@ function PutCard(player, card) {
     cardImage.src = card.GetImageSymbolPath();
     player.drawnCards += 1;
     player.currentPoints += CalculateCardPoints(player, card);
-    cardPlace[0].innerHTML = card.value;
-    cardPlace[1].innerHTML = card.value;
+    cardPlace[0].innerHTML = card.GetCharacterSymbol();
+    cardPlace[1].innerHTML = card.GetCharacterSymbol();
+    TryRemoveCardFromDeck(card);
 
     if (player.currentPoints >= 21) {
         Pass(player);
+    }
+}
+
+function TryRemoveCardFromDeck(card){
+    if (deck.deckType !== 0){
+        let cardIndex = deck.deck.indexOf(card);
+        deck.deck.splice(cardIndex, 1);
     }
 }
 
@@ -373,7 +420,8 @@ function CreateCookie(){
 
     listOfPlayers.filter(function (player) {
         if (player.isLogged) {
-            cookie += "&" + player.username + "," + player.isWinner + "," + player.snakeEyes + "," + player.currentPoints + "," + player.drawnCards;
+            cookie += "&" + player.username + "," + player.isWinner + "," + player.snakeEyes + "," + player.currentPoints
+             + "," + player.drawnCards + "," + player.CalculatePlayerBet();
         }
     });
 
@@ -428,18 +476,20 @@ function CheckWinners() {
     CreateListOfLosers();
 }
 
-function TryCreatePlayer(playerName, playerType, playerSkin) {
+function TryCreatePlayer(playerName, playerType, playerBet, playerBetValue, playerSkin, playerNumber) {
     if (playerName !== "") {
-        let player = new Player(playerName, playerType, playerSkin);
+        let player = new Player(playerName, playerType, playerBet, playerBetValue, playerSkin, playerNumber);
+        console.log(player);
         listOfPlayers.push(player);
     }
 }
 
 function CreatePlayers() {
-    TryCreatePlayer(player1Name, player1Type, skins[0]);
-    TryCreatePlayer(player2Name, player2Type, skins[1]);
-    TryCreatePlayer(player3Name, player3Type, skins[2]);
-    TryCreatePlayer(player4Name, player4Type, skins[3]);
+    let playerNumber = 1;
+    TryCreatePlayer(player1Name, player1Type, player1Bet, player1BetValue, skins[0], playerNumber++);
+    TryCreatePlayer(player2Name, player2Type, player2Bet, player2BetValue, skins[1], playerNumber++);
+    TryCreatePlayer(player3Name, player3Type, player3Bet, player3BetValue, skins[2], playerNumber++);
+    TryCreatePlayer(player4Name, player4Type, player4Bet, player4BetValue, skins[3], playerNumber++);
 }
 
 
@@ -448,14 +498,11 @@ let passButton = document.querySelector('#Pass');
 
 let listOfPlayers = [];
 CreatePlayers();
-// sessionStorage.clear();
 let playersInGame = [...listOfPlayers];
 let winners = [];
 let losers = [];
 
-let deck = new Deck(1);
+let deck = new Deck(numberOfDecks);
+console.log(deck);
 
 StartGame();
-
-
-

@@ -12,6 +12,7 @@ if(isset($_COOKIE['gameData'])){
         $snakeEye = intval(filter_var($data[2], FILTER_VALIDATE_BOOLEAN));
         $gamePoints = intval($data[3]);
         $drawnCards = intval($data[4]);
+        $additionalBetPoints = intval($data[5]);
 
         $blackjack = 0;
         if($gamePoints == 21) $blackjack = 1;
