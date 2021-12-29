@@ -12,7 +12,7 @@ if(isset($_COOKIE['gameData'])){
         $snakeEye = intval(filter_var($data[2], FILTER_VALIDATE_BOOLEAN));
         $gamePoints = intval($data[3]);
         $drawnCards = intval($data[4]);
-        $additionalBetPoints = intval($data[5]);
+        $additionalBetMoney = intval($data[5]);
 
         $blackjack = 0;
         if($gamePoints == 21) $blackjack = 1;
@@ -23,8 +23,8 @@ if(isset($_COOKIE['gameData'])){
         if($blackjack == 1) $rankingPoints = 5;
         if($snakeEye == 1) $rankingPoints = 10;
 
-        $money = 0;
-        if ($rankingPoints > 0) $money = $rankingPoints * 5 + $additionalBetPoints;
+        $money = $additionalBetMoney;
+        if ($rankingPoints > 0) $money = $money + $rankingPoints * 5;
 
         $stmt = $dbh->prepare('UPDATE statistics SET wins = wins + :win, failures = failures + (1 - :win),
                       drawnCards = drawnCards + :drawnCards, blackjacks = blackjacks + :blackjack,
