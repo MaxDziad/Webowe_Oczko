@@ -78,7 +78,24 @@ function setName(select, input, i) {
     })
 }
 
+function checkBet(playerType, playerBet, playerBetValue){
+    playerType.addEventListener("change", function(e){
+        if(playerType.value === '0' || playerType.value === '1' || playerType.value === '2' || playerType.value === '3'){
+            playerBet.setAttribute("disabled", true);
+            playerBetValue.setAttribute("disabled", true);
+        } else{
+            playerBet.removeAttribute("disabled");
+            playerBetValue.removeAttribute("disabled");
+        }
+    })
+   
+}
 setName(player1Type, player1Name, 1);
 setName(player2Type, player2Name, 2);
 setName(player3Type, player3Name, 3);
 setName(player4Type, player4Name, 4);
+
+checkBet(player1Type, player1Bet , player1BetValue);
+checkBet(player2Type, player2Bet , player2BetValue);
+checkBet(player3Type, player3Bet , player3BetValue);
+checkBet(player4Type, player4Bet , player4BetValue);
