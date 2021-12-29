@@ -55,7 +55,11 @@ if(player4Type.options[player4Type.selectedIndex].text === ''){
 }
 
 function setName(select, input, i) {
-
+    console.log(select)
+    if(select.value === "100"){
+        console.log('tak')
+        input.readOnly = true;
+    }
     select.addEventListener("change", function (e) {
         if (e.target.value === '1') {
             input.value = `Easy-Ai-${i}`;
@@ -83,19 +87,43 @@ function setName(select, input, i) {
 }
 
 function checkBet(playerType, playerBet, playerBetValue){
+    if(playerType.value === "9999"){
+        playerBet.setAttribute("disabled", true);
+        playerBetValue.setAttribute("disabled", true);
+    }
     playerType.addEventListener("change", function(e){
-        if(playerType.value === '0' || playerType.value === '1' || playerType.value === '2' || playerType.value === '3'){
+
+
+        if(playerType.value === '0' || playerType.value === '1' || playerType.value === '2' || playerType.value === '3' || playerType.value === '9999' ){
             playerBet.setAttribute("disabled", true);
             playerBetValue.setAttribute("disabled", true);
             playerBetValue.value = "";
             playerBet.value = "0";
         } else{
             playerBet.removeAttribute("disabled");
-            playerBetValue.removeAttribute("disabled");
+            if(playerBet.value !== "0"){
+                playerBetValue.removeAttribute("disabled");
+            }
         }
     })
-   
+
 }
+
+function checkIfBet(playerBet, playerBetValue){
+    if(playerBet.value === "0"){
+        playerBetValue.setAttribute('disabled', true);
+    }
+
+    playerBet.addEventListener("change", function(e){
+        if(e.target.value === "0"){
+            playerBetValue.setAttribute('disabled', true);
+            playerBetValue.value = "";
+        } else{
+            playerBetValue.removeAttribute('disabled');
+        }
+    })
+}
+
 setName(player1Type, player1Name, 1);
 setName(player2Type, player2Name, 2);
 setName(player3Type, player3Name, 3);
@@ -105,3 +133,8 @@ checkBet(player1Type, player1Bet , player1BetValue);
 checkBet(player2Type, player2Bet , player2BetValue);
 checkBet(player3Type, player3Bet , player3BetValue);
 checkBet(player4Type, player4Bet , player4BetValue);
+
+checkIfBet(player1Bet, player1BetValue)
+checkIfBet(player2Bet, player2BetValue)
+checkIfBet(player3Bet, player3BetValue)
+checkIfBet(player4Bet, player4BetValue)

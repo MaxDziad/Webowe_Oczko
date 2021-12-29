@@ -5,11 +5,10 @@ $.ajax({
     type: "GET",
     dataType: "json",
     async: false,
-    success: function(data) {
+    success: function (data) {
         skins = [...data]
-        console.log(skins[0])
     },
-    error: function() {
+    error: function () {
         alert("Your error");
     },
 });
@@ -84,18 +83,19 @@ class Player {
         winners.push(this.username);
     }
 
-    CalculatePlayerBet() {    
-        if (this.playerBet !== NO_BET){
-            listOfPlayers.filter(function (player) {
-                if (this.playerBet === player.playerNumber && player.isWinner) {
-                    return playerBetValue;
-                }
-                else {
-                    return -playerBetValue;
+    CalculatePlayerBet() {
+        let thisPlayer = this;
+        let earnedCash = 0;
+        if (this.playerBet !== NO_BET) {
+            listOfPlayers.forEach(function (player) {
+                console.log(player)
+                if (thisPlayer.playerBet === player.playerNumber) {
+                    earnedCash =  player.isWinner ? thisPlayer.playerBetValue : -thisPlayer.playerBetValue;
+                    return;
                 }
             });
         }
-        return 0;
+        return earnedCash;
     }
 }
 
@@ -134,20 +134,20 @@ class Card {
         return "/application/images/game/" + this.symbol + ".png";
     }
 
-    GetCharacterSymbol(){
-        if (this.value === ACE){
+    GetCharacterSymbol() {
+        if (this.value === ACE) {
             return 'A';
         }
-        else if(this.value === JACK){
+        else if (this.value === JACK) {
             return 'J';
         }
-        else if(this.value === QUEEN){
+        else if (this.value === QUEEN) {
             return 'Q';
         }
-        else if(this.value === KING){
+        else if (this.value === KING) {
             return 'K';
         }
-        else{
+        else {
             return this.value;
         }
     }
@@ -203,7 +203,7 @@ function OnPassButton() {
 }
 
 function TryPlayAiTurn(player) {
-    if (player.playerType === USER || player.playerType === GUEST || player.playerType ===HOST) {
+    if (player.playerType === USER || player.playerType === GUEST || player.playerType === HOST) {
         return;
     }
 
@@ -273,7 +273,7 @@ function FiftyChance() {
 function RenderPlayers() {
     playersView.innerHTML = '';
     for (let i = 0; i < listOfPlayers.length; i++) {
-        console.log(listOfPlayers[i].skin);
+
         playersView.innerHTML +=
             `<div class="players__card" data-playerName=${listOfPlayers[i].username}>
             <div class="image"><img src="${listOfPlayers[i].skin}"></div>
@@ -284,11 +284,11 @@ function RenderPlayers() {
         //<p class="players__points">Pass: ${listOfPlayers[i].pass}</p>
         //<p class="players__points">Turn: ${listOfPlayers[i].turn}</p> 
 
-        if(listOfPlayers[i].turn === true){
+        if (listOfPlayers[i].turn === true) {
             actualPlayerCard = document.querySelector(`[data-playerName="${listOfPlayers[i].username}"]`);
             actualPlayerCard.style.boxShadow = "0px 0px 40px 5px var(--orange)";
         }
-        if(listOfPlayers[i].pass === true){
+        if (listOfPlayers[i].pass === true) {
             actualPlayerCard = document.querySelector(`[data-playerName="${listOfPlayers[i].username}"]`);
             actualPlayerCard.style.opacity = "30%";
         }
@@ -329,15 +329,15 @@ function RemoveIfPlayerPassed() {
 function ChangePlayer() {
     for (let i = 0; i < playersInGame.length; i++) {
         if (playersInGame.length == 1) {
-            console.log(playersInGame[i]);
+
             return playersInGame[i];
         }
-        if (playersInGame[i].turn === true){
+        if (playersInGame[i].turn === true) {
             newPlayer = playersInGame[(i + 1) % playersInGame.length];
             newPlayer.turn = true;
             playersInGame[i].turn = false;
             moveLabel.innerHTML = 'Player move: ' + newPlayer.username;
-            
+
             return newPlayer;
         }
     }
@@ -369,7 +369,7 @@ function CalculateCardPoints(player, card) {
 
 function PutCard(player, card) {
     let cardPlace = document.querySelectorAll(`[data-player="${player.username}"] p`);
-    
+
     let cardImage = document.querySelector(`[data-player="${player.username}"] img`);
     cardImage.src = card.GetImageSymbolPath();
     player.drawnCards += 1;
@@ -383,8 +383,8 @@ function PutCard(player, card) {
     }
 }
 
-function TryRemoveCardFromDeck(card){
-    if (deck.deckType !== 0){
+function TryRemoveCardFromDeck(card) {
+    if (deck.deckType !== 0) {
         let cardIndex = deck.deck.indexOf(card);
         deck.deck.splice(cardIndex, 1);
     }
@@ -394,7 +394,7 @@ function Pass(player) {
     player.pass = true;
 }
 
-function CreateEndingScreen(){
+function CreateEndingScreen() {
     let endScreen = document.querySelector('#endview');
     endScreen.style.display = 'flex';
     let winnersParagraph = document.querySelector('#winners');
@@ -409,19 +409,22 @@ function GameOver() {
     CheckWinners();
     CreateCookie();
     CreateEndingScreen();
+    // setTimeout(() => {
+    //     window.location.href='profile';
+    // }, 3000);
 }
 
-function CreateCookie(){
+function CreateCookie() {
     var cookie = "gameData=";
 
     var date = new Date();
     date.setTime(date.getTime() + (30 * 60 * 1000)); // 30 minutes till expire
     expires = "; expires=" + date.toGMTString();
 
-    listOfPlayers.filter(function (player) {
+    listOfPlayers.forEach(function (player) {
         if (player.isLogged) {
             cookie += "&" + player.username + "," + player.isWinner + "," + player.snakeEyes + "," + player.currentPoints
-             + "," + player.drawnCards + "," + player.CalculatePlayerBet();
+                + "," + player.drawnCards + "," + player.CalculatePlayerBet();
         }
     });
 
@@ -435,7 +438,7 @@ function CheckIsGameOver() {
     }
 }
 
-function TryFindSnakeEyesWinners(){
+function TryFindSnakeEyesWinners() {
     listOfPlayers.forEach(player => {
         if (player.snakeEyes === true) {
             player.AddToWinnerList();
@@ -443,24 +446,25 @@ function TryFindSnakeEyesWinners(){
     })
 }
 
-function FindNearestWinners(){
+function FindNearestWinners() {
     if (winners.length === 0) {
         let currentMaxPoints = Number.NEGATIVE_INFINITY;
 
         listOfPlayers.forEach(player => {
-            if (player.currentPoints > currentMaxPoints && player.currentPoints <= 21){
+            if (player.currentPoints > currentMaxPoints && player.currentPoints <= 21) {
                 winners = [];
                 currentMaxPoints = player.currentPoints;
-                player.AddToWinnerList();
             }
-            else if (player.currentPoints === currentMaxPoints){
+        })
+        listOfPlayers.forEach(player => {
+            if(player.currentPoints === currentMaxPoints){
                 player.AddToWinnerList();
             }
         })
     }
 }
 
-function CreateListOfLosers(){
+function CreateListOfLosers() {
     losers = listOfPlayers.filter(function (player) {
         if (!winners.includes(player.username)) {
             return player;
@@ -479,7 +483,6 @@ function CheckWinners() {
 function TryCreatePlayer(playerName, playerType, playerBet, playerBetValue, playerSkin, playerNumber) {
     if (playerName !== "") {
         let player = new Player(playerName, playerType, playerBet, playerBetValue, playerSkin, playerNumber);
-        console.log(player);
         listOfPlayers.push(player);
     }
 }
@@ -503,6 +506,6 @@ let winners = [];
 let losers = [];
 
 let deck = new Deck(numberOfDecks);
-console.log(deck);
+
 
 StartGame();

@@ -1,1 +1,1 @@
-["\/application\/images\/skins\/red.png","\/application\/images\/skins\/guest.png","\/application\/images\/skins\/red.png","\/application\/images\/skins\/red.png"]
+["\/application\/images\/skins\/green.png","\/application\/images\/skins\/no-skin.png","\/application\/images\/skins\/guest.png","\/application\/images\/skins\/no-skin.png"]

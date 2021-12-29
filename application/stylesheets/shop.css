@@ -54,3 +54,9 @@
 .skin__buy-button:hover{
     cursor: pointer;
 }
+
+.warning{
+    margin-top: 5rem;
+    font-size: 3rem;
+    color: rgb(238, 204, 204);
+}
