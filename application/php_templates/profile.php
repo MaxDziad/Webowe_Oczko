@@ -35,10 +35,12 @@ if(isset($_COOKIE['gameData'])){
                         ':snakeEye' => $snakeEye, ':gamePoints' => $gamePoints,
                         ':rankingPoints' => $rankingPoints, ':money' => $money, ':username' => $username]);
     }
-
     setcookie("gameData", "", time() - 3600); // setting cookie time to current time minus one hour to make it expire
 }
 
-
+    $stmt = $dbh->prepare('SELECT money FROM statistics WHERE username = :username');
+    $stmt->execute([':username' =>$_SESSION['login']]);
+    $money = $stmt->fetch(PDO::FETCH_ASSOC);
+    $_SESSION['cash'] = $money['money'];
 
 echo $twig->render('profile.html.twig', ['username' => $_SESSION['login'], 'cash' => $_SESSION['cash']]);
