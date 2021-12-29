@@ -21,11 +21,13 @@ function handleSubmit() {
     return;
 }
 
+
+
 const player1Type = document.querySelector("#player1Type");
 const player1Name = document.querySelector("#player1Name");
 const player1Bet = document.querySelector("#player1Bet");
 const player1BetValue = document.querySelector("#player1BetValue");
-
+sessionStorage.setItem('hostName', player1Name.value);
 
 const player2Type = document.querySelector("#player2Type");
 const player2Name = document.querySelector("#player2Name");
@@ -70,8 +72,10 @@ function setName(select, input, i) {
         } else if (e.target.options[e.target.selectedIndex].text === '') {
             input.readOnly = true;
             input.value = '';
-        }
-        else {
+        }else if (e.target.options[e.target.selectedIndex].text === 'Host') {
+            input.readOnly = true;
+            input.value = sessionStorage.getItem("hostName");
+        }else {
             input.value = '';
             input.readOnly = false;
         }
@@ -83,6 +87,8 @@ function checkBet(playerType, playerBet, playerBetValue){
         if(playerType.value === '0' || playerType.value === '1' || playerType.value === '2' || playerType.value === '3'){
             playerBet.setAttribute("disabled", true);
             playerBetValue.setAttribute("disabled", true);
+            playerBetValue.value = "";
+            playerBet.value = "0";
         } else{
             playerBet.removeAttribute("disabled");
             playerBetValue.removeAttribute("disabled");
