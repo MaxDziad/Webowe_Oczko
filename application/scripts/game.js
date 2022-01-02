@@ -409,9 +409,9 @@ function GameOver() {
     CheckWinners();
     CreateCookie();
     CreateEndingScreen();
-    // setTimeout(() => {
-    //     window.location.href='profile';
-    // }, 3000);
+    setTimeout(() => {
+        window.location.href='profile';
+    }, 4000);
 }
 
 function CreateCookie() {
