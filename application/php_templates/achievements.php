@@ -14,6 +14,7 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     while ($achievements = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $achievement = array(
             'name' => $achievements['name'],
+            'criterion' => $achievements['criterion'],
             'points' => $statistics[$achievements['criterion']],
             'threshold' => $achievements['threshold']
         );

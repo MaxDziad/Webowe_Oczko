@@ -9,6 +9,7 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
 
     while ($stats = $stmt->fetch(PDO::FETCH_ASSOC)){
         $username = $stats['username'];
+        $rankingPoints = $stats['rankingPoints'];
         $wins = $stats['wins'];
         $failures = $stats['failures'];
         $games = $wins + $failures;
@@ -17,6 +18,7 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
 
         $user = array(
             'username'=> $username,
+            'rankingPoints' => $rankingPoints,
             'wins' => $wins,
             'failures' => $failures,
             'games' => $games,

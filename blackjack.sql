@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 19 Gru 2021, 21:41
+-- Czas generowania: 07 Sty 2022, 17:10
 -- Wersja serwera: 10.4.21-MariaDB
 -- Wersja PHP: 8.0.12
 
@@ -38,9 +38,35 @@ CREATE TABLE `achievements` (
 --
 
 INSERT INTO `achievements` (`name`, `criterion`, `threshold`) VALUES
-('5 wins', 'wins', 5),
-('Snake Eyes', 'snakeEyes', 3),
-('21 points', 'blackjacks', 10);
+('First Win', 'wins', 1),
+('Newbie', 'wins', 5),
+('Amateur', 'wins', 10),
+('Professional', 'wins', 20),
+('Expert', 'wins', 30),
+('Risky', 'drawnCards', 10),
+('Venturesome', 'drawnCards', 20),
+('Audacious', 'drawnCards', 30),
+('Crazy Mad!', 'drawnCards', 40),
+('Tight!', 'blackjacks', 1),
+('Nah, it wasn\'t tight', 'blackjacks', 5),
+('Perfection.', 'blackjacks', 10),
+('Persian Eye!', 'snakeEyes', 1),
+('Two Eyes', 'snakeEyes', 2),
+('Inner Eye', 'snakeEyes', 3),
+('Are you a spider?', 'snakeEyes', 8),
+('One Hundred', 'gamePoints', 100),
+('Two Hundred', 'gamePoints', 200),
+('Five Hundred!', 'gamePoints', 500),
+('That\'s a One Thousand!', 'gamePoints', 1000),
+('It\'s an Addiction...', 'gamePoints', 1000000),
+('A Stairs to Climb', 'rankingPoints', 10),
+('I\'ll Take the Elevator', 'rankingPoints', 50),
+('Challenger Approaches!', 'rankingPoints', 100),
+('Pocket Money', 'revenue', 50),
+('Not Poor Anymore', 'revenue', 150),
+('I Can Sleep On It', 'revenue', 500),
+('Is it Necessary?', 'revenue', 1000),
+('It\'s Lamborghini Time!', 'revenue', 10000);
 
 -- --------------------------------------------------------
 
@@ -112,7 +138,7 @@ CREATE TABLE `statistics` (
 --
 
 INSERT INTO `statistics` (`username`, `wins`, `failures`, `drawnCards`, `blackjacks`, `snakeEyes`, `gamePoints`, `rankingPoints`, `revenue`, `money`, `currentSkin`) VALUES
-('admin', 9, 14, 97, 0, 0, 518, 4, 90, 90, 1),
+('admin', 10, 14, 100, 0, 0, 532, 6, 100, 100, 2),
 ('user', 0, 9, 18, 0, 0, 171, -9, 0, 0, 0);
 
 -- --------------------------------------------------------
