@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 07 Sty 2022, 17:10
+-- Czas generowania: 07 Sty 2022, 19:01
 -- Wersja serwera: 10.4.21-MariaDB
 -- Wersja PHP: 8.0.12
 
@@ -66,7 +66,7 @@ INSERT INTO `achievements` (`name`, `criterion`, `threshold`) VALUES
 ('Not Poor Anymore', 'revenue', 150),
 ('I Can Sleep On It', 'revenue', 500),
 ('Is it Necessary?', 'revenue', 1000),
-('It\'s Lamborghini Time!', 'revenue', 10000);
+('Let\'s Buy a Lamborghini!', 'revenue', 10000);
 
 -- --------------------------------------------------------
 
@@ -86,10 +86,18 @@ CREATE TABLE `shop` (
 --
 
 INSERT INTO `shop` (`sid`, `name`, `path`, `price`) VALUES
-(1, 'green', '/application/images/skins/green.png', 20),
-(2, 'red', '/application/images/skins/red.png', 10),
-(3, 'yellow', '/application/images/skins/yellow.png', 15),
-(4, 'blue', '/application/images/skins/blue.png', 50);
+(1, 'Basic Green', '/application/images/skins/green.png', 20),
+(2, 'Basic Red', '/application/images/skins/red.png', 10),
+(3, 'Basic Blue', '/application/images/skins/blue.png', 50),
+(4, 'Golden', '/application/images/skins/gold.png', 200),
+(5, 'Silver', '/application/images/skins/silver.png', 150),
+(6, 'Blue with Springs', '/application/images/skins/blue_springs.png', 120),
+(7, 'Golden Pixelized', '/application/images/skins/golden_pixelized.png', 300),
+(8, 'Golden Spear', '/application/images/skins/golden_spear.png', 350),
+(9, 'Hearthstone', '/application/images/skins/hearthstone.png', 230),
+(10, 'Magic The Gathering', '/application/images/skins/magic.png', 180),
+(11, 'Pink Poker', '/application/images/skins/pink_poker.png', 140),
+(12, 'Pokemon', '/application/images/skins/pokemon.jpg', 500);
 
 -- --------------------------------------------------------
 
