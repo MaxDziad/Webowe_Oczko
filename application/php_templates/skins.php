@@ -19,15 +19,13 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     $user_skins = array();
 
     while ($skin = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $sid = intval($skin['sid']);
-        $name = html_entity_decode($skin['name'], ENT_QUOTES | ENT_HTML401);
-        $path = html_entity_decode($skin['path'], ENT_QUOTES | ENT_HTML401);
+        $sid = $skin['sid'];
+        $path = $skin['path'];
         if ($sid == $current_skin['currentSkin']) $is_current = true;
         else $is_current = false;
 
         $new_skin = array(
             'sid' => $sid,
-            'name' => $name,
             'path' => $path,
             'is_current' => $is_current
         );

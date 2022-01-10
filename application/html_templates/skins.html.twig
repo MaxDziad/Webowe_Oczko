@@ -14,7 +14,6 @@
                         <li class="shop__list-item mySkin">
                             <img class="skin__image" src="{{ skin['path'] }}">
                             <div class="skin__buy">
-                                <h2 class="skin__name">{{ skin['name'] }}</h2>
                                 <form method="POST" action='/skins' id="changeSkinForm">
                                     <input hidden value="{{ skin['sid'] }}" name="current_sid">
                                     <input hidden type="submit">
@@ -27,7 +26,6 @@
                         <li class="shop__list-item otherSkin">
                             <img class="skin__image" src="{{ skin['path'] }}">
                             <div class="skin__buy">
-                            <h2 class="skin__name">{{ skin['name'] }}</h2>
                             <form method="POST" action='/skins' id="changeSkinForm">
                                 <input hidden value="{{ skin['sid'] }}" name="current_sid">
                                 <input hidden type="submit">

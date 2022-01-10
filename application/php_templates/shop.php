@@ -7,14 +7,12 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
     $stmt->execute([':username' => $_SESSION['login']]);
 
     while ($skin = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $sid = intval($skin['sid']);
-        $name = $skin['name'];
+        $sid = $skin['sid'];
         $path = $skin['path'];
         $price = $skin['price'];
 
         $new_skin = array(
             'sid' => $sid,
-            'name' => $name,
             'path' => $path,
             'price' => $price
         );
@@ -41,8 +39,9 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
                     $_SESSION['cash'] = $_SESSION['cash'] - $skin['price'];
                     header('Location: /skins');
                 } catch (PDOException $e) {}
-            }
-        }
+            } else echo '<script type="text/javascript">alert("You did not have money enough to buy this skin!"); window.location = "/shop"</script>';
+
+    }
     }
 
 echo $twig->render('shop.html.twig', ['shop_skins' => $shop_skins, 'username' => $_SESSION['login'], 'cash' => $_SESSION['cash']]);
