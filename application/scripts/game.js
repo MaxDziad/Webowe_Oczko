@@ -355,11 +355,11 @@ function DrawCard() {
 }
 
 function CalculateCardPoints(player, card) {
-    if (card.value === ACE && player.currentPoints <= 10) {
+    if (card.value === ACE && player.drawnCards == 2 && player.currentPoints == 11) {
+        player.snakeEyes = true;
         return 11;
     }
-    else if (player.drawnCards == 2 && player.currentPoints == 11) {
-        player.snakeEyes = true;
+    else if (card.value === ACE && player.currentPoints <= 10) {
         return 11;
     }
     else {
