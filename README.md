@@ -11,6 +11,8 @@ Projekt można odpalić np z pomocą XAMPP. W tym celu:
 - teraz znowu klikamy po lewej w naszą nową utworzą bazą blackjack
 - następnie w zakładkach wyżej (tak jak na zdjęciu wyżej) jest Import, wchodzimy w nią, klikamy Wybierz Plik i wybieramy z naszego pobranego repo blackjack.sql
 - Voi la, baza została zaimportowana. Teraz klikacie w Admin obok modułu Apache i jesteśmy w domu!
+
+
 P.S. Jest jedno domyślne konto do testowania L: admin P: admin123 , możecie też tworzyć ile tam chcecie użytkowników i testować. Good luck!
 
 ~ Maxio, Kacpi i Amadi
