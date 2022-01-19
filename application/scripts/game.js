@@ -154,6 +154,7 @@ class Card {
 }
 
 function StartGame() {
+    StartTimer();
     let currentPlayer = playersInGame[0];
     currentPlayer.turn = true;
     RenderPlayers();
@@ -169,6 +170,14 @@ function StartGame() {
     })
 
     TryPlayAiTurn(currentPlayer);
+}
+
+function StartTimer() {
+    gameStartTime = new Date().getTime();
+}
+
+function EndTimer() {
+    gameEndTime = new Date().getTime();
 }
 
 function DisableButtons() {
@@ -405,6 +414,7 @@ function CreateEndingScreen() {
 
 function GameOver() {
     gameOver = true;
+    EndTimer();
     DisableButtons();
     CheckWinners();
     CreateCookie();
@@ -412,6 +422,10 @@ function GameOver() {
     setTimeout(() => {
         window.location.href='profile';
     }, 4000);
+}
+
+function GetGameTimeInSeconds() {
+    return Math.floor(((gameEndTime - gameStartTime) % (1000 * 60)) / 1000);
 }
 
 function CreateCookie() {
@@ -424,7 +438,7 @@ function CreateCookie() {
     listOfPlayers.forEach(function (player) {
         if (player.isLogged) {
             cookie += "&" + player.username + "," + player.isWinner + "," + player.snakeEyes + "," + player.currentPoints
-                + "," + player.drawnCards + "," + player.CalculatePlayerBet();
+                + "," + player.drawnCards + "," + player.CalculatePlayerBet() + "," + GetGameTimeInSeconds();
         }
     });
 
@@ -507,5 +521,7 @@ let losers = [];
 
 let deck = new Deck(numberOfDecks);
 
+let gameStartTime = 0;
+let gameEndTime = 0;
 
 StartGame();
