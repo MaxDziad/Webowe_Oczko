@@ -13,6 +13,7 @@ if(isset($_COOKIE['gameData'])){
         $gamePoints = intval($data[3]);
         $drawnCards = intval($data[4]);
         $additionalBetMoney = intval($data[5]);
+        $gameTimeInSeconds = intval($data[6]);
 
         $blackjack = 0;
         if($gamePoints == 21) $blackjack = 1;
