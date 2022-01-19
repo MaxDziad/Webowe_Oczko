@@ -51,9 +51,9 @@ const AI_MEDIUM = 2;
 const AI_HARD = 3;
 
 const ACE = 1;
-const JACK = 10;
-const QUEEN = 10;
-const KING = 10;
+const JACK = 11;
+const QUEEN = 12;
+const KING = 13;
 
 const HEART = "heart";
 const DIAMOND = "diamond";
@@ -370,6 +370,9 @@ function CalculateCardPoints(player, card) {
     }
     else if (card.value === ACE && player.currentPoints <= 10) {
         return 11;
+    }
+    else if (card.value >= 11) {
+        return 10;
     }
     else {
         return card.value;
