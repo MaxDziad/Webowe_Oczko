@@ -57,7 +57,7 @@ if(player4Type.options[player4Type.selectedIndex].text === ''){
 function setName(select, input, i) {
     console.log(select)
     if(select.value === "100"){
-        console.log('tak')
+        
         input.readOnly = true;
     }
     select.addEventListener("change", function (e) {
@@ -103,6 +103,8 @@ function checkBet(playerType, playerBet, playerBetValue){
             playerBet.removeAttribute("disabled");
             if(playerBet.value !== "0"){
                 playerBetValue.removeAttribute("disabled");
+                
+                
             }
         }
     })
@@ -120,6 +122,8 @@ function checkIfBet(playerBet, playerBetValue){
             playerBetValue.value = "";
         } else{
             playerBetValue.removeAttribute('disabled');
+            // playerBetValue.value ="0"; 
+            
         }
     })
 }
