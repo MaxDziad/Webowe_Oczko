@@ -13,6 +13,6 @@ Projekt można odpalić np z pomocą XAMPP. W tym celu:
 - Voi la, baza została zaimportowana. Teraz klikacie w Admin obok modułu Apache i jesteśmy w domu!
 
 
-P.S. Jest jedno domyślne konto do testowania L: admin P: admin123 , możecie też tworzyć ile tam chcecie użytkowników i testować. Good luck!
+P.S. Jest jedno domyślne konto do testowania L: user P: user123 , możecie też tworzyć ile tam chcecie użytkowników i testować. Good luck!
 
 ~ Maxio, Kacpi i Amadi

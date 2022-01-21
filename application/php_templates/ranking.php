@@ -9,20 +9,32 @@ if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio
 
     while ($stats = $stmt->fetch(PDO::FETCH_ASSOC)){
         $username = $stats['username'];
-        $rankingPoints = $stats['rankingPoints'];
         $wins = $stats['wins'];
         $failures = $stats['failures'];
         $games = $wins + $failures;
         if ($games > 0) $efficiency = round($wins / $games * 100) . '%';
         else $efficiency = '0%';
+        $drawnCards = $stats['drawnCards'];
+        $blackjacks = $stats['blackjacks'];
+        $snakeEyes = $stats['snakeEyes'];
+        $gamePoints = $stats['gamePoints'];
+        $rankingPoints = $stats['rankingPoints'];
+        $gameTime = $stats['gameTime'];
+        $revenue = $stats['revenue'];
 
         $user = array(
             'username'=> $username,
-            'rankingPoints' => $rankingPoints,
             'wins' => $wins,
             'failures' => $failures,
             'games' => $games,
             'efficiency' => $efficiency,
+            'drawnCards' => $drawnCards,
+            'blackjacks' => $blackjacks,
+            'snakeEyes' => $snakeEyes,
+            'gamePoints' => $gamePoints,
+            'rankingPoints' => $rankingPoints,
+            'gameTime' => $gameTime,
+            'revenue' => $revenue
         );
         array_push($best_users, $user);
     }

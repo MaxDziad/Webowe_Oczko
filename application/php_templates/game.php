@@ -2,7 +2,11 @@
 if (!defined('IN_INDEX')) { exit("Nie można uruchomić tego pliku bezpośrednio."); }
 
 if(isset($_POST['player1Type'])){
-    if(isset($_POST['player1BetValue'])) if($_POST['player1BetValue'] > $_SESSION['cash']) echo '<script type="text/javascript">alert("Host does not have money enough!"); window.location = "/lobby"</script>';
+    if(isset($_POST['player1BetValue']))
+        if($_POST['player1BetValue'] > $_SESSION['cash']) echo '<script type="text/javascript">alert("Host does not have money enough!"); window.location = "/lobby"</script>';
+    if(isset($_POST['player1Bet']))
+        if (($_POST['player1Bet'] == 3 && $_POST['player3Type'] == 9999) || ($_POST['player1Bet'] == 4 && $_POST['player4Type'] == 9999) )
+            echo '<script type="text/javascript">alert("You cannot bet on player which is not taking part in the game!"); window.location = "/lobby"</script>';
     for($i = 1; $i <= 4; $i++) {
         $username = $_POST['player'.$i.'Name'];
         if ($_POST['player'.$i.'Type'] == 10) {
@@ -14,8 +18,12 @@ if(isset($_POST['player1Type'])){
             $stmt = $dbh->prepare('SELECT * FROM statistics WHERE username = :username');
             $stmt->execute([':username' => $username]);
             if ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                if(isset($_POST['player'.$i.'BetValue'])) if($_POST['player'.$i.'BetValue'] > $user['money']) echo '<script type="text/javascript">alert("Some user or users do not have money enough!"); window.location = "/lobby"</script>';
+                if(isset($_POST['player'.$i.'BetValue']))
+                    if($_POST['player'.$i.'BetValue'] > $user['money']) echo '<script type="text/javascript">alert("Some user or users do not have money enough!"); window.location = "/lobby"</script>';
             } else echo '<script type="text/javascript">alert("Username is not in our database!"); window.location = "/lobby"</script>';
+            if (($_POST['player'.$i.'Bet'] == 3 && $_POST['player3Type'] == 9999) || ($_POST['player'.$i.'Bet'] == 4 && $_POST['player4Type'] == 9999) ) {
+                echo '<script type="text/javascript">alert("You cannot bet on player which is not taking part in the game!"); window.location = "/lobby"</script>';
+            }
         }
     }
     $skins_info = array();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 07 Sty 2022, 19:01
+-- Czas generowania: 21 Sty 2022, 21:52
 -- Wersja serwera: 10.4.21-MariaDB
 -- Wersja PHP: 8.0.12
 
@@ -115,11 +115,8 @@ CREATE TABLE `skins` (
 --
 
 INSERT INTO `skins` (`username`, `sid`) VALUES
-('admin', 3),
-('admin', 2),
-('user', 2),
-('admin', 1),
-('admin', 0);
+('user', 10),
+('user', 1);
 
 -- --------------------------------------------------------
 
@@ -136,6 +133,7 @@ CREATE TABLE `statistics` (
   `snakeEyes` int(10) NOT NULL DEFAULT 0,
   `gamePoints` int(10) NOT NULL DEFAULT 0,
   `rankingPoints` int(10) NOT NULL DEFAULT 0,
+  `gameTime` int(10) NOT NULL DEFAULT 0,
   `revenue` int(10) NOT NULL DEFAULT 50,
   `money` int(10) NOT NULL DEFAULT 50,
   `currentSkin` int(10) NOT NULL
@@ -145,9 +143,8 @@ CREATE TABLE `statistics` (
 -- Zrzut danych tabeli `statistics`
 --
 
-INSERT INTO `statistics` (`username`, `wins`, `failures`, `drawnCards`, `blackjacks`, `snakeEyes`, `gamePoints`, `rankingPoints`, `revenue`, `money`, `currentSkin`) VALUES
-('admin', 10, 14, 100, 0, 0, 532, 6, 100, 100, 2),
-('user', 0, 9, 18, 0, 0, 171, -9, 0, 0, 0);
+INSERT INTO `statistics` (`username`, `wins`, `failures`, `drawnCards`, `blackjacks`, `snakeEyes`, `gamePoints`, `rankingPoints`, `gameTime`, `revenue`, `money`, `currentSkin`) VALUES
+('user', 7, 3, 21, 0, 0, 147, 11, 156, 255, 55, 1);
 
 -- --------------------------------------------------------
 
@@ -167,8 +164,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`uid`, `login`, `password`, `created`) VALUES
-(1, 'admin', '$2y$10$GEO80edBKrYoDIEXiY0W3eT2w.aGZceklHYBHzcB/wu8K/0THSFR6', '2021-11-29 21:00:27'),
-(3, 'user', '$2y$10$vzceub0338DC430E26RDqu4ldD0i1PKN1kaCnhAYawAW9l6aYvSdS', '2021-12-14 01:10:51');
+(7, 'user', '$2y$10$iOZ7Nf/cCM20eRpSLXBhh.N56/1bs9xG76QvE4q/oZzj49oS/WvlW', '2022-01-21 21:21:04');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -213,7 +209,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `uid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `uid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

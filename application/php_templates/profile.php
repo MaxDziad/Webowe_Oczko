@@ -30,11 +30,11 @@ if(isset($_COOKIE['gameData'])){
         $stmt = $dbh->prepare('UPDATE statistics SET wins = wins + :win, failures = failures + (1 - :win),
                       drawnCards = drawnCards + :drawnCards, blackjacks = blackjacks + :blackjack,
                       snakeEyes = snakeEyes + :snakeEye, gamePoints = gamePoints + :gamePoints,
-                      rankingPoints = rankingPoints + :rankingPoints, revenue = revenue + :money,
-                      money = money + :money WHERE username = :username');
+                      rankingPoints = rankingPoints + :rankingPoints, gameTime = gameTime + :gameTime,
+                      revenue = revenue + :money, money = money + :money WHERE username = :username');
         $stmt->execute([':win' => $win, ':drawnCards' => $drawnCards, ':blackjack' => $blackjack,
-                        ':snakeEye' => $snakeEye, ':gamePoints' => $gamePoints,
-                        ':rankingPoints' => $rankingPoints, ':money' => $money, ':username' => $username]);
+                        ':snakeEye' => $snakeEye, ':gamePoints' => $gamePoints, ':rankingPoints' => $rankingPoints,
+                        ':gameTime' => $gameTimeInSeconds, ':money' => $money, ':username' => $username]);
     }
     setcookie("gameData", "", time() - 3600); // setting cookie time to current time minus one hour to make it expire
 }
