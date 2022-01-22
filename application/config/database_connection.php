@@ -4,7 +4,7 @@
         'db_host'     => 'localhost',
         'db_name'     => 'blackjack',
         'db_user'     => 'root',
-        'db_password' => 'jdx2r212345'
+        'db_password' => ''
     ];
 
     if (isset($config) && is_array($config)) {
