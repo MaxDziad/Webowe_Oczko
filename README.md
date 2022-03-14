@@ -3,9 +3,33 @@ Inżynieria Oprogramowania: Webowe Oczko
 
 Live View: https://blackjack-k.herokuapp.com/
 
+This is black-jack game made for project at university. You can play cards with your friends or with few levels of AI.
+
+
+
+
 Testing account: L: user P: user123
 
+**Main page**
+![alt text](https://github.com/MaxDziad/Webowe_Oczko/blob/main/Images/main.jpg)
+
+**Register**
+![alt text](https://github.com/MaxDziad/Webowe_Oczko/blob/main/Images/register.jpg)
+
+**Logged view**
+![alt text](https://github.com/MaxDziad/Webowe_Oczko/blob/main/Images/logged.jpg)
+
+**Shop view**
+![alt text](https://github.com/MaxDziad/Webowe_Oczko/blob/main/Images/shop.jpg)
+
+**Achievements view**
 ![alt text](https://github.com/MaxDziad/Webowe_Oczko/blob/main/Images/achiev.jpg)
+
+**Lobby view**
+![alt text](https://github.com/MaxDziad/Webowe_Oczko/blob/main/Images/lobby.jpg)
+
+**Game**
+![alt text](https://github.com/MaxDziad/Webowe_Oczko/blob/main/Images/game.jpg)
 
 
 Projekt można odpalić np z pomocą XAMPP. W tym celu:
