@@ -1,6 +1,11 @@
 # Webowe_Oczko
 Inżynieria Oprogramowania: Webowe Oczko
 
+Live View: https://blackjack-k.herokuapp.com/
+
+Testing account: L: user P: user123
+
+
 Projekt można odpalić np z pomocą XAMPP. W tym celu:
 ![image](https://user-images.githubusercontent.com/33766583/149179158-5efd6699-2651-453c-b23d-b949c829ad0a.png)
 - wchodzimy tak jak na zdjęciu po prawej w Explorer, wyskoczy nam okienko, klikamy w htdocs, usuwamy tam wszystkie domyślne pliki xamppa i wrzucamy całość pobranego projektu
@@ -15,4 +20,4 @@ Projekt można odpalić np z pomocą XAMPP. W tym celu:
 
 P.S. Jest jedno domyślne konto do testowania L: user P: user123 , możecie też tworzyć ile tam chcecie użytkowników i testować. Good luck!
 
-~ Maxio, Kacpi i Amadi
+
