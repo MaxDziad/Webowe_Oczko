@@ -14,6 +14,7 @@ Testing account: L: user P: user123
 ![alt text](https://github.com/MaxDziad/Webowe_Oczko/blob/main/Images/main.jpg)
 
 **Register**
+
 ![alt text](https://github.com/MaxDziad/Webowe_Oczko/blob/main/Images/register.jpg)
 
 **Logged view**
