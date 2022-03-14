@@ -422,6 +422,7 @@ function GameOver() {
     CheckWinners();
     CreateCookie();
     CreateEndingScreen();
+   
     setTimeout(() => {
         window.location.href='profile';
     }, 4000);
