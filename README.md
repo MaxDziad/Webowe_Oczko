@@ -1,6 +1,8 @@
 # Webowe_Oczko
 Inżynieria Oprogramowania: Webowe Oczko
+
 Live View: https://blackjack-k.herokuapp.com/
+
 Testing account: L: user P: user123
 
 
