@@ -5,6 +5,8 @@ Live View: https://blackjack-k.herokuapp.com/
 
 Testing account: L: user P: user123
 
+![alt text](https://github.com/MaxDziad/Webowe_Oczko/blob/main/Images/achiev.jpg)
+
 
 Projekt można odpalić np z pomocą XAMPP. W tym celu:
 ![image](https://user-images.githubusercontent.com/33766583/149179158-5efd6699-2651-453c-b23d-b949c829ad0a.png)
